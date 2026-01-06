@@ -32,7 +32,7 @@ export function Hero() {
                         y: [0, -20, 0],
                     }}
                     transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-3xl"
+                    className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-2xl"
                 />
                 <motion.div
                     animate={{
@@ -40,7 +40,7 @@ export function Hero() {
                         y: [0, 30, 0],
                     }}
                     transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute top-1/3 right-1/4 w-80 h-80 bg-neon-pink/20 rounded-full blur-3xl"
+                    className="absolute top-1/3 right-1/4 w-80 h-80 bg-neon-pink/20 rounded-full blur-2xl"
                 />
                 <motion.div
                     animate={{
@@ -48,7 +48,7 @@ export function Hero() {
                         y: [0, 25, 0],
                     }}
                     transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute bottom-1/4 right-1/3 w-72 h-72 bg-neon-cyan/15 rounded-full blur-3xl"
+                    className="absolute bottom-1/4 right-1/3 w-72 h-72 bg-neon-cyan/15 rounded-full blur-2xl"
                 />
             </div>
 

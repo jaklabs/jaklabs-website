@@ -117,3 +117,33 @@
   border: 1px solid rgba(168, 85, 247, 0.3);
   box-shadow: 0 0 15px rgba(168, 85, 247, 0.1), inset 0 0 15px rgba(168, 85, 247, 0.05);
 }
+
+/* Performance optimizations */
+@layer base {
+  /* Force GPU acceleration for animated elements */
+  .animate-pulse,
+  [class*="blur-"] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Optimize scrolling */
+  html {
+    scroll-behavior: auto; /* Remove smooth scroll for better performance */
+  }
+
+  /* Content containment for sections */
+  section {
+    contain: layout style;
+  }
+}
