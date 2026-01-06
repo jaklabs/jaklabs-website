@@ -42,3 +42,4 @@ infrastructure/lambda/node_modules/
 infrastructure/dist/
 *.js
 *.d.ts
+infrastructure/

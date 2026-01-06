@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { Calendar, ArrowLeft, ArrowRight, Linkedin, Twitter, Facebook, Clock, Sparkles, Quote } from 'lucide-react'
-import { getBlogPostBySlug, getBlogPosts } from '@/lib/blog-data'
+import { getBlogPost, getBlogPosts } from '@/lib/blog-data'
 import { BlogPost } from '@/types/blog'
 
 interface BlogPostPageProps {
@@ -212,7 +212,7 @@ function MoreArticleCard({
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
-    const post = getBlogPostBySlug(params.slug)
+    const post = getBlogPost(params.slug)
     const heroRef = useRef(null)
     const heroInView = useInView(heroRef, { once: true })
 
