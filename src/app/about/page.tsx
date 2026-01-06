@@ -53,7 +53,7 @@ export default function AboutPage() {
     const heroInView = useInView(heroRef, { once: true })
     const founderInView = useInView(founderRef, { once: true, margin: '-100px' })
     const missionInView = useInView(missionRef, { once: true, margin: '-100px' })
-    const logoInView = useInView(logoRef, { once: true, margin: '-100px' })
+    // logoRef is used for scroll animations via useScroll below
     const valuesInView = useInView(valuesRef, { once: true, margin: '-100px' })
     const storyInView = useInView(storyRef, { once: true, margin: '-100px' })
 

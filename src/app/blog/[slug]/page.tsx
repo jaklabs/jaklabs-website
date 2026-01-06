@@ -6,7 +6,8 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { Calendar, ArrowLeft, ArrowRight, Linkedin, Twitter, Facebook, Clock, Sparkles, Quote } from 'lucide-react'
-import { getBlogPost, getBlogPosts } from '@/lib/blog-data'
+import { getBlogPostBySlug, getBlogPosts } from '@/lib/blog-data'
+import { BlogPost } from '@/types/blog'
 
 interface BlogPostPageProps {
     params: {
@@ -27,7 +28,7 @@ function MoreArticleCard({
                              index,
                              isReversed
                          }: {
-    post: any
+    post: BlogPost
     index: number
     isReversed: boolean
 }) {
@@ -211,7 +212,7 @@ function MoreArticleCard({
 }
 
 export default function BlogPostPage({ params }: BlogPostPageProps) {
-    const post = getBlogPost(params.slug)
+    const post = getBlogPostBySlug(params.slug)
     const heroRef = useRef(null)
     const heroInView = useInView(heroRef, { once: true })
 
