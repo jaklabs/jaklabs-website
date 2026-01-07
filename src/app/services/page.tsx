@@ -236,15 +236,62 @@ export default function ServicesPage() {
 
     return (
         <>
+            {/* Hero Section with gradient background and floating neon orbs */}
             <section ref={heroRef} className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 z-0">
-                    <Image src="/images/services-hero.jpg" alt="Professional typing on laptop" fill className="object-cover" priority />
-                    <div className="absolute inset-0 bg-background/70" />
+                {/* Animated background gradient - matches homepage */}
+                <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background" />
+
+                {/* Floating neon orbs */}
+                <div className="absolute inset-0 overflow-hidden">
+                    <motion.div
+                        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
+                        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-2xl"
+                    />
+                    <motion.div
+                        animate={{ x: [0, -20, 0], y: [0, 30, 0] }}
+                        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute top-1/3 right-1/4 w-80 h-80 bg-neon-pink/20 rounded-full blur-2xl"
+                    />
+                    <motion.div
+                        animate={{ x: [0, 25, 0], y: [0, 25, 0] }}
+                        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+                        className="absolute bottom-1/4 right-1/3 w-72 h-72 bg-neon-cyan/15 rounded-full blur-2xl"
+                    />
                 </div>
+
+                {/* Grid pattern overlay */}
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(168,85,247,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+
                 <div className="container-custom relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
-                        <motion.p initial={{ opacity: 0, y: 20 }} animate={heroInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="subheading mb-4">OUR SERVICES</motion.p>
-                        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={heroInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.1 }} className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">OUR SERVICES</motion.h1>
+                        <motion.p initial={{ opacity: 0, y: 20 }} animate={heroInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="subheading mb-4">WHAT WE DO</motion.p>
+
+                        {/* OUR SERVICES title with gradient color and pulsing glow */}
+                        <motion.h1
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={heroInView ? {
+                                opacity: 1,
+                                y: 0,
+                                textShadow: [
+                                    "0 0 20px rgba(168,85,247,0.5), 0 0 40px rgba(168,85,247,0.3), 0 0 60px rgba(168,85,247,0.2)",
+                                    "0 0 40px rgba(168,85,247,0.8), 0 0 80px rgba(168,85,247,0.5), 0 0 120px rgba(168,85,247,0.3)",
+                                    "0 0 20px rgba(168,85,247,0.5), 0 0 40px rgba(168,85,247,0.3), 0 0 60px rgba(168,85,247,0.2)"
+                                ]
+                            } : {}}
+                            transition={{
+                                duration: 0.6,
+                                delay: 0.1,
+                                textShadow: {
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    ease: "easeInOut"
+                                }
+                            }}
+                            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight"
+                        >
+                            <span className="text-gradient-neon">OUR SERVICES</span>
+                        </motion.h1>
                     </div>
                 </div>
             </section>
@@ -267,7 +314,7 @@ export default function ServicesPage() {
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="text-center lg:text-left">
                             <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8">BUILD BRAND AND UNLOCKING <span className="text-gradient-neon">YOUR BUSINESS POTENTIALS</span></motion.h2>
-                            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}>
+                            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }} className="flex justify-center lg:justify-start">
                                 <Link href="/contact" className="btn-primary group">VIEW MORE SERVICES<ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" /></Link>
                             </motion.div>
                         </div>
