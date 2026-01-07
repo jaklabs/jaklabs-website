@@ -265,7 +265,7 @@ export default function ServicesPage() {
             <section className="section-padding">
                 <div className="container-custom">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
-                        <div>
+                        <div className="text-center lg:text-left">
                             <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-8">BUILD BRAND AND UNLOCKING <span className="text-gradient-neon">YOUR BUSINESS POTENTIALS</span></motion.h2>
                             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}>
                                 <Link href="/contact" className="btn-primary group">VIEW MORE SERVICES<ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" /></Link>
@@ -296,7 +296,7 @@ export default function ServicesPage() {
 
             <section ref={servicesRef} className="section-padding">
                 <div className="container-custom">
-                    <motion.div initial={{ opacity: 0, y: 30 }} animate={servicesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16">
+                    <motion.div initial={{ opacity: 0, y: 30 }} animate={servicesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16 text-center">
                         <p className="subheading mb-4">WHAT WE OFFER</p>
                         <h2 className="heading-lg">Our <span className="text-gradient-neon">Services</span></h2>
                     </motion.div>
