@@ -78,8 +78,8 @@ export function Hero() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
                     >
-                        <span className="block">We Help Service Businesses</span>
-                        <span className="text-gradient-neon">Dominate Your Market</span>
+                        <span className="block">We Help Businesses</span>
+                        <span className="text-gradient-neon">Dominate Their Market</span>
                     </motion.h1>
 
                     {/* Subheading */}
