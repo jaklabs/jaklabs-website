@@ -1,4 +1,3 @@
-cat > src/app/contact/page.tsx << 'EOF'
 'use client'
 
 import { useState, useRef } from 'react'
@@ -528,4 +527,3 @@ export default function ContactPage() {
       </>
   )
 }
-EOF
