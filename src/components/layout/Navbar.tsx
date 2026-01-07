@@ -131,13 +131,6 @@ export function Navbar() {
                                 </div>
                             ))}
                             <Link
-                                href="/contact"
-                                className="btn-primary w-full mt-4"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                Get Started
-                            </Link>
-                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
