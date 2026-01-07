@@ -1,4 +1,3 @@
-cat > src/components/layout/Navbar.tsx << 'EOF'
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -138,4 +137,3 @@ export function Navbar() {
         </nav>
     )
 }
-EOF
