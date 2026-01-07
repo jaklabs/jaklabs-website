@@ -1,3 +1,4 @@
+cat > src/components/layout/Navbar.tsx << 'EOF'
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -44,10 +45,10 @@ export function Navbar() {
             <div className="container-custom">
                 <div className="flex items-center justify-between h-20">
                     <Link href="/" className="flex items-center space-x-2">
-            <span className="text-2xl font-bold font-heading">
-              <span className="text-primary">JAK</span>
-              <span className="text-white">Labs</span>
-            </span>
+                        <span className="text-2xl font-bold font-heading">
+                            <span className="text-primary">JAK</span>
+                            <span className="text-white">Labs</span>
+                        </span>
                     </Link>
 
                     <div className="hidden md:flex items-center space-x-8">
@@ -130,10 +131,11 @@ export function Navbar() {
                                     </Link>
                                 </div>
                             ))}
-                            <Link
+                        </div>
                     </motion.div>
                 )}
             </AnimatePresence>
         </nav>
     )
 }
+EOF
