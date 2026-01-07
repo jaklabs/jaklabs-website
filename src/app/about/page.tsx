@@ -126,12 +126,12 @@ export default function AboutPage() {
             {/* Scrolling Text Section */}
             <section ref={scrollTextRef} className="py-24 md:py-32 overflow-hidden bg-secondary/30">
                 <div className="space-y-4 md:space-y-6">
-                    <motion.div style={{ x: achieveX }} className="whitespace-nowrap">
+                    <motion.div style={{ x: achieveX }} className="whitespace-nowrap will-change-transform">
                         <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold text-white/90 tracking-tight">
                             Achieve Business
                         </h2>
                     </motion.div>
-                    <motion.div style={{ x: growthX }} className="whitespace-nowrap">
+                    <motion.div style={{ x: growthX }} className="whitespace-nowrap will-change-transform">
                         <h2 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tight">
                             <span className="text-gradient-neon">✦ Growth</span>
                         </h2>
