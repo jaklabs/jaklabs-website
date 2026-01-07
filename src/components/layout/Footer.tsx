@@ -27,10 +27,10 @@ const footerLinks = {
 }
 
 const socialLinks = [
-    { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
-    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-    { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
+    { icon: Facebook, href: 'https://www.facebook.com/jakthedev', label: 'Facebook' },
+    { icon: Twitter, href: 'REMOVE_TWITTER', label: 'Twitter' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/jd-alexander-kemp-99b07064/', label: 'LinkedIn' },
+    { icon: Instagram, href: 'https://www.instagram.com/jaklabs.io?igsh=eHhmYnBvOXc4eGQ1&utm_source=qr', label: 'Instagram' },
 ]
 
 export function Footer() {
@@ -50,13 +50,13 @@ export function Footer() {
                             We help you stand out, attract clients, and grow your business.
                         </p>
                         <div className="space-y-3">
-                            <a href="mailto:hello@jaklabs.io" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
+                            <a href="mailto:jdakemp@jaklabs.io" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
                                 <Mail className="w-5 h-5" />
-                                <span>hello@jaklabs.io</span>
+                                <span>jdakemp@jaklabs.io</span>
                             </a>
-                            <a href="tel:+1234567890" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
+                            <a href="tel:+15175057135" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
                                 <Phone className="w-5 h-5" />
-                                <span>(123) 456-7890</span>
+                                <span>(517) 505-7135</span>
                             </a>
                         </div>
                     </div>

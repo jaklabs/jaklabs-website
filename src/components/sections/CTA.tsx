@@ -22,7 +22,7 @@ export function CTA() {
                     <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/20 rounded-full blur-3xl" />
                     <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-accent-purple/20 rounded-full blur-3xl" />
 
-                    <div className="relative z-10 max-w-3xl">
+                    <div className="relative z-10 max-w-3xl mx-auto text-center">
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -57,15 +57,15 @@ export function CTA() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={isInView ? { opacity: 1, y: 0 } : {}}
                             transition={{ duration: 0.5, delay: 0.4 }}
-                            className="flex flex-col sm:flex-row gap-4"
+                            className="flex flex-col sm:flex-row gap-4 justify-center"
                         >
                             <Link href="/contact" className="btn-primary group">
                                 Schedule a Call
                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                            <a href="mailto:hello@jaklabs.io" className="btn-secondary">
+                            <a href="mailto:jdakemp@jaklabs.io" className="btn-secondary">
                                 <Mail className="mr-2 w-5 h-5" />
-                                hello@jaklabs.io
+                                jdakemp@jaklabs.io
                             </a>
                         </motion.div>
                     </div>
