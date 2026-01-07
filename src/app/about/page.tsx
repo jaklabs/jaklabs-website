@@ -88,8 +88,8 @@ export default function AboutPage() {
                     <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background" />
                 </div>
 
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-2xl " />
-                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-neon-pink/20 rounded-full blur-2xl " />
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-purple/20 rounded-full blur-3xl animate-pulse " />
+                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-neon-pink/20 rounded-full blur-3xl animate-pulse delay-1000 " />
 
                 <div className="container-custom relative z-10">
                     <div className="max-w-4xl mx-auto text-center">
