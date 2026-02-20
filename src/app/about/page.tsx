@@ -35,10 +35,10 @@ const values = [
 ]
 
 const milestones = [
-    { year: '2014', title: 'Founded', description: 'JAKLabs was born with a mission to help service businesses grow.' },
-    { year: '2017', title: 'First Major Client', description: 'Landed our first enterprise client and expanded our team.' },
-    { year: '2020', title: '100 Projects', description: 'Celebrated our 100th successful project delivery.' },
-    { year: '2024', title: 'National Reach', description: 'Now serving clients across all 50 states.' },
+    { year: '2021', title: 'The Foundation', description: 'JAK Labs was founded to bridge the gap between traditional service businesses and the power of modern digital systems. We launched with a singular mission to ensure the best local businesses were also the best-represented online.' },
+    { year: '2023', title: 'The Expansion', description: 'We reached a major technical milestone by securing our first enterprise-level partnership and expanding our team of specialists. This growth proved that our "business engine" approach could scale to handle high-volume operations without losing its personalized touch.' },
+    { year: '2025', title: 'The Milestone', description: 'JAK Labs celebrated its 100th successful project delivery, cementing our reputation for high-performance apps and measurable ROI. This milestone represents a proven track record of transforming a diverse range of businesses through custom-engineered technology.' },
+    { year: '2026', title: 'The Global Mission', description: 'We are now transcending boundaries to provide elite app development and marketing precision to clients worldwide. Our mission is to standardize excellence on a global scale, helping businesses in every corner of the globe dominate their markets.' },
 ]
 
 export default function AboutPage() {
