@@ -57,7 +57,7 @@ export function Hero() {
 
             <motion.div
                 style={{ y, opacity }}
-                className="container-custom relative z-10 pt-20"
+                className="container-custom relative z-10 pt-32"
             >
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Main Heading */}
