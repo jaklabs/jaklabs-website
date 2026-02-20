@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { ArrowRight, Play, Sparkles } from 'lucide-react'
+import { ArrowRight, Play } from 'lucide-react'
 
 export function Hero() {
     const ref = useRef(null)
@@ -60,17 +60,6 @@ export function Hero() {
                 className="container-custom relative z-10 pt-20"
             >
                 <div className="max-w-4xl mx-auto text-center">
-                    {/* Badge */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20, scale: 0.9 }}
-                        animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                        transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
-                    >
-                        <Sparkles className="w-4 h-4 text-neon-purple" />
-                        <span className="text-sm text-white/80">Marketing & App Development Agency</span>
-                    </motion.div>
-
                     {/* Main Heading */}
                     <motion.h1
                         initial={{ opacity: 0, y: 30 }}
