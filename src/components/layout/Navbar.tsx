@@ -26,6 +26,7 @@ export function Navbar() {
     const [isOpen, setIsOpen] = useState(false)
     const [scrolled, setScrolled] = useState(false)
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+    const [mobileDropdown, setMobileDropdown] = useState<string | null>(null)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -121,13 +122,60 @@ export function Navbar() {
                         <div className="container-custom py-4 space-y-2">
                             {navLinks.map((link) => (
                                 <div key={link.name}>
-                                    <Link
-                                        href={link.href}
-                                        className="block py-3 text-white/80 hover:text-white transition-colors"
-                                        onClick={() => setIsOpen(false)}
-                                    >
-                                        {link.name}
-                                    </Link>
+                                    {link.dropdown ? (
+                                        <>
+                                            <button
+                                                className="flex items-center justify-between w-full py-3 text-white/80 hover:text-white transition-colors"
+                                                onClick={() =>
+                                                    setMobileDropdown(
+                                                        mobileDropdown === link.name ? null : link.name
+                                                    )
+                                                }
+                                            >
+                                                <span>{link.name}</span>
+                                                <ChevronDown
+                                                    className={`w-4 h-4 transition-transform duration-200 ${
+                                                        mobileDropdown === link.name ? 'rotate-180' : ''
+                                                    }`}
+                                                />
+                                            </button>
+                                            <AnimatePresence>
+                                                {mobileDropdown === link.name && (
+                                                    <motion.div
+                                                        initial={{ opacity: 0, height: 0 }}
+                                                        animate={{ opacity: 1, height: 'auto' }}
+                                                        exit={{ opacity: 0, height: 0 }}
+                                                        transition={{ duration: 0.2 }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <div className="pl-4 border-l border-white/10 ml-2 space-y-1">
+                                                            {link.dropdown.map((item) => (
+                                                                <Link
+                                                                    key={item.name}
+                                                                    href={item.href}
+                                                                    className="block py-2 text-white/60 hover:text-white transition-colors text-sm"
+                                                                    onClick={() => {
+                                                                        setIsOpen(false)
+                                                                        setMobileDropdown(null)
+                                                                    }}
+                                                                >
+                                                                    {item.name}
+                                                                </Link>
+                                                            ))}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </>
+                                    ) : (
+                                        <Link
+                                            href={link.href}
+                                            className="block py-3 text-white/80 hover:text-white transition-colors"
+                                            onClick={() => setIsOpen(false)}
+                                        >
+                                            {link.name}
+                                        </Link>
+                                    )}
                                 </div>
                             ))}
                         </div>
