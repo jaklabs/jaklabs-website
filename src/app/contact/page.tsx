@@ -75,15 +75,15 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: 'Phone',
-      value: '(123) 456-7890',
-      href: 'tel:+1234567890',
+      value: '(517) 505-7135',
+      href: 'tel:+15175057135',
       gradient: 'from-neon-purple to-neon-pink',
     },
     {
       icon: Mail,
       title: 'Email',
-      value: 'hello@jaklabs.io',
-      href: 'mailto:hello@jaklabs.io',
+      value: 'jdakemp@gmail.com',
+      href: 'mailto:jdakemp@gmail.com',
       gradient: 'from-neon-pink to-neon-cyan',
     },
     {

@@ -50,9 +50,9 @@ export function Footer() {
                             We help you stand out, attract clients, and grow your business.
                         </p>
                         <div className="space-y-3">
-                            <a href="mailto:jdakemp@jaklabs.io" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
+                            <a href="mailto:jdakemp@gmail.com" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
                                 <Mail className="w-5 h-5" />
-                                <span>jdakemp@jaklabs.io</span>
+                                <span>jdakemp@gmail.com</span>
                             </a>
                             <a href="tel:+15175057135" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
                                 <Phone className="w-5 h-5" />
