@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, BarChart3, Target, Megaphone, TrendingUp, Search, Mail, Smartphone, Globe, CheckCircle2 } from 'lucide-react'
+import { ArrowRight, BarChart3, Target, Megaphone, TrendingUp, Search, Mail, Smartphone, Globe, CheckCircle2, Zap, Crosshair, Users, Lightbulb, FlaskConical, LineChart, Bot, Layers, Inbox } from 'lucide-react'
 
 const strategies = [
     {
@@ -263,8 +263,389 @@ export default function MarketingStrategyPage() {
                 </div>
             </section>
 
-            {/* What We Build Section */}
+            {/* Strategic Blueprint Section */}
             <section className="section-padding">
+                <div className="container-custom">
+                    <div className="max-w-4xl mx-auto text-center mb-16">
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="subheading mb-4"
+                        >
+                            THE STRATEGIC BLUEPRINT
+                        </motion.p>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
+                        >
+                            Engineering{' '}
+                            <span className="text-gradient-neon">Market Dominance</span>
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="text-white/60 text-lg"
+                        >
+                            At JAK Labs, we believe that high-growth marketing isn&apos;t an accident—it&apos;s a documented,
+                            tactical science. Moving beyond simple guesswork, a robust marketing strategy aligns your
+                            overarching business goals with data-driven execution to maximize your Return on Investment (ROI).
+                        </motion.p>
+                    </div>
+                </div>
+            </section>
+
+            {/* Why Strategy Section */}
+            <section className="section-padding bg-secondary/30">
+                <div className="container-custom">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <motion.div
+                            initial={{ opacity: 0, x: -30 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <p className="subheading mb-4">WHY STRATEGY MATTERS</p>
+                            <h2 className="heading-lg mb-6">
+                                Your Greatest{' '}
+                                <span className="text-gradient-neon">Competitive Edge</span>
+                            </h2>
+                            <p className="text-white/60 mb-8">
+                                A marketing strategy serves as your professional playbook, designed to amplify your
+                                &quot;share of voice&quot; and convert leads into revenue. Without this roadmap, businesses
+                                risk targeting irrelevant audiences and wasting resources on features that don&apos;t resonate.
+                            </p>
+                        </motion.div>
+
+                        <div className="space-y-6">
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="flex items-start gap-4 p-6 rounded-xl border border-white/10 bg-background/50 hover:border-neon-purple/30 transition-colors"
+                            >
+                                <div className="w-12 h-12 rounded-lg bg-neon-purple/10 flex items-center justify-center flex-shrink-0">
+                                    <Users className="w-6 h-6 text-neon-purple" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold mb-1">Deep Market Insight</h3>
+                                    <p className="text-white/60 text-sm">Truly understand the psychographics of your ideal client.</p>
+                                </div>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.15 }}
+                                className="flex items-start gap-4 p-6 rounded-xl border border-white/10 bg-background/50 hover:border-neon-pink/30 transition-colors"
+                            >
+                                <div className="w-12 h-12 rounded-lg bg-neon-pink/10 flex items-center justify-center flex-shrink-0">
+                                    <Lightbulb className="w-6 h-6 text-neon-pink" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold mb-1">Defined Value Proposition</h3>
+                                    <p className="text-white/60 text-sm">Articulate exactly why you are the #1 choice.</p>
+                                </div>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                className="flex items-start gap-4 p-6 rounded-xl border border-white/10 bg-background/50 hover:border-neon-cyan/30 transition-colors"
+                            >
+                                <div className="w-12 h-12 rounded-lg bg-neon-cyan/10 flex items-center justify-center flex-shrink-0">
+                                    <Crosshair className="w-6 h-6 text-neon-cyan" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold mb-1">Precision Positioning</h3>
+                                    <p className="text-white/60 text-sm">Outmaneuver competitors by owning a specific niche.</p>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* 4-Phase Execution Framework */}
+            <section className="section-padding">
+                <div className="container-custom">
+                    <div className="text-center mb-16">
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="subheading mb-4"
+                        >
+                            OUR METHODOLOGY
+                        </motion.p>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="heading-lg mb-4"
+                        >
+                            The JAK Labs <span className="text-gradient-neon">4-Phase</span> Execution Framework
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="text-white/60 max-w-3xl mx-auto"
+                        >
+                            We distinguish between Strategy (the high-level &quot;Why&quot;) and Planning (the tactical
+                            &quot;How&quot;). Our approach follows a rigorous order of operations.
+                        </motion.p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="relative p-8 rounded-2xl border border-white/10 bg-secondary/50 backdrop-blur-sm hover:border-neon-purple/40 hover:shadow-[0_0_40px_rgba(191,90,242,0.1)] transition-all duration-500"
+                        >
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-14 h-14 rounded-xl bg-neon-purple/10 flex items-center justify-center">
+                                    <FlaskConical className="w-7 h-7 text-neon-purple" />
+                                </div>
+                                <div>
+                                    <span className="text-sm font-mono text-neon-purple">PHASE 01</span>
+                                    <h3 className="text-xl md:text-2xl font-bold">Research &amp; Archetyping</h3>
+                                </div>
+                            </div>
+                            <p className="text-white/60 text-sm leading-relaxed">We begin by defining SMART goals (Specific, Measurable, Achievable, Relevant, Time-bound). We then conduct primary and secondary research to build detailed Buyer Personas, ensuring your messaging hits the pain points of your ideal customer.</p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="relative p-8 rounded-2xl border border-white/10 bg-secondary/50 backdrop-blur-sm hover:border-neon-pink/40 hover:shadow-[0_0_40px_rgba(255,45,146,0.1)] transition-all duration-500"
+                        >
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-14 h-14 rounded-xl bg-neon-pink/10 flex items-center justify-center">
+                                    <Target className="w-7 h-7 text-neon-pink" />
+                                </div>
+                                <div>
+                                    <span className="text-sm font-mono text-neon-pink">PHASE 02</span>
+                                    <h3 className="text-xl md:text-2xl font-bold">Positioning &amp; Unique Value (UVP)</h3>
+                                </div>
+                            </div>
+                            <p className="text-white/60 text-sm leading-relaxed">We identify your Unique Value Proposition—the &quot;secret sauce&quot; that makes you better than the competition. We then map this across a messaging matrix to ensure consistency across every digital touchpoint.</p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="relative p-8 rounded-2xl border border-white/10 bg-secondary/50 backdrop-blur-sm hover:border-neon-cyan/40 hover:shadow-[0_0_40px_rgba(0,255,255,0.1)] transition-all duration-500"
+                        >
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-14 h-14 rounded-xl bg-neon-cyan/10 flex items-center justify-center">
+                                    <LineChart className="w-7 h-7 text-neon-cyan" />
+                                </div>
+                                <div>
+                                    <span className="text-sm font-mono text-neon-cyan">PHASE 03</span>
+                                    <h3 className="text-xl md:text-2xl font-bold">Channel Optimization &amp; Budgeting</h3>
+                                </div>
+                            </div>
+                            <p className="text-white/60 text-sm leading-relaxed">Based on your audience&apos;s behavior, we select the high-ROI channels—be it Meta Ads, SEO, or Email Marketing. We allocate your budget strategically, prioritizing tactics that offer the fastest path to growth.</p>
+                        </motion.div>
+
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                            className="relative p-8 rounded-2xl border border-white/10 bg-secondary/50 backdrop-blur-sm hover:border-neon-blue/40 hover:shadow-[0_0_40px_rgba(0,136,255,0.1)] transition-all duration-500"
+                        >
+                            <div className="flex items-center gap-4 mb-4">
+                                <div className="w-14 h-14 rounded-xl bg-neon-blue/10 flex items-center justify-center">
+                                    <TrendingUp className="w-7 h-7 text-neon-blue" />
+                                </div>
+                                <div>
+                                    <span className="text-sm font-mono text-neon-blue">PHASE 04</span>
+                                    <h3 className="text-xl md:text-2xl font-bold">Measurement &amp; Agile Adaptation</h3>
+                                </div>
+                            </div>
+                            <p className="text-white/60 text-sm leading-relaxed">Marketing is a living system. We establish Key Performance Indicators (KPIs) and use advanced analytics to monitor traffic, conversion rates, and acquisition costs. We remain agile, refining the strategy based on real-time data.</p>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* AI Advantage Section */}
+            <section className="section-padding bg-secondary/30">
+                <div className="container-custom">
+                    <div className="grid lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6 }}
+                                className="subheading mb-4"
+                            >
+                                THE AI ADVANTAGE
+                            </motion.p>
+                            <motion.h2
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.1 }}
+                                className="heading-lg mb-6"
+                            >
+                                <span className="text-gradient-neon">Hyper-Personalization</span>{' '}
+                                at Scale
+                            </motion.h2>
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                className="text-white/60 mb-8"
+                            >
+                                In 2026, the &quot;Lab&quot; approach means leveraging Artificial Intelligence to gain an
+                                unfair advantage. We integrate AI to deliver:
+                            </motion.p>
+                        </div>
+
+                        <div className="space-y-6">
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5 }}
+                                className="flex items-start gap-4 p-6 rounded-xl border border-white/10 bg-background/50 hover:border-neon-purple/30 transition-colors"
+                            >
+                                <div className="w-12 h-12 rounded-lg bg-neon-purple/10 flex items-center justify-center flex-shrink-0">
+                                    <LineChart className="w-6 h-6 text-neon-purple" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold mb-1">Predictive Analytics</h3>
+                                    <p className="text-white/60 text-sm">Forecasting market trends and ROI before you spend.</p>
+                                </div>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.15 }}
+                                className="flex items-start gap-4 p-6 rounded-xl border border-white/10 bg-background/50 hover:border-neon-pink/30 transition-colors"
+                            >
+                                <div className="w-12 h-12 rounded-lg bg-neon-pink/10 flex items-center justify-center flex-shrink-0">
+                                    <Bot className="w-6 h-6 text-neon-pink" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold mb-1">Hyper-Personalization</h3>
+                                    <p className="text-white/60 text-sm">Tailoring the customer journey at scale.</p>
+                                </div>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                className="flex items-start gap-4 p-6 rounded-xl border border-white/10 bg-background/50 hover:border-neon-cyan/30 transition-colors"
+                            >
+                                <div className="w-12 h-12 rounded-lg bg-neon-cyan/10 flex items-center justify-center flex-shrink-0">
+                                    <Zap className="w-6 h-6 text-neon-cyan" />
+                                </div>
+                                <div>
+                                    <h3 className="text-lg font-bold mb-1">Automated Optimization</h3>
+                                    <p className="text-white/60 text-sm">Running A/B tests and campaign adjustments at lightning speed.</p>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Strategic Options Section */}
+            <section className="section-padding">
+                <div className="container-custom">
+                    <div className="text-center mb-16">
+                        <motion.p
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="subheading mb-4"
+                        >
+                            STRATEGIC OPTIONS
+                        </motion.p>
+                        <motion.h2
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="heading-lg mb-4"
+                        >
+                            Options for Your{' '}
+                            <span className="text-gradient-neon">Growth</span>
+                        </motion.h2>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8">
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="text-center p-8 rounded-2xl border border-white/10 bg-secondary/50 backdrop-blur-sm hover:border-neon-purple/40 hover:shadow-[0_0_40px_rgba(191,90,242,0.15)] transition-all duration-500"
+                        >
+                            <div className="w-16 h-16 rounded-xl bg-neon-purple/10 flex items-center justify-center mx-auto mb-5">
+                                <Layers className="w-8 h-8 text-neon-purple" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3">Inbound Marketing</h3>
+                            <p className="text-white/60 text-sm">Engineering a magnet for high-value leads.</p>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.15 }}
+                            className="text-center p-8 rounded-2xl border border-white/10 bg-secondary/50 backdrop-blur-sm hover:border-neon-pink/40 hover:shadow-[0_0_40px_rgba(255,45,146,0.15)] transition-all duration-500"
+                        >
+                            <div className="w-16 h-16 rounded-xl bg-neon-pink/10 flex items-center justify-center mx-auto mb-5">
+                                <Globe className="w-8 h-8 text-neon-pink" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3">Content &amp; Social Systems</h3>
+                            <p className="text-white/60 text-sm">Building authority through value-driven media.</p>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                            className="text-center p-8 rounded-2xl border border-white/10 bg-secondary/50 backdrop-blur-sm hover:border-neon-cyan/40 hover:shadow-[0_0_40px_rgba(0,255,255,0.15)] transition-all duration-500"
+                        >
+                            <div className="w-16 h-16 rounded-xl bg-neon-cyan/10 flex items-center justify-center mx-auto mb-5">
+                                <Inbox className="w-8 h-8 text-neon-cyan" />
+                            </div>
+                            <h3 className="text-xl font-bold mb-3">Email &amp; SMS Automation</h3>
+                            <p className="text-white/60 text-sm">Nurturing prospects into loyal brand advocates.</p>
+                        </motion.div>
+                    </div>
+                </div>
+            </section>
+
+            {/* What We Build Section */}
+            <section className="section-padding bg-secondary/30">
                 <div className="container-custom">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="text-center lg:text-left">
