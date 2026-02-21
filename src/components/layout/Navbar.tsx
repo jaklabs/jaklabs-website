@@ -15,7 +15,7 @@ const navLinks = [
             { name: 'Marketing Strategy', href: '/marketing-strategy' },
             { name: 'App Development', href: '/app-development' },
             { name: 'Brand Strategy', href: '/brand-strategy' },
-            { name: 'SEO & Content', href: '/services#seo' },
+            { name: 'SEO & Marketing', href: '/seo-marketing' },
         ],
     },
     { name: 'Blog', href: '/blog' },
