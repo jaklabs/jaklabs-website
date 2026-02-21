@@ -13,7 +13,7 @@ const navLinks = [
         href: '/services',
         dropdown: [
             { name: 'Marketing Strategy', href: '/marketing-strategy' },
-            { name: 'App Development', href: '/services#development' },
+            { name: 'App Development', href: '/app-development' },
             { name: 'Brand Design', href: '/services#branding' },
             { name: 'SEO & Content', href: '/services#seo' },
         ],
