@@ -9,7 +9,7 @@ const footerLinks = {
         { name: 'Contact', href: '/contact' },
     ],
     services: [
-        { name: 'Marketing Strategy', href: '/services#marketing' },
+        { name: 'Marketing Strategy', href: '/services/marketing-strategy' },
         { name: 'App Development', href: '/services#development' },
         { name: 'Brand Design', href: '/services#branding' },
         { name: 'SEO & Content', href: '/services#seo' },
