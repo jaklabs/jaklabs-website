@@ -14,7 +14,7 @@ const navLinks = [
         dropdown: [
             { name: 'Marketing Strategy', href: '/marketing-strategy' },
             { name: 'App Development', href: '/app-development' },
-            { name: 'Brand Design', href: '/services#branding' },
+            { name: 'Brand Strategy', href: '/brand-strategy' },
             { name: 'SEO & Content', href: '/services#seo' },
         ],
     },
