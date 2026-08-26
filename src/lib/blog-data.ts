@@ -18,8 +18,24 @@ const API = process.env.BLOG_API_URL
   // a permissions problem rather than a wrong path.
   || 'https://eml064cbzg.execute-api.us-east-1.amazonaws.com/v1'
 
-/** Posts change when someone publishes, not per request. Five minutes is plenty. */
-const REVALIDATE = 300
+/**
+ * How long the DATA cache lives — deliberately shorter than the page's.
+ *
+ * There are two caches in play and they are independent: the route segment's
+ * `export const revalidate` decides when a page re-renders, and this decides
+ * when the fetch underneath it re-reads the API. Setting both to 300 looks
+ * tidy and is a trap. The page re-renders on its own boundary, finds the fetch
+ * cache not yet stale, renders from OLD data, and caches that render for
+ * another 300 seconds. The two timers drift out of phase and the index can sit
+ * on stale content indefinitely — which is exactly what happened: a post went
+ * live, appeared on the index, then vanished from it again on the next
+ * re-render.
+ *
+ * Keeping the data window well inside the page window removes the phase
+ * problem entirely. Whenever a page re-renders, the data behind it is at most
+ * this old. Worst case for a new post to appear is page-revalidate + this.
+ */
+const REVALIDATE = 30
 
 /** A post with no cover would crash next/image, which requires a non-empty src. */
 export const FALLBACK_COVER = '/images/blogheader.jpg'
