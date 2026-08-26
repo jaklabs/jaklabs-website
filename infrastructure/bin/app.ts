@@ -37,6 +37,9 @@ const apiStack = new ApiStack(app, 'JakLabsApiStack', {
   description: 'JAKLabs API Gateway and Lambda functions',
   blogsTable: databaseStack.blogsTable,
   categoriesTable: databaseStack.categoriesTable,
+  // The CRM's pool, so the blog admin can live inside the CRM. Overridable for
+  // a non-production deploy; there is exactly one CRM, so it is not a lookup.
+  crmUserPoolId: process.env.CRM_USER_POOL_ID || 'us-east-1_UCehzgHPU',
   mediaBucket: storageStack.mediaBucket,
   userPool: authStack.userPool,
   userPoolClient: authStack.userPoolClient,

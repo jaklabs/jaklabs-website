@@ -2,7 +2,7 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, PutCommand, GetCommand, UpdateCommand, DeleteCommand, QueryCommand } from '@aws-sdk/lib-dynamodb'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { success, created, noContent, error, notFound, validationError, serverError } from '../shared/response'
-import { generateId, generateSlug, calculateReadingTime, getCurrentTimestamp, formatDateKey, getUserFromEvent, isAdmin, validateRequired, sanitizeHtml } from '../shared/utils'
+import { generateId, generateSlug, calculateReadingTime, getCurrentTimestamp, formatDateKey, getUserFromEvent, isAdmin, validateRequired, sanitizeHtml, toPlainText, buildExcerpt } from '../shared/utils'
 import { BlogPost, CreateBlogInput, UpdateBlogInput, PaginatedResponse } from '../shared/types'
 
 const client = new DynamoDBClient({})
@@ -22,14 +22,17 @@ export async function createBlog(event: APIGatewayProxyEvent): Promise<APIGatewa
     const now = getCurrentTimestamp()
     const id = generateId()
     const slug = generateSlug(body.title)
+    // Sanitise ONCE, up front, so everything derived from the body — the
+    // excerpt, the reading time — is derived from what will actually be stored.
+    const safeContent = sanitizeHtml(body.content)
     const status = body.status || 'draft'
     const publishedAt = status === 'published' ? now : undefined
 
     const blog: BlogPost = {
-      id, slug, title: body.title, excerpt: body.excerpt || body.content.substring(0, 200) + '...',
-      content: sanitizeHtml(body.content), coverImage: body.coverImage || '', category: body.category,
+      id, slug, title: toPlainText(body.title), excerpt: buildExcerpt(body.excerpt, safeContent),
+      content: safeContent, coverImage: body.coverImage || '', category: body.category,
       tags: body.tags || [], status, authorId: user.userId, authorName: user.email.split('@')[0],
-      readingTime: calculateReadingTime(body.content), publishedAt, createdAt: now, updatedAt: now,
+      readingTime: calculateReadingTime(toPlainText(safeContent)), publishedAt, createdAt: now, updatedAt: now,
       PK: `BLOG#${id}`, SK: 'METADATA', GSI1PK: `STATUS#${status}`, GSI1SK: formatDateKey(publishedAt || now),
       GSI2PK: `CATEGORY#${body.category.toLowerCase()}`, GSI2SK: formatDateKey(publishedAt || now),
     }
@@ -121,9 +124,20 @@ export async function updateBlog(event: APIGatewayProxyEvent): Promise<APIGatewa
     const expressionNames: Record<string, string> = { '#updatedAt': 'updatedAt' }
     const expressionValues: Record<string, any> = { ':updatedAt': now }
 
-    if (body.title !== undefined) { updates.push('#title = :title'); expressionNames['#title'] = 'title'; expressionValues[':title'] = body.title }
-    if (body.excerpt !== undefined) { updates.push('excerpt = :excerpt'); expressionValues[':excerpt'] = body.excerpt }
-    if (body.content !== undefined) { updates.push('content = :content, readingTime = :readingTime'); expressionValues[':content'] = sanitizeHtml(body.content); expressionValues[':readingTime'] = calculateReadingTime(body.content) }
+    if (body.title !== undefined) { updates.push('#title = :title'); expressionNames['#title'] = 'title'; expressionValues[':title'] = toPlainText(body.title) }
+    if (body.excerpt !== undefined) { updates.push('excerpt = :excerpt'); expressionValues[':excerpt'] = toPlainText(body.excerpt) }
+    if (body.content !== undefined) {
+      const safeContent = sanitizeHtml(body.content)
+      updates.push('content = :content, readingTime = :readingTime')
+      expressionValues[':content'] = safeContent
+      expressionValues[':readingTime'] = calculateReadingTime(toPlainText(safeContent))
+      // Rewriting the body with no new excerpt should refresh the auto-derived
+      // one, or the index keeps summarising a draft nobody can read any more.
+      if (body.excerpt === undefined) {
+        updates.push('excerpt = :excerpt')
+        expressionValues[':excerpt'] = buildExcerpt(undefined, safeContent)
+      }
+    }
     if (body.coverImage !== undefined) { updates.push('coverImage = :coverImage'); expressionValues[':coverImage'] = body.coverImage }
     if (body.category !== undefined) { updates.push('category = :category, GSI2PK = :gsi2pk'); expressionValues[':category'] = body.category; expressionValues[':gsi2pk'] = `CATEGORY#${body.category.toLowerCase()}` }
     if (body.tags !== undefined) { updates.push('tags = :tags'); expressionValues[':tags'] = body.tags }

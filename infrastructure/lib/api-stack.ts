@@ -15,6 +15,8 @@ interface ApiStackProps extends cdk.StackProps {
   mediaBucket: s3.Bucket
   userPool: cognito.UserPool
   userPoolClient: cognito.UserPoolClient
+  /** The CRM's Cognito pool, so its tokens are accepted for authoring. */
+  crmUserPoolId: string
 }
 
 export class ApiStack extends cdk.Stack {
@@ -52,6 +54,25 @@ export class ApiStack extends cdk.Stack {
       },
     })
 
+    // CATEGORIES LAMBDA
+    //
+    // Its own function rather than another branch inside the blogs handler: that
+    // router dispatches on HTTP method alone, so POST /categories would have
+    // landed in createBlog. Separating them keeps each router trivial.
+    const categoriesLambda = new NodejsFunction(this, 'CategoriesFunction', {
+      ...lambdaConfig,
+      functionName: 'jaklabs-categories',
+      entry: path.join(__dirname, '../lambda/categories/handler.ts'),
+      handler: 'handler',
+      environment: {
+        CATEGORIES_TABLE: categoriesTable.tableName,
+        // Read-only, and only to refuse deleting a category that still has
+        // posts filed under it.
+        BLOGS_TABLE: blogsTable.tableName,
+        NODE_OPTIONS: '--enable-source-maps',
+      },
+    })
+
     // MEDIA LAMBDA
     const mediaLambda = new NodejsFunction(this, 'MediaFunction', {
       ...lambdaConfig,
@@ -67,7 +88,9 @@ export class ApiStack extends cdk.Stack {
 
     // PERMISSIONS
     blogsTable.grantReadWriteData(blogsLambda)
-    categoriesTable.grantReadWriteData(blogsLambda)
+    categoriesTable.grantReadWriteData(categoriesLambda)
+    // Read-only on purpose — the categories handler must never edit a post.
+    blogsTable.grantReadData(categoriesLambda)
     mediaBucket.grantReadWrite(mediaLambda)
     mediaBucket.grantPut(blogsLambda)
 
@@ -91,9 +114,24 @@ export class ApiStack extends cdk.Stack {
     })
 
     // AUTHORIZER
+    //
+    // TWO pools, deliberately. `jaklabs-users` is this site's own pool; the
+    // second is the CRM's (`jaklabs-crm-prod`), because the blog admin lives in
+    // the CRM Jak already signs into every day rather than behind a second
+    // login on the marketing site.
+    //
+    // One API Gateway authorizer can accept several pools, which is why the
+    // alternative — reimplementing blog CRUD inside the CRM against the same
+    // table — was not taken. Two codebases writing one table diverge; one API
+    // trusting two issuers does not.
+    //
+    // Authorisation still comes from the `Admins` group claim, so a CRM user
+    // who is not in that group can read published posts and nothing more.
+    const crmUserPool = cognito.UserPool.fromUserPoolId(this, 'CrmUserPool', props.crmUserPoolId)
+
     const authorizer = new apigateway.CognitoUserPoolsAuthorizer(this, 'BlogsAuthorizer', {
       authorizerName: 'jaklabs-authorizer',
-      cognitoUserPools: [userPool],
+      cognitoUserPools: [userPool, crmUserPool],
     })
 
     const blogsIntegration = new apigateway.LambdaIntegration(blogsLambda)
@@ -113,6 +151,17 @@ export class ApiStack extends cdk.Stack {
     blogsResource.addMethod('POST', blogsIntegration, authOptions)
     blogResource.addMethod('PUT', blogsIntegration, authOptions)
     blogResource.addMethod('DELETE', blogsIntegration, authOptions)
+
+    // CATEGORY ROUTES
+    const categoriesIntegration = new apigateway.LambdaIntegration(categoriesLambda)
+    const categoriesResource = this.api.root.addResource('categories')
+    const categoryResource = categoriesResource.addResource('{slug}')
+
+    // Reading is public: the website's category filter needs it unauthenticated.
+    categoriesResource.addMethod('GET', categoriesIntegration)
+    categoriesResource.addMethod('POST', categoriesIntegration, authOptions)
+    categoryResource.addMethod('PUT', categoriesIntegration, authOptions)
+    categoryResource.addMethod('DELETE', categoriesIntegration, authOptions)
 
     // MEDIA ROUTES
     const mediaResource = this.api.root.addResource('media')

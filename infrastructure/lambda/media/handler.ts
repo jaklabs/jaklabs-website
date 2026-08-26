@@ -9,7 +9,12 @@ const s3Client = new S3Client({})
 const MEDIA_BUCKET = process.env.MEDIA_BUCKET!
 const CLOUDFRONT_DOMAIN = process.env.CLOUDFRONT_DOMAIN!
 
-const ALLOWED_CONTENT_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml', 'video/mp4', 'application/pdf']
+// SVG is deliberately NOT here. An .svg is an XML document that can carry
+// <script>, and while a browser will not run it inside an <img>, it will run it
+// when the CDN URL is opened directly — a stored-XSS on the media domain,
+// uploaded through a feature whose whole purpose is to accept files. A blog
+// cover image has no need for it; PNG and WebP cover the same ground.
+const ALLOWED_CONTENT_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'video/mp4', 'application/pdf']
 
 export async function getUploadUrl(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   try {
