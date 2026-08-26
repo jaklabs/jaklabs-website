@@ -147,3 +147,125 @@
     contain: layout style;
   }
 }
+
+/* --- blog post body ---------------------------------------------------------
+ *
+ * The article HTML comes from the CMS, so it has no Tailwind classes on it —
+ * a <h2> from the editor is a bare <h2>. These rules are what turn that into
+ * something readable on the dark article page.
+ *
+ * Scoped to .blog-content so nothing here can leak into the rest of the site.
+ * Written against the exact tag set the sanitiser allows; anything outside that
+ * list cannot reach the page, so there is nothing else to style.
+ */
+.blog-content {
+  color: rgb(255 255 255 / 0.72);
+  font-size: 1.0625rem;
+  line-height: 1.8;
+}
+
+.blog-content > * + * { margin-top: 1.5rem; }
+
+.blog-content h2,
+.blog-content h3,
+.blog-content h4 {
+  color: #fff;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+/* Generous space ABOVE a heading and tight below it, so a heading reads as
+   belonging to the text that follows rather than floating between blocks. */
+.blog-content h2 { font-size: 1.875rem; margin-top: 3.5rem; }
+.blog-content h3 { font-size: 1.375rem; margin-top: 2.5rem; }
+.blog-content h4 { font-size: 1.125rem; margin-top: 2rem; }
+.blog-content h2 + *,
+.blog-content h3 + *,
+.blog-content h4 + * { margin-top: 0.75rem; }
+
+.blog-content a {
+  color: rgb(196 181 253);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s;
+}
+.blog-content a:hover { color: #fff; }
+
+.blog-content strong { color: #fff; font-weight: 600; }
+
+.blog-content ul,
+.blog-content ol { padding-left: 1.5rem; }
+.blog-content ul { list-style: disc; }
+.blog-content ol { list-style: decimal; }
+.blog-content li { margin-top: 0.5rem; }
+.blog-content li::marker { color: rgb(167 139 250); }
+
+.blog-content blockquote {
+  border-left: 3px solid rgb(167 139 250 / 0.6);
+  padding-left: 1.25rem;
+  font-size: 1.1875rem;
+  color: rgb(255 255 255 / 0.85);
+  font-style: italic;
+}
+
+.blog-content code {
+  background: rgb(255 255 255 / 0.08);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 0.375rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.875em;
+  color: rgb(216 205 255);
+}
+
+.blog-content pre {
+  background: rgb(0 0 0 / 0.4);
+  border: 1px solid rgb(255 255 255 / 0.1);
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  /* A long code line must scroll inside its own box; letting it widen the
+     article makes the whole page scroll sideways on a phone — which is one of
+     the very faults the audit tool flags on other people's sites. */
+  overflow-x: auto;
+}
+.blog-content pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: rgb(226 232 240);
+}
+
+.blog-content img {
+  border-radius: 0.75rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.blog-content figure figcaption {
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+  color: rgb(255 255 255 / 0.5);
+  text-align: center;
+}
+
+/* Tables scroll rather than overflow, for the same reason as <pre>. */
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  display: block;
+  overflow-x: auto;
+}
+.blog-content th,
+.blog-content td {
+  border: 1px solid rgb(255 255 255 / 0.12);
+  padding: 0.625rem 0.875rem;
+  text-align: left;
+}
+.blog-content th { color: #fff; font-weight: 600; background: rgb(255 255 255 / 0.04); }
+
+.blog-content hr {
+  border: 0;
+  border-top: 1px solid rgb(255 255 255 / 0.12);
+  margin-top: 2.5rem;
+}
