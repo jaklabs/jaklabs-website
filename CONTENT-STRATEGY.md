@@ -134,6 +134,26 @@ proven the format, and then link the other five to it.
 **Cadence:** one post a week beats six in a fortnight and then silence. Search
 and answer engines both reward a site that is still being updated.
 
+### Every post ends with a CTA — no exceptions
+
+A post that earns attention and then asks for nothing has wasted it. The first
+two posts shipped without one and had to be retrofitted; the editor now warns
+before publishing.
+
+The order matters, and it is always the same:
+
+1. **One tailored line** connecting that post's argument to the next step, so it
+   reads as the end of the piece rather than a bolted-on footer.
+2. **[Run the free website check](/website-audit)** — thirty seconds, no signup,
+   no email. Low friction, self-serve, and it proves competence instead of
+   claiming it.
+3. **The free 30-minute Operations Audit → /contact** — framed as what a tool
+   *cannot* see: whether the booking flow completes, whether enquiries arrive,
+   where customers give up. Including "you don't need me" as a possible answer.
+
+The two-step is the point. The tool is a free thing given *before* anything is
+asked for, which is what makes the second ask land instead of reading as a pitch.
+
 ---
 
 ## The measurement
