@@ -8,8 +8,8 @@ import { Megaphone, Smartphone, Palette, Search, ArrowRight, ArrowUpRight } from
 const services = [
     {
         icon: Megaphone,
-        title: 'Marketing Strategy',
-        description: 'Data-driven campaigns that put your business in front of the right customers.',
+        title: 'Getting work in',
+        description: 'Lead capture, quoting and follow-up that happens whether or not you remember. Most businesses lose more to un-chased quotes than to anything else.',
         features: ['Digital Advertising', 'Social Media', 'Email Marketing'],
         gradient: 'from-neon-purple to-neon-pink',
         glowColor: 'shadow-[0_0_30px_rgba(168,85,247,0.3),0_0_60px_rgba(168,85,247,0.1)]',
@@ -21,8 +21,8 @@ const services = [
     },
     {
         icon: Smartphone,
-        title: 'App Development',
-        description: 'Custom web and mobile applications that streamline your operations.',
+        title: 'Running the work',
+        description: 'Scheduling, dispatch and job tracking. What got done, by whom, and when — instead of a group chat and your memory.',
         features: ['Web Apps', 'Mobile Apps', 'Custom Software'],
         gradient: 'from-neon-pink to-neon-cyan',
         glowColor: 'shadow-[0_0_30px_rgba(255,45,146,0.3),0_0_60px_rgba(255,45,146,0.1)]',
@@ -34,8 +34,8 @@ const services = [
     },
     {
         icon: Palette,
-        title: 'Brand Design',
-        description: 'Memorable brand identities that establish trust and recognition.',
+        title: 'Getting paid',
+        description: 'Invoicing and payment, and a straight answer to "how much am I owed right now" in under ten seconds.',
         features: ['Logo Design', 'Brand Guidelines', 'Visual Identity'],
         gradient: 'from-neon-cyan to-neon-blue',
         glowColor: 'shadow-[0_0_30px_rgba(0,255,255,0.3),0_0_60px_rgba(0,255,255,0.1)]',
@@ -47,8 +47,8 @@ const services = [
     },
     {
         icon: Search,
-        title: 'SEO & Content',
-        description: 'Content strategies that drive organic traffic and establish authority.',
+        title: 'The free Operations Audit',
+        description: 'Thirty minutes. I walk your site and your process the way a customer would and tell you what I find — including when you don\'t need me.',
         features: ['SEO Optimization', 'Content Strategy', 'Blog Management'],
         gradient: 'from-neon-blue to-neon-purple',
         glowColor: 'shadow-[0_0_30px_rgba(0,136,255,0.3),0_0_60px_rgba(0,136,255,0.1)]',
@@ -84,7 +84,7 @@ export function Services() {
                         transition={{ duration: 0.5 }}
                         className="inline-block px-4 py-1.5 rounded-full bg-neon-purple/10 border border-neon-purple/20 text-neon-purple text-sm font-medium mb-6"
                     >
-                        What We Do
+                        What I Do
                     </motion.span>
 
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -93,7 +93,7 @@ export function Services() {
                     </h2>
 
                     <p className="text-lg text-white/50 max-w-xl mx-auto">
-                        We combine marketing expertise with technical excellence to deliver
+                        Four things, and the last one is free. Everything else is software that removes
                         solutions that actually grow your business.
                     </p>
                 </motion.div>

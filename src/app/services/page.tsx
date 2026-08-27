@@ -173,15 +173,15 @@ function PricingSection() {
             <div className="container-custom">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-16">
                     <p className="subheading mb-4">TAILORED SOLUTIONS</p>
-                    <h2 className="heading-lg mb-4">Our <span className="text-gradient-neon">Service Packages</span></h2>
-                    <p className="text-white/60 max-w-2xl mx-auto">Every niche has different needs. We start with a Discovery Session to understand your business and create a custom solution that drives real results.</p>
+                    <h2 className="heading-lg mb-4">My <span className="text-gradient-neon">Service Packages</span></h2>
+                    <p className="text-white/60 max-w-2xl mx-auto">Every niche has different needs. I start with a free 30-minute Operations Audit — I walk your site and your process the way a customer would, and create a custom solution that drives real results.</p>
                 </motion.div>
                 <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
                     {pricingPlans.map((plan, index) => (<PricingCard key={plan.id} plan={plan} index={index} />))}
                 </div>
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="text-center mt-12 p-6 rounded-2xl bg-secondary/50 border border-white/10">
-                    <p className="text-white/80 mb-2"><span className="text-neon-purple font-semibold">Strategy Note:</span> We believe in the &quot;Consultation First&quot; model.</p>
-                    <p className="text-white/60 text-sm">Instead of one-size-fits-all packages, we start with a Technical Discovery Session to understand your unique needs and build a custom solution that actually moves the needle for your business.</p>
+                    <p className="text-white/80 mb-2"><span className="text-neon-purple font-semibold">Strategy Note:</span> Software should be the last resort, not the first.</p>
+                    <p className="text-white/60 text-sm">Instead of one-size-fits-all packages, I start by finding out whether you need software at all, and what it would actually cost. If a reminder and a template solve it, that is what I will tell you. Otherwise we scope the real needs and build a custom solution that actually moves the needle for your business.</p>
                 </motion.div>
             </div>
         </section>
@@ -345,7 +345,7 @@ export default function ServicesPage() {
                 <div className="container-custom">
                     <motion.div initial={{ opacity: 0, y: 30 }} animate={servicesInView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16 text-center">
                         <p className="subheading mb-4">WHAT WE OFFER</p>
-                        <h2 className="heading-lg">Our <span className="text-gradient-neon">Services</span></h2>
+                        <h2 className="heading-lg">My <span className="text-gradient-neon">Services</span></h2>
                     </motion.div>
                     <div className="space-y-0">
                         {services.map((service, index) => (<ServiceRow key={service.id} service={service} index={index} hoveredService={hoveredService} setHoveredService={setHoveredService} servicesInView={servicesInView} />))}
@@ -360,7 +360,7 @@ export default function ServicesPage() {
                 <div className="container-custom">
                     <div className="text-center max-w-3xl mx-auto">
                         <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="heading-lg mb-6">Ready to Transform <span className="text-gradient-neon">Your Business</span>?</motion.h2>
-                        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="text-white/60 text-lg mb-8">Let&apos;s discuss how our services can help you achieve your goals.</motion.p>
+                        <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.1 }} className="text-white/60 text-lg mb-8">Let&apos;s discuss how I can help, and what it would cost.</motion.p>
                         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.2 }}>
                             <Link href="/contact" className="btn-primary group">Get in Touch<ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" /></Link>
                         </motion.div>

@@ -49,7 +49,7 @@ export function CTA() {
                             className="text-white/60 text-lg mb-8"
                         >
                             Whether you need a complete marketing overhaul or a custom application,
-                            we are here to help you achieve your business goals. Let&apos;s start with
+                            I&apos;ll tell you what I&apos;d fix and what I&apos;d leave alone. Let&apos;s start with
                             a conversation.
                         </motion.p>
 
@@ -63,9 +63,9 @@ export function CTA() {
                                 Schedule a Call
                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                            <a href="mailto:jdakemp@jaklabs.io" className="btn-secondary">
+                            <a href="mailto:jdakemp@gmail.com" className="btn-secondary">
                                 <Mail className="mr-2 w-5 h-5" />
-                                jdakemp@jaklabs.io
+                                jdakemp@gmail.com
                             </a>
                         </motion.div>
                     </div>

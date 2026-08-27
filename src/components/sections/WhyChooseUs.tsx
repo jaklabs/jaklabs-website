@@ -7,28 +7,28 @@ import { Target, Rocket, Shield, HeartHandshake } from 'lucide-react'
 const features = [
     {
         icon: Target,
-        title: 'Results-Driven',
-        description: 'Every strategy we implement is measured against clear KPIs. We focus on metrics that matter: leads, conversions, and revenue growth.',
+        title: 'One senior engineer',
+        description: 'Not a project manager and three juniors. The person you talk to is the person writing the code. Ask anyone else you are considering who is actually building it.',
     },
     {
         icon: Rocket,
-        title: 'Fast Execution',
-        description: 'We move quickly without sacrificing quality. Your campaigns launch faster, your apps deploy sooner, and results come quicker.',
+        title: 'I did it to myself first',
+        description: 'Haslett Handyman runs on a CRM I wrote — email in, tickets created, jobs scheduled, invoices out. I will show you the real system, not a slide about it.',
     },
     {
         icon: Shield,
-        title: 'Industry Expertise',
-        description: 'We specialize in service businesses. We know your customers, your challenges, and what works in your industry.',
+        title: 'Published pricing',
+        description: 'Most builds land between $2,500 and $10,000. It is on the blog, in public, so you do not spend three calls finding out.',
     },
     {
         icon: HeartHandshake,
-        title: 'True Partnership',
-        description: 'We work as an extension of your team. Your success is our success, and we are invested in your long-term growth.',
+        title: 'I will tell you to buy nothing',
+        description: 'If your problem is a reminder and a template, you do not need a platform. Software should be the last resort, not the first. I have said this more than once.',
     },
 ]
 
 // Word animation variants
-const titleWords = ['We', 'Are', 'Not', 'Just', 'Another']
+const titleWords = ['Why', 'Work', 'With', 'Me']
 const highlightWords = ['Marketing', 'Agency']
 
 export function WhyChooseUs() {
@@ -102,8 +102,8 @@ export function WhyChooseUs() {
                             transition={{ duration: 0.6, delay: 0.7 }}
                             className="text-white/50 text-lg mb-8"
                         >
-                            We combine deep marketing expertise with technical capabilities to deliver
-                            comprehensive solutions. From strategy to execution, we handle everything
+                            I build operations software for local service businesses, and I use it myself to deliver
+                            comprehensive solutions. From strategy to execution, I handle everything
                             so you can focus on what you do best—serving your customers.
                         </motion.p>
 

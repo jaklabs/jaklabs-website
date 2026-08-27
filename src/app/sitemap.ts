@@ -21,10 +21,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const pages = ([
     { url: BASE, changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE}/services`, changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE}/app-development`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/seo-marketing`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/marketing-strategy`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${BASE}/brand-strategy`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/contact`, changeFrequency: 'monthly', priority: 0.7 },
     // The audit tool is the highest-intent page on the site.

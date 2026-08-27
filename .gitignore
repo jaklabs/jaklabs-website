@@ -43,3 +43,4 @@ infrastructure/dist/
 *.js
 *.d.ts
 infrastructure/
+graphify-out/

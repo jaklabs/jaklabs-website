@@ -107,7 +107,7 @@ export function Industries() {
                         transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="inline-block px-4 py-1.5 rounded-full bg-neon-cyan/10 border border-neon-cyan/20 text-neon-cyan text-sm font-medium mb-6"
                     >
-                        Industries We Serve
+                        Industries I Work With
                     </motion.span>
 
                     <motion.h2
@@ -126,8 +126,8 @@ export function Industries() {
                         transition={{ duration: 0.6, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
                         className="text-lg text-white/50 max-w-xl mx-auto"
                     >
-                        We understand the unique challenges of service-based businesses.
-                        Our strategies are tailored to help you win.
+                        Different trades, same three problems: getting work in, running it, getting paid.
+                        The software changes shape; the problems do not.
                     </motion.p>
                 </div>
 
@@ -171,7 +171,7 @@ export function Industries() {
                     transition={{ duration: 0.6, delay: 0.5 }}
                     className="text-center text-white/30 text-sm mt-20"
                 >
-                    And many more industries we help dominate their local markets
+                    And many more industries I help run without their owners
                 </motion.p>
             </div>
         </section>

@@ -50,6 +50,10 @@ export function Footer() {
                             We help you stand out, attract clients, and grow your business.
                         </p>
                         <div className="space-y-3">
+                            {/* NOT jdakemp@jaklabs.io — the apex domain has no MX record, so that
+    address receives nothing. Mail is configured on email.jaklabs.io.
+    Add an MX record on the apex (or Google Workspace) and this can
+    become the professional address everywhere. */}
                             <a href="mailto:jdakemp@gmail.com" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
                                 <Mail className="w-5 h-5" />
                                 <span>jdakemp@gmail.com</span>

@@ -11,34 +11,39 @@ const values = [
     {
         icon: Target,
         title: 'Results First',
-        description: 'Everything we do is measured by the impact it has on your business growth.',
+        description: 'If it does not save you time or make you money, I will say so rather than build it.',
         glowColor: 'shadow-[0_0_30px_rgba(168,85,247,0.3),0_0_60px_rgba(168,85,247,0.1)]',
     },
     {
         icon: Lightbulb,
-        title: 'Innovation',
-        description: 'We stay ahead of trends to give you a competitive advantage in your market.',
+        title: 'Plain answers',
+        description: 'Published pricing, honest scope, and "you do not need this" when that is the answer.',
         glowColor: 'shadow-[0_0_30px_rgba(255,45,146,0.3),0_0_60px_rgba(255,45,146,0.1)]',
     },
     {
         icon: Users,
-        title: 'Partnership',
-        description: 'We work as an extension of your team, invested in your long-term success.',
+        title: 'One person',
+        description: 'The person you talk to is the person building it. Nothing gets handed to a junior.',
         glowColor: 'shadow-[0_0_30px_rgba(0,255,255,0.3),0_0_60px_rgba(0,255,255,0.1)]',
     },
     {
         icon: Award,
-        title: 'Excellence',
-        description: 'We hold ourselves to the highest standards in every project we deliver.',
+        title: 'Built it myself first',
+        description: 'My own service business runs on software I wrote. I would not sell you something I would not run.',
         glowColor: 'shadow-[0_0_30px_rgba(0,136,255,0.3),0_0_60px_rgba(0,136,255,0.1)]',
     },
 ]
 
+// Everything here is true and checkable. The previous version claimed a 100th
+// project delivery, a team of specialists, an enterprise partnership and clients
+// worldwide — none of which had happened. On a page whose only job is to make a
+// stranger trust you, an invented track record is the most expensive possible
+// thing to be caught in.
 const milestones = [
-    { year: '2021', title: 'The Foundation', description: 'JAK Labs was founded to bridge the gap between traditional service businesses and the power of modern digital systems. We launched with a singular mission to ensure the best local businesses were also the best-represented online.' },
-    { year: '2023', title: 'The Expansion', description: 'We reached a major technical milestone by securing our first enterprise-level partnership and expanding our team of specialists. This growth proved that our "business engine" approach could scale to handle high-volume operations without losing its personalized touch.' },
-    { year: '2025', title: 'The Milestone', description: 'JAK Labs celebrated its 100th successful project delivery, cementing our reputation for high-performance apps and measurable ROI. This milestone represents a proven track record of transforming a diverse range of businesses through custom-engineered technology.' },
-    { year: '2026', title: 'The Global Mission', description: 'We are now transcending boundaries to provide elite app development and marketing precision to clients worldwide. Our mission is to standardize excellence on a global scale, helping businesses in every corner of the globe dominate their markets.' },
+    { year: 'The problem', title: 'Running a service business', description: 'I run Haslett Handyman. Quotes lived in my head, jobs lived in a group chat, and invoices went out when I remembered. Nothing was broken exactly — it just all depended on me being available.' },
+    { year: 'The build', title: 'I wrote the software I needed', description: 'Email comes in, a ticket is created, the job gets scheduled, the invoice goes out. I can see what I am owed without asking anyone. I built it because I needed it, not because I planned to sell it.' },
+    { year: 'The proof', title: 'It runs without me', description: 'The business operates on that system today. That is the entire pitch and the reason I can show you a working thing rather than a slide about one.' },
+    { year: 'Now', title: 'Building it for other people', description: 'Same three problems, different trades — getting work in, running the work, getting paid. Mostly local businesses around Lansing and mid-Michigan, where I can come and see the place.' },
 ]
 
 export default function AboutPage() {
@@ -107,7 +112,7 @@ export default function AboutPage() {
                             transition={{ duration: 0.6, delay: 0.1 }}
                             className="heading-xl mb-6"
                         >
-                            We Build Brands That{' '}
+                            Software That Runs{' '}
                             <span className="text-gradient-neon">Dominate Markets</span>
                         </motion.h1>
                         <motion.p
@@ -197,14 +202,14 @@ export default function AboutPage() {
                             animate={missionInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ duration: 0.8 }}
                         >
-                            <p className="subheading mb-4">Our Mission</p>
+                            <p className="subheading mb-4">Why I do this</p>
                             <h2 className="heading-lg mb-6">
                                 Empowering Service Businesses to{' '}
                                 <span className="text-gradient-neon">Reach Their Full Potential</span>
                             </h2>
                             <div className="space-y-4 text-white/70">
                                 <p>
-                                    We believe every service business deserves access to world-class marketing
+                                    Every local service business deserves software that fits how it actually works, not a platform it has to bend around. Most of them are running on spreadsheets and memory because the alternative was priced for someone bigger. That is the gap I builng
                                     and technology solutions.
                                 </p>
                             </div>
@@ -249,7 +254,7 @@ export default function AboutPage() {
                             animate={storyInView ? { opacity: 1, x: 0 } : {}}
                             transition={{ duration: 0.6 }}
                         >
-                            <p className="subheading mb-4">Our Story</p>
+                            <p className="subheading mb-4">How this started</p>
                             <h2 className="heading-lg mb-6">
                                 From Idea to <span className="text-gradient-neon">Industry Leader</span>
                             </h2>
@@ -297,7 +302,7 @@ export default function AboutPage() {
                         transition={{ duration: 0.6 }}
                         className="text-center max-w-3xl mx-auto mb-16"
                     >
-                        <p className="subheading mb-4">Our Values</p>
+                        <p className="subheading mb-4">How I work</p>
                         <h2 className="heading-lg mb-6">
                             What <span className="text-gradient-neon">Drives Us</span>
                         </h2>
@@ -332,7 +337,7 @@ export default function AboutPage() {
                             Ready to Work <span className="text-gradient-neon">Together</span>?
                         </h2>
                         <p className="text-white/60 mb-8">
-                            Let us show you how we can help your business reach its full potential.
+                            Let us show you how I can help — or tell you honestly that you do not need me.
                         </p>
                         <Link href="/contact" className="btn-primary group">
                             Get in Touch

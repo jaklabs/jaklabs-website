@@ -67,8 +67,8 @@ export function Hero() {
                         transition={{ duration: 0.6, delay: 0.1 }}
                         className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6"
                     >
-                        <span className="block">We Help Service Businesses</span>
-                        <span className="text-gradient-neon">Dominate Their Market</span>
+                        <span className="block">I build the systems that let</span>
+                        <span className="text-gradient-neon">a business run without its owner</span>
                     </motion.h1>
 
                     {/* Subheading */}
@@ -78,8 +78,9 @@ export function Hero() {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="text-xl text-white/60 mb-10 max-w-2xl mx-auto"
                     >
-                        From real estate agents to HVAC companies, we craft marketing strategies
-                        and custom applications that turn your business into the go-to choice in your area.
+                        Scheduling, quoting, invoicing and follow-up — the work that currently
+                        lives in a group chat and your head. I&apos;m JD Kemp, one senior engineer
+                        in the Lansing area, and I built this for my own business first.
                     </motion.p>
 
                     {/* CTA Buttons */}
@@ -94,17 +95,17 @@ export function Hero() {
                             className="group relative px-8 py-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-lg font-medium text-white overflow-hidden transition-all hover:scale-105 hover:shadow-lg hover:shadow-neon-purple/25"
                         >
               <span className="relative z-10 flex items-center">
-                Start Your Project
+                Book a free Operations Audit
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
                         </Link>
                         <Link
-                            href="/services"
+                            href="/website-audit"
                             className="group px-8 py-4 rounded-lg font-medium text-white border border-white/20 hover:border-neon-cyan/50 hover:bg-neon-cyan/5 transition-all"
                         >
               <span className="flex items-center">
                 <Play className="mr-2 w-5 h-5 text-neon-cyan" />
-                Explore Services
+                Check my website free
               </span>
                         </Link>
                     </motion.div>
