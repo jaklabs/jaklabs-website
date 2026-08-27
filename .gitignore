@@ -40,7 +40,13 @@ infrastructure/cdk.out/
 infrastructure/node_modules/
 infrastructure/lambda/node_modules/
 infrastructure/dist/
-*.js
+infrastructure/cdk.out/
 *.d.ts
-infrastructure/
+
+# NOT `infrastructure/` wholesale. That rule excluded the entire CDK app —
+# every stack, every Lambda handler, and the contact form's only copy of its
+# source — from version control. The deployed bytes were the sole record of
+# what any of it did.
+#
+# The build outputs above are what actually needed ignoring.
 graphify-out/
