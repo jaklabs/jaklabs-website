@@ -118,9 +118,9 @@ export function Hero() {
                         className="grid grid-cols-3 gap-8 mt-20 pt-10 border-t border-white/10"
                     >
                         {[
-                            { value: '150+', label: 'Projects Delivered', color: 'text-neon-purple' },
-                            { value: '98%', label: 'Client Satisfaction', color: 'text-neon-pink' },
-                            { value: '10+', label: 'Years Experience', color: 'text-neon-cyan' },
+                            { value: '456', label: 'Michigan sites I audited', color: 'text-neon-purple' },
+                            { value: '1', label: 'Engineer on your project', color: 'text-neon-pink' },
+                            { value: '$2.5–10K', label: 'Typical build', color: 'text-neon-cyan' },
                         ].map((stat, index) => (
                             <motion.div
                                 key={index}

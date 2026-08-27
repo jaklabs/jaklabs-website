@@ -6,11 +6,14 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 
+// True and checkable. The previous set — 125+ projects, 150+ clients served,
+// 100% satisfaction — was invented, and a fabricated number is the cheapest
+// possible thing for a prospect to disprove.
 const stats = [
-    { value: '125+', label: 'PROJECTS COMPLETED' },
-    { value: '150+', label: 'CLIENTS SERVED' },
-    { value: '100%', label: 'CLIENT SATISFACTION' },
-    { value: '10+', label: 'YEARS EXPERIENCE' },
+    { value: '456', label: 'MICHIGAN SITES AUDITED' },
+    { value: '7', label: 'CHECKS, FREE, NO SIGNUP' },
+    { value: '1', label: 'ENGINEER ON YOUR PROJECT' },
+    { value: '$2.5–10K', label: 'TYPICAL BUILD' },
 ]
 
 const services = [
