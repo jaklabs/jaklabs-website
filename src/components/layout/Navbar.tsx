@@ -18,6 +18,7 @@ const navLinks = [
             { name: 'SEO & Marketing', href: '/seo-marketing' },
         ],
     },
+    { name: 'Free Audit', href: '/website-audit' },
     { name: 'Blog', href: '/blog' },
     { name: 'Contact', href: '/contact' },
 ]

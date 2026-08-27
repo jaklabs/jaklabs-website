@@ -27,6 +27,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/brand-strategy`, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${BASE}/contact`, changeFrequency: 'monthly', priority: 0.7 },
+    // The audit tool is the highest-intent page on the site.
+    { url: `${BASE}/website-audit`, changeFrequency: 'monthly', priority: 0.95 },
     { url: `${BASE}/blog`, changeFrequency: 'weekly', priority: 0.9 },
   ] as const).map((p) => ({ ...p, lastModified: new Date() }))
 

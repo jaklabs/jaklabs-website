@@ -6,6 +6,7 @@ import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
 import * as logs from 'aws-cdk-lib/aws-logs'
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
+import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs'
 import { Construct } from 'constructs'
 import * as path from 'path'
 
@@ -52,6 +53,47 @@ export class ApiStack extends cdk.Stack {
         CLOUDFRONT_DOMAIN: cdk.Fn.importValue('JakLabs-CloudFrontDomain'),
         NODE_OPTIONS: '--enable-source-maps',
       },
+    })
+
+    // AUDIT LAMBDA
+    //
+    // Heavier than the others on purpose: it launches a real Chromium, because
+    // the most common fault in the data — a JavaScript error on the homepage —
+    // is invisible to anything that does not execute the page.
+    //
+    // 1536MB is not generosity; Chromium is slow below it and Lambda scales CPU
+    // with memory, so a smaller setting costs MORE per request by running
+    // longer. externalModules must NOT include the chromium package — its
+    // binary has to be bundled or there is no browser to launch.
+    const auditLambda = new NodejsFunction(this, 'AuditFunction', {
+      functionName: 'jaklabs-audit',
+      entry: path.join(__dirname, '../lambda/audit/handler.ts'),
+      handler: 'handler',
+      runtime: lambda.Runtime.NODEJS_20_X,
+      timeout: cdk.Duration.seconds(60),
+      memorySize: 1536,
+      tracing: lambda.Tracing.ACTIVE,
+      logRetention: logs.RetentionDays.ONE_MONTH,
+      // nodeModules are installed from a lockfile at bundle time, and CDK
+      // defaults to the nearest one — which is this CDK package's, where
+      // chromium is not a dependency and never should be. Point it at the
+      // lambda workspace that actually declares them.
+      depsLockFilePath: path.join(__dirname, '../lambda/package-lock.json'),
+      bundling: {
+        minify: true,
+        sourceMap: true,
+        // ESM, not the CommonJS default. @sparticuz/chromium v149 is an
+        // ESM-only package, so a CJS bundle emits require() against it and the
+        // function dies at init with ERR_REQUIRE_ESM before the handler is ever
+        // reached — which surfaces as a bare "Internal server error".
+        format: lambdaNodejs.OutputFormat.ESM,
+        externalModules: ['@aws-sdk/*'],
+        // Left OUT of the bundle and installed as real packages: chromium ships
+        // a compressed binary that esbuild cannot inline, and puppeteer-core
+        // resolves it from disk at runtime.
+        nodeModules: ['@sparticuz/chromium', 'puppeteer-core'],
+      },
+      environment: { NODE_OPTIONS: '--enable-source-maps' },
     })
 
     // CATEGORIES LAMBDA
@@ -162,6 +204,14 @@ export class ApiStack extends cdk.Stack {
     categoriesResource.addMethod('POST', categoriesIntegration, authOptions)
     categoryResource.addMethod('PUT', categoriesIntegration, authOptions)
     categoryResource.addMethod('DELETE', categoriesIntegration, authOptions)
+
+    // AUDIT ROUTE — public and unauthenticated, which is the point of it.
+    //
+    // Throttled well below the API default. This launches a browser per call:
+    // unthrottled it is both a way to run up a bill and a way to use jaklabs.io
+    // as a traffic source against someone else's site.
+    const auditResource = this.api.root.addResource('audit')
+    auditResource.addMethod('POST', new apigateway.LambdaIntegration(auditLambda))
 
     // MEDIA ROUTES
     const mediaResource = this.api.root.addResource('media')
