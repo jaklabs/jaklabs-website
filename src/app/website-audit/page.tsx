@@ -13,7 +13,7 @@ import AuditTool from './AuditTool'
  */
 
 export const metadata: Metadata = {
-  title: 'Free Website Audit for Michigan Businesses | JAK Labs',
+  title: 'Free Website Audit for Michigan Businesses',
   description:
     'Check your website the way a customer on a phone would. Seven checks, real answers, '
     + 'no signup — built by JD Kemp after auditing 456 Michigan business sites.',

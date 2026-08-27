@@ -13,7 +13,7 @@ import BlogIndex from './BlogIndex'
  */
 
 export const metadata: Metadata = {
-  title: 'Blog | JAK Labs',
+  title: 'Blog',
   description:
     'Practical writing on booking, intake and operations software for Michigan '
     + 'med spas, clinics and wellness businesses — from someone who audits their sites.',

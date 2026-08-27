@@ -44,14 +44,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // A missing post still needs valid metadata — the 404 is rendered by the
   // page, and returning nothing here produces a page titled "undefined".
   if (!post) {
-    return { title: 'Post not found | JAK Labs', robots: { index: false, follow: false } }
+    return { title: 'Post not found', robots: { index: false, follow: false } }
   }
 
   const url = `/blog/${post.slug}`
   const image = post.coverImage || FALLBACK_COVER
 
   return {
-    title: `${post.title} | JAK Labs`,
+    // The root template appends the brand; adding it here renders it twice.
+    title: post.title,
     description: post.excerpt,
     keywords: post.tags,
     authors: [{ name: post.authorName }],
