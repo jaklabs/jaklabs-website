@@ -8,8 +8,8 @@ import { Megaphone, Smartphone, Palette, Search, ArrowRight, ArrowUpRight } from
 const services = [
     {
         icon: Megaphone,
-        title: 'Getting work in',
-        description: 'Lead capture, quoting and follow-up that happens whether or not you remember. Most businesses lose more to un-chased quotes than to anything else.',
+        title: 'AI Reliability Audit',
+        description: '$2,500 flat. Your AI feature reviewed before it ships a wrong answer — eval harness, retrieval gates, a prioritised fix list. About a week.',
         features: ['Digital Advertising', 'Social Media', 'Email Marketing'],
         gradient: 'from-neon-purple to-neon-pink',
         glowColor: 'shadow-[0_0_30px_rgba(168,85,247,0.3),0_0_60px_rgba(168,85,247,0.1)]',
@@ -21,8 +21,8 @@ const services = [
     },
     {
         icon: Smartphone,
-        title: 'Running the work',
-        description: 'Scheduling, dispatch and job tracking. What got done, by whom, and when — instead of a group chat and your memory.',
+        title: 'LLM Integration Sprint',
+        description: 'From $7,500. One production-ready AI feature built end to end on your stack, with the evaluation gates that keep it honest. Two to four weeks.',
         features: ['Web Apps', 'Mobile Apps', 'Custom Software'],
         gradient: 'from-neon-pink to-neon-cyan',
         glowColor: 'shadow-[0_0_30px_rgba(255,45,146,0.3),0_0_60px_rgba(255,45,146,0.1)]',
@@ -34,8 +34,8 @@ const services = [
     },
     {
         icon: Palette,
-        title: 'Getting paid',
-        description: 'Invoicing and payment, and a straight answer to "how much am I owed right now" in under ten seconds.',
+        title: 'Ops-Automation Build',
+        description: 'From $6,000. One manual workflow automated — intake to ticketing to invoicing, OCR, accounting sync. The build I did for my own business first.',
         features: ['Logo Design', 'Brand Guidelines', 'Visual Identity'],
         gradient: 'from-neon-cyan to-neon-blue',
         glowColor: 'shadow-[0_0_30px_rgba(0,255,255,0.3),0_0_60px_rgba(0,255,255,0.1)]',
@@ -47,8 +47,8 @@ const services = [
     },
     {
         icon: Search,
-        title: 'The free Operations Audit',
-        description: 'Thirty minutes. I walk your site and your process the way a customer would and tell you what I find — including when you don\'t need me.',
+        title: 'Embedded Engineering',
+        description: 'Monthly. I join your team for a stretch, learn your domain, and ship on your real systems. Forward-deployed — and the free Operations Audit is how it starts.',
         features: ['SEO Optimization', 'Content Strategy', 'Blog Management'],
         gradient: 'from-neon-blue to-neon-purple',
         glowColor: 'shadow-[0_0_30px_rgba(0,136,255,0.3),0_0_60px_rgba(0,136,255,0.1)]',
@@ -93,7 +93,7 @@ export function Services() {
                     </h2>
 
                     <p className="text-lg text-white/50 max-w-xl mx-auto">
-                        Four things, and the last one is free. Everything else is software that removes
+                        Four service areas. Start with the free Operations Audit — thirty minutes, no charge, and I will tell you when you do not need
                         solutions that actually grow your business.
                     </p>
                 </motion.div>

@@ -5,12 +5,12 @@ import type { Metadata } from 'next'
 // description, which meant they competed with each other and none of them
 // described what it was.
 export const metadata: Metadata = {
-  title: 'What I Build',
-  description: "Three things: getting work in, running the work, getting paid. Custom operations software for Michigan service businesses. Most builds $2,500–$10,000.",
+  title: 'Services & Pricing',
+  description: "AI Reliability Audit $2,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
   alternates: { canonical: '/services' },
   openGraph: {
-    title: 'What I Build | JAK Labs',
-    description: "Three things: getting work in, running the work, getting paid. Custom operations software for Michigan service businesses. Most builds $2,500–$10,000.",
+    title: 'Services & Pricing | JAK Labs',
+    description: "AI Reliability Audit $2,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
     url: '/services',
     type: 'website',
   },

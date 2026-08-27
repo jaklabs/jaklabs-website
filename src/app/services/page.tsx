@@ -16,54 +16,77 @@ const stats = [
     { value: '$2.5–10K', label: 'TYPICAL BUILD' },
 ]
 
+// Four service areas, each its own pillar. The hrefs are anchors into the
+// packages below rather than /services/<slug> pages — those never existed and
+// every one of them was a dead link.
 const services = [
-    { id: 'digital-marketing', title: 'Digital Marketing Ad Production', description: 'Strategic advertising campaigns across all digital platforms.', href: '/services/digital-marketing' },
-    { id: 'app-development', title: 'Application Development', description: 'Custom web and mobile applications built with cutting-edge technology.', href: '/services/app-development' },
-    { id: 'digital-transformation', title: 'Digital Transformation Consulting', description: 'Expert guidance to modernize your business processes.', href: '/services/digital-transformation' },
-    { id: 'tech-audit', title: 'Advanced Technology Audit', description: 'Comprehensive analysis of your tech stack.', href: '/services/tech-audit' },
+    { id: 'ai-reliability', title: 'AI Reliability Audit', description: 'Your AI feature reviewed before it ships a wrong or unsafe answer. Eval harness, retrieval gates, a prioritised fix list.', href: '#ai-reliability' },
+    { id: 'llm-sprint', title: 'LLM Integration Sprint', description: 'One production-ready AI feature, built end-to-end on your stack and your data — with the gates that keep it honest.', href: '#llm-sprint' },
+    { id: 'ops-automation', title: 'Ops-Automation Build', description: 'One manual workflow automated: lead intake to ticketing to invoicing, receipt OCR, accounting sync. The Haslett build.', href: '#ops-automation' },
+    { id: 'embedded', title: 'Embedded Engineering', description: 'I join your team for a stretch and ship on your real systems. Forward-deployed, monthly, no recruiter.', href: '#embedded' },
 ]
 
+// The offers ladder: Audit → Build → Retainer. Prices are on the page on
+// purpose — the whole positioning rests on published pricing, and a prospect
+// who has to book a call to learn a number usually just leaves.
+//
+// Everything claimed here is something JD has actually shipped. The telehealth
+// platform is BUILT AND OWNED with no live tenant; it is never described as a
+// client engagement.
 const pricingPlans = [
     {
-        id: 'digital-marketing',
-        title: 'Digital Marketing',
-        subtitle: 'Visibility & Conversion Engine',
-        description: 'Build a revenue engine that drives qualified leads and converts them into customers.',
-        color: 'neon-purple',
+        id: 'ai-reliability',
+        title: 'AI Reliability Audit',
+        subtitle: '$2,500 flat · about a week',
+        description: 'You have an AI feature in or near production and no way to know whether it is about to say something wrong.',
+        color: 'neon-cyan',
         features: [
-            { category: 'Paid Advertising', items: ['Meta (Facebook/Instagram) Ad Management', 'Google Ads (Search, Display, Local)', 'A/B Testing & Creative Optimization'] },
-            { category: 'SEO & Content', items: ['Local SEO & Google Business Profile', 'Technical SEO & Site Speed', 'Content Strategy & Blog Posts'] },
-            { category: 'Conversion Optimization', items: ['High-Converting Landing Pages', 'Heatmap & User Behavior Analysis', 'Marketing Automation & Funnels'] },
-            { category: 'Content & Creative', items: ['Short-Form Video Production', 'Professional Copywriting', 'Email & SMS Marketing'] }
+            { category: 'What I review', items: ['Prompts, retrieval and data flow end to end', 'Failure modes — where it breaks and how quietly', 'What reaches a user without being checked'] },
+            { category: 'What you get', items: ['An evaluation-harness design for your system', 'Retrieval-quality gate recommendations', 'A prioritised, plain-English fix list', 'A 45-minute walkthrough'] },
+            { category: 'Why me', items: ['I built a PHI-grade reliability layer for a HIPAA telehealth platform', 'Eval + retrieval gates that verify output before it could reach a patient'] },
+            { category: 'What happens next', items: ['The fix list is the scope for a build — priced separately, never assumed'] },
         ]
     },
     {
-        id: 'app-development',
-        title: 'App Development',
-        subtitle: 'Custom Software Solutions',
-        description: 'Build tools that save time, reduce errors, and improve client experience.',
+        id: 'llm-sprint',
+        title: 'LLM Integration Sprint',
+        subtitle: 'From $7,500 · 2–4 weeks',
+        description: 'You want a real AI feature — a chatbot, document processing, a copilot — and you have no AI engineer in-house.',
         color: 'neon-pink',
         featured: true,
         features: [
-            { category: 'Mobile Development', items: ['iOS & Android Apps (Native/Cross-Platform)', 'Customer Portals & Booking Apps', 'Push Notifications & Analytics'] },
-            { category: 'Web Applications', items: ['Internal Dashboards & Admin Panels', 'SaaS Platform Development', 'E-commerce Solutions'] },
-            { category: 'Business Automation', items: ['AI Quoting Engines', 'Automated Scheduling Systems', 'Digital Contract Management'] },
-            { category: 'Backend & Infrastructure', items: ['AWS Cloud Hosting', 'API Development & Integration', 'Database Management'] }
+            { category: 'What gets built', items: ['One production-ready LLM feature, end to end', 'Integrated with your actual stack, not a sandbox', 'Deployed, documented, and handed over'] },
+            { category: 'Built in from the start', items: ['Evaluation gates before anything reaches a user', 'Retrieval quality measured, not assumed', 'Controlled agent state — no unbounded loops'] },
+            { category: 'Why me', items: ['I ship LLM features into live production, not demos', 'Claude-vision receipt OCR running inside a live CRM', 'The reliability layer is the part I care most about'] },
+            { category: 'Fixed scope', items: ['One feature, one price, agreed before I start'] },
         ]
     },
     {
-        id: 'tech-rental',
-        title: 'Tech Rental & Adaptation',
-        subtitle: 'Hardware & Specialized Tech',
-        description: 'Access cutting-edge equipment without the massive upfront cost.',
-        color: 'neon-cyan',
+        id: 'ops-automation',
+        title: 'Ops-Automation Build',
+        subtitle: 'From $6,000 · 2–4 weeks',
+        description: 'Your team is drowning in manual work that a system should be doing. This is the build I did for my own business first.',
+        color: 'neon-purple',
         features: [
-            { category: 'Aerial & Drone Tech', items: ['Aerial Photography & Videography', '3D Mapping & Site Surveying', 'Thermal Inspection Drones'] },
-            { category: 'Surveying & Mapping', items: ['LiDAR Scanning', 'Matterport 3D Virtual Tours', 'High-Precision Layouts'] },
-            { category: 'Security & Surveillance', items: ['Temporary Job-Site Cameras', 'Access Control Systems', 'Smart Lock Integration'] },
-            { category: 'Machine Adaptation', items: ['IoT Sensor Retrofitting', 'Fleet Telematics & GPS', 'Workstation & Network Rentals'] }
+            { category: 'What gets automated', items: ['Lead intake → ticketing → scheduling → invoicing', 'Receipt and document OCR', 'QuickBooks / Plaid sync and clean books', 'The follow-up that only happens when someone remembers'] },
+            { category: 'Built on your stack', items: ['Your tools where they work, replaced where they do not', 'AWS, Terraform-managed', 'Yours to keep — no platform lock-in'] },
+            { category: 'Why me', items: ['I built exactly this for Haslett Handyman and I still operate it', '$155K invoiced at ~95% collected', '3,235 transactions auto-categorised', '~140 hours of admin removed'] },
+            { category: 'Optional after', items: ['$1–2K/month to keep it running, improved and supported'] },
         ]
-    }
+    },
+    {
+        id: 'embedded',
+        title: 'Embedded Engineering',
+        subtitle: 'Monthly retainer · fractional',
+        description: 'You need an engineer inside the business for a stretch — not a contractor lobbing code over a wall.',
+        color: 'neon-purple',
+        features: [
+            { category: 'How it works', items: ['I embed with your team for a defined period', 'I learn your domain and your data before I build', 'I ship on your real systems, and I support what I ship'] },
+            { category: 'What it suits', items: ['A backlog nobody has time to own', 'An AI or automation project that keeps stalling', 'A team with real ops and no in-house AI engineering'] },
+            { category: 'Why me', items: ['I run a business as well as building software, so I speak both', 'One senior engineer — the person you talk to writes the code'] },
+            { category: 'Terms', items: ['Monthly, cancel with notice, scope agreed each cycle'] },
+        ]
+    },
 ]
 
 function ServiceRow({ service, index, hoveredService, setHoveredService, servicesInView }: { service: typeof services[0]; index: number; hoveredService: string | null; setHoveredService: (id: string | null) => void; servicesInView: boolean }) {
@@ -133,7 +156,7 @@ function PricingCard({ plan, index }: { plan: typeof pricingPlans[0]; index: num
     const colors = colorClasses[plan.color as keyof typeof colorClasses]
 
     return (
-        <motion.div ref={cardRef} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.15 }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} className={`relative rounded-2xl border transition-all duration-500 bg-secondary/50 ${isActive ? `${colors.border} ${colors.glow} scale-[1.02]` : 'border-white/10'} ${plan.featured ? 'lg:-mt-4 lg:mb-4' : ''}`}>
+        <motion.div id={plan.id} ref={cardRef} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: index * 0.15 }} onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)} className={`relative rounded-2xl border transition-all duration-500 bg-secondary/50 ${isActive ? `${colors.border} ${colors.glow} scale-[1.02]` : 'border-white/10'} ${plan.featured ? 'lg:-mt-4 lg:mb-4' : ''}`}>
             {plan.featured && <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full ${colors.bg} text-white text-sm font-medium`}>Most Popular</div>}
             <div className="p-6 md:p-8">
                 <div className="text-center mb-6 pb-6 border-b border-white/10">
@@ -153,7 +176,7 @@ function PricingCard({ plan, index }: { plan: typeof pricingPlans[0]; index: num
                         </div>
                     ))}
                 </div>
-                <Link href="/contact" className={`block w-full py-4 rounded-xl font-medium text-center transition-all duration-300 ${isActive ? `${colors.bg} text-white shadow-lg` : 'bg-white/5 text-white hover:bg-white/10'}`}>Book Discovery Session</Link>
+                <Link href="/contact" className={`block w-full py-4 rounded-xl font-medium text-center transition-all duration-300 ${isActive ? `${colors.bg} text-white shadow-lg` : 'bg-white/5 text-white hover:bg-white/10'}`}>Start with the free Operations Audit</Link>
             </div>
         </motion.div>
     )
@@ -169,9 +192,9 @@ function PricingSection() {
     return (
         <section className="section-padding overflow-hidden">
             <div ref={textRef} className="mb-16 space-y-2">
-                <motion.div style={{ x: text1X }} className="whitespace-nowrap"><span className="text-5xl md:text-7xl lg:text-8xl font-bold text-white/10">DIGITAL TRANSFORMATION • CONSULTING • DEVELOPMENT •</span></motion.div>
-                <motion.div style={{ x: text2X }} className="whitespace-nowrap"><span className="text-5xl md:text-7xl lg:text-8xl font-bold text-gradient-neon">SOLUTIONS • INNOVATION • TECHNOLOGY •</span></motion.div>
-                <motion.div style={{ x: text3X }} className="whitespace-nowrap"><span className="text-5xl md:text-7xl lg:text-8xl font-bold text-white/10">GROWTH • STRATEGY • SUCCESS •</span></motion.div>
+                <motion.div style={{ x: text1X }} className="whitespace-nowrap"><span className="text-5xl md:text-7xl lg:text-8xl font-bold text-white/10">AI RELIABILITY • EVAL HARNESSES • RETRIEVAL GATES •</span></motion.div>
+                <motion.div style={{ x: text2X }} className="whitespace-nowrap"><span className="text-5xl md:text-7xl lg:text-8xl font-bold text-gradient-neon">LLM FEATURES • OPS AUTOMATION • EMBEDDED •</span></motion.div>
+                <motion.div style={{ x: text3X }} className="whitespace-nowrap"><span className="text-5xl md:text-7xl lg:text-8xl font-bold text-white/10">SHIPPED • MEASURED • YOURS TO KEEP •</span></motion.div>
             </div>
             <div className="container-custom">
                 <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-16">
@@ -179,7 +202,7 @@ function PricingSection() {
                     <h2 className="heading-lg mb-4">My <span className="text-gradient-neon">Service Packages</span></h2>
                     <p className="text-white/60 max-w-2xl mx-auto">Every niche has different needs. I start with a free 30-minute Operations Audit — I walk your site and your process the way a customer would, and create a custom solution that drives real results.</p>
                 </motion.div>
-                <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
+                <div className="grid md:grid-cols-2 gap-6 lg:gap-8" id="packages">
                     {pricingPlans.map((plan, index) => (<PricingCard key={plan.id} plan={plan} index={index} />))}
                 </div>
                 <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: 0.3 }} className="text-center mt-12 p-6 rounded-2xl bg-secondary/50 border border-white/10">
