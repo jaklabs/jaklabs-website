@@ -280,16 +280,16 @@ export default function ContactPage() {
                 </h2>
 
                 <p className="text-white/50 text-lg leading-relaxed mb-8">
-                  Whether you need a stunning website, powerful marketing strategy, or custom application,
-                  we&apos;re here to bring your vision to life.
+                  Tell me what is slow, manual or falling through the cracks. strategy, or custom application,
+                  we&apos;re here to bring your and what it would cost.
                 </p>
 
                 {/* Feature points */}
                 <div className="space-y-4">
                   {[
-                    'Free consultation to discuss your needs',
-                    'Custom solutions tailored to your business',
-                    'Dedicated support throughout your project',
+                    'Free 30-minute Operations Audit, no pitch',
+                    'A straight answer, including &quot;you don&apos;t need this&quot;',
+                    'One senior engineer — the person you talk to builds it',
                   ].map((point, index) => (
                       <motion.div
                           key={index}
@@ -464,6 +464,9 @@ export default function ContactPage() {
                         <div className="flex items-center gap-3">
                           <button
                               type="button"
+                              role="checkbox"
+                              aria-checked={agreedToTerms}
+                              aria-label="I agree to the terms and conditions"
                               onClick={() => setAgreedToTerms(!agreedToTerms)}
                               className={`w-5 h-5 rounded border flex items-center justify-center flex-shrink-0 transition-all duration-300 ${
                                   agreedToTerms
