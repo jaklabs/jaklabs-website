@@ -1,28 +1,38 @@
 import Link from 'next/link'
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone } from 'lucide-react'
 
+// Every link here now resolves. It previously carried ten that did not: eight
+// /industries/* pages that had never been built, /careers, and /about#team —
+// on every page of the site. The service anchors were dead too (#marketing,
+// #development, #branding) and named offerings that are no longer sold.
+//
+// Slugs must match src/lib/industries.ts. A footer link is the cheapest thing
+// on a site to leave broken and one of the most expensive to be caught on:
+// somebody clicking "Healthcare" and getting a 404 has learned something about
+// how carefully the rest of it was built.
 const footerLinks = {
     company: [
-        { name: 'About Us', href: '/about' },
-        { name: 'Our Team', href: '/about#team' },
-        { name: 'Careers', href: '/careers' },
+        { name: 'About JD', href: '/about' },
+        { name: 'Engineering', href: '/engineering' },
+        { name: 'Blog', href: '/blog' },
         { name: 'Contact', href: '/contact' },
     ],
     services: [
-        { name: 'Marketing Strategy', href: '/services#marketing' },
-        { name: 'App Development', href: '/services#development' },
-        { name: 'Brand Design', href: '/services#branding' },
-        { name: 'SEO & Content', href: '/services#seo' },
+        { name: 'AI Reliability Audit', href: '/services#ai-reliability' },
+        { name: 'LLM Integration Sprint', href: '/services#llm-sprint' },
+        { name: 'Ops-Automation Build', href: '/services#ops-automation' },
+        { name: 'Embedded Engineering', href: '/services#embedded' },
+        { name: 'Free website audit', href: '/website-audit' },
     ],
     industries: [
-        { name: 'Real Estate', href: '/industries/real-estate' },
-        { name: 'Trades', href: '/industries/trades' },
-        { name: 'Home Services', href: '/industries/home-services' },
-        { name: 'Professional', href: '/industries/professional' },
-        { name: 'Healthcare', href: '/industries/healthcare' },
-        { name: 'Legal', href: '/industries/legal' },
-        { name: 'Automotive', href: '/industries/automotive' },
-        { name: 'Restaurants', href: '/industries/restaurants' },
+        { name: 'Home & Trade Services', href: '/industries/home-and-trade-services' },
+        { name: 'Health, Wellness & Beauty', href: '/industries/health-wellness-and-beauty' },
+        { name: 'Financial & Insurance', href: '/industries/financial-and-insurance' },
+        { name: 'Real Estate & Property', href: '/industries/real-estate-and-property' },
+        { name: 'Staffing & Recruiting', href: '/industries/staffing-and-recruiting' },
+        { name: 'Logistics & Field Ops', href: '/industries/logistics-and-field-operations' },
+        { name: 'Technology & AI', href: '/industries/technology-and-ai-products' },
+        { name: 'All industries', href: '/industries' },
     ],
 }
 
