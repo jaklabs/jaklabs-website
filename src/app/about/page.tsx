@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
-import { Target, Lightbulb, Users, Award, ArrowRight } from 'lucide-react'
+import { Target, Lightbulb, Users, Award, ArrowRight, Github, ShieldCheck, Database, Workflow } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Card } from '@/components/ui'
@@ -46,6 +46,43 @@ const milestones = [
     { year: 'Now', title: 'Building it for other people', description: 'Same three problems, different trades — getting work in, running the work, getting paid. Mostly local businesses around Lansing and mid-Michigan, where I can come and see the place.' },
 ]
 
+// The engineering half of the page. Every figure below is checkable — the repos
+// are public and the Haslett numbers come out of the system that produced them.
+// The telehealth platform is BUILT AND OWNED and has no live client; it is
+// described that way here deliberately and must never be worded otherwise.
+const artifacts = [
+    {
+        icon: Database,
+        title: 'Multi-tenant clinical platform',
+        summary:
+            'Many separately branded clinics on one system, patient data isolated by PostgreSQL row-level security rather than by application code, and a swappable clinical-network adapter. 95 TypeScript source files, 29 test files, 36 migrations, four subdomains from one deployment.',
+        note: 'Designed and built solo. I own it; it has no live client.',
+        href: 'https://github.com/jaklabs/telehealth-platform-reference',
+        linkLabel: 'Architecture reference',
+        glowColor: 'shadow-[0_0_30px_rgba(168,85,247,0.25)]',
+    },
+    {
+        icon: ShieldCheck,
+        title: 'A public endpoint that fetches arbitrary URLs',
+        summary:
+            'The free website audit on this site runs headless Chromium in Lambda against any address a stranger types in. That is an SSRF liability unless the boundary is real: link-local metadata, private ranges, credentials in the URL and non-HTTP schemes are all refused. 14 attack vectors, tested against the deployed endpoint.',
+        note: 'Security judgement on an unauthenticated endpoint.',
+        href: '/website-audit',
+        linkLabel: 'Try the audit',
+        glowColor: 'shadow-[0_0_30px_rgba(0,255,255,0.25)]',
+    },
+    {
+        icon: Workflow,
+        title: 'An end-to-end prospecting pipeline',
+        summary:
+            'Places API to enrichment to headless audit to scoring to CRM, with idempotent writes, a do-not-contact gate and the compliance rules encoded in the scorer rather than left to whoever runs it. It is how I find my own clients, which is the point — I build tools for myself first.',
+        note: 'Ranking runs in code. No model call, so the result is reproducible.',
+        href: 'https://github.com/jaklabs/web-browse',
+        linkLabel: 'One piece of it, public',
+        glowColor: 'shadow-[0_0_30px_rgba(255,45,146,0.25)]',
+    },
+]
+
 export default function AboutPage() {
     const heroRef = useRef(null)
     const scrollTextRef = useRef(null)
@@ -54,6 +91,7 @@ export default function AboutPage() {
     const logoRef = useRef(null)
     const valuesRef = useRef(null)
     const storyRef = useRef(null)
+    const engineeringRef = useRef(null)
 
     const heroInView = useInView(heroRef, { once: true })
     const founderInView = useInView(founderRef, { once: true, margin: '-100px' })
@@ -61,6 +99,7 @@ export default function AboutPage() {
     // logoRef is used for scroll animations via useScroll below
     const valuesInView = useInView(valuesRef, { once: true, margin: '-100px' })
     const storyInView = useInView(storyRef, { once: true, margin: '-100px' })
+    const engineeringInView = useInView(engineeringRef, { once: true, margin: '-100px' })
 
     // Scrolling text animation
     const { scrollYProgress: textScrollProgress } = useScroll({
@@ -104,7 +143,7 @@ export default function AboutPage() {
                             transition={{ duration: 0.6 }}
                             className="subheading mb-4"
                         >
-                            About JAKLabs
+                            About JD Kemp
                         </motion.p>
                         <motion.h1
                             initial={{ opacity: 0, y: 30 }}
@@ -112,8 +151,8 @@ export default function AboutPage() {
                             transition={{ duration: 0.6, delay: 0.1 }}
                             className="heading-xl mb-6"
                         >
-                            Software That Runs{' '}
-                            <span className="text-gradient-neon">Dominate Markets</span>
+                            I Build the Systems a Business{' '}
+                            <span className="text-gradient-neon">Actually Runs On</span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 30 }}
@@ -121,8 +160,9 @@ export default function AboutPage() {
                             transition={{ duration: 0.6, delay: 0.2 }}
                             className="text-xl text-white/70"
                         >
-                            JAKLabs is a full-service marketing and development agency dedicated to helping
-                            service-based businesses attract more customers and grow sustainably.
+                            One engineer. I write production software for local service businesses,
+                            and I embed with companies that need someone who can learn a customer&apos;s
+                            world fast and ship into it.
                         </motion.p>
                     </div>
                 </div>
@@ -176,16 +216,24 @@ export default function AboutPage() {
                             <h2 className="heading-lg mb-4">
                                 JD <span className="text-gradient-neon">Kemp</span>
                             </h2>
-                            <p className="text-neon-purple font-medium mb-6">Founder & CEO</p>
+                            <p className="text-neon-purple font-medium mb-6">
+                                Engineer · Owner, Haslett Handyman
+                            </p>
                             <div className="space-y-4 text-white/70">
                                 <p>
-                                    With over a decade of experience in marketing and software development,
-                                    I founded JAKLabs with a singular mission: to help service-based businesses
-                                    thrive in the digital age.
+                                    I build production software, and I run a home-services business that
+                                    depends on it. Those are not two careers. The second is why I am any
+                                    good at the first.
                                 </p>
                                 <p>
-                                    Having worked with hundreds of businesses across various industries,
-                                    I understand the unique challenges that service providers face.
+                                    Most people who build software for service businesses have never quoted
+                                    a job, chased an invoice, or lost a customer to a booking form that did
+                                    not work. I have done all three, this year, with my own money on the
+                                    line. It changes what you build.
+                                </p>
+                                <p>
+                                    I work alone on purpose. The person you talk to is the person writing
+                                    the code, and nothing gets handed to a junior.
                                 </p>
                             </div>
                         </motion.div>
@@ -209,8 +257,15 @@ export default function AboutPage() {
                             </h2>
                             <div className="space-y-4 text-white/70">
                                 <p>
-                                    Every local service business deserves software that fits how it actually works, not a platform it has to bend around. Most of them are running on spreadsheets and memory because the alternative was priced for someone bigger. That is the gap I builng
-                                    and technology solutions.
+                                    Every local service business deserves software that fits how it
+                                    actually works, not a platform it has to bend around. Most of them are
+                                    running on spreadsheets and memory because the alternative was priced
+                                    for someone bigger.
+                                </p>
+                                <p>
+                                    That is the gap I build into. Not a website — the operational software
+                                    behind it: how work comes in, how it gets scheduled, and how you get
+                                    paid without chasing anyone.
                                 </p>
                             </div>
                         </motion.div>
@@ -256,10 +311,10 @@ export default function AboutPage() {
                         >
                             <p className="subheading mb-4">How this started</p>
                             <h2 className="heading-lg mb-6">
-                                From Idea to <span className="text-gradient-neon">Industry Leader</span>
+                                From My Own Business to <span className="text-gradient-neon">Yours</span>
                             </h2>
                             <div className="space-y-4 text-white/70">
-                                <p>JAKLabs started with a simple observation: service businesses were being underserved.</p>
+                                <p>It started with my own business, not a business plan.</p>
                             </div>
                         </motion.div>
 
@@ -304,7 +359,7 @@ export default function AboutPage() {
                     >
                         <p className="subheading mb-4">How I work</p>
                         <h2 className="heading-lg mb-6">
-                            What <span className="text-gradient-neon">Drives Us</span>
+                            What I <span className="text-gradient-neon">Refuse to Fake</span>
                         </h2>
                     </motion.div>
 
@@ -329,15 +384,139 @@ export default function AboutPage() {
                 </div>
             </section>
 
+            {/* Forward-deployed engineering — the second audience.
+                A local owner reads this as credibility and moves on. An engineering
+                lead evaluating me for an embedded contract reads it as the whole
+                pitch, which is why it names the artifacts and links to the code. */}
+            <section ref={engineeringRef} className="section-padding">
+                <div className="container-custom">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={engineeringInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.6 }}
+                        className="max-w-3xl mb-16"
+                    >
+                        <p className="subheading mb-4">The other half of the work</p>
+                        <h2 className="heading-lg mb-6">
+                            Forward-deployed{' '}
+                            <span className="text-gradient-neon">engineering</span>
+                        </h2>
+                        <div className="space-y-4 text-white/70">
+                            <p className="text-xl text-white/80">
+                                I embed with a company, learn the customer&apos;s business fast, and ship
+                                the production system that makes the product work in their world.
+                            </p>
+                            <p>
+                                Every other engineer up for that work has never run a business. I have.
+                                So when an AI company sells into trades, home services or clinics,{' '}
+                                <span className="text-white">
+                                    I do not need to learn the customer — I am the customer, and I can
+                                    build.
+                                </span>
+                            </p>
+                            <p>
+                                The breadth is the job: their auth, their database, their frontend, their
+                                deploy, and someone&apos;s spreadsheet. Undocumented APIs and data that
+                                arrives wrong are the work, not an obstacle to it.
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    {/* Proof, not adjectives. */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={engineeringInView ? { opacity: 1, y: 0 } : {}}
+                        transition={{ duration: 0.6, delay: 0.15 }}
+                        className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
+                    >
+                        {[
+                            { figure: '$155K', label: 'invoiced through software I wrote and operate' },
+                            { figure: '3,235', label: 'transactions categorised without anyone touching them' },
+                            { figure: '~140 hrs', label: 'of admin taken out of my own week' },
+                            { figure: '1', label: 'engineer — start to production, including the infrastructure' },
+                        ].map((stat) => (
+                            <Card key={stat.figure} className="text-center">
+                                <div className="text-3xl font-bold text-gradient-neon mb-2">
+                                    {stat.figure}
+                                </div>
+                                <div className="text-sm text-white/60">{stat.label}</div>
+                            </Card>
+                        ))}
+                    </motion.div>
+
+                    <div className="grid md:grid-cols-3 gap-6 mb-12">
+                        {artifacts.map((artifact, index) => (
+                            <motion.div
+                                key={artifact.title}
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={engineeringInView ? { opacity: 1, y: 0 } : {}}
+                                transition={{ duration: 0.5, delay: 0.25 + index * 0.1 }}
+                            >
+                                <Card className={`h-full flex flex-col ${artifact.glowColor}`}>
+                                    <div className="w-12 h-12 mb-4 rounded-xl bg-neon-purple/10 flex items-center justify-center">
+                                        <artifact.icon className="w-6 h-6 text-neon-purple" />
+                                    </div>
+                                    <h3 className="font-semibold mb-3">{artifact.title}</h3>
+                                    <p className="text-sm text-white/60 mb-4 flex-grow">
+                                        {artifact.summary}
+                                    </p>
+                                    <p className="text-xs text-white/40 mb-4 italic">{artifact.note}</p>
+                                    <Link
+                                        href={artifact.href}
+                                        className="text-sm text-neon-purple hover:text-neon-pink transition-colors inline-flex items-center group"
+                                        {...(artifact.href.startsWith('http')
+                                            ? { target: '_blank', rel: 'noopener noreferrer' }
+                                            : {})}
+                                    >
+                                        {artifact.linkLabel}
+                                        <ArrowRight className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                    </Link>
+                                </Card>
+                            </motion.div>
+                        ))}
+                    </div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={engineeringInView ? { opacity: 1 } : {}}
+                        transition={{ duration: 0.6, delay: 0.5 }}
+                        className="max-w-3xl"
+                    >
+                        <p className="text-sm text-white/40 mb-2">What I work in</p>
+                        <p className="text-white/70 mb-8">
+                            TypeScript and Python · React and React Native · AWS — Lambda, DynamoDB,
+                            Postgres/RDS, Cognito, SES, CloudFront · Terraform and CDK · Claude and the
+                            evaluation layer that decides whether its answer is good enough to show
+                            anyone.
+                        </p>
+                        <div className="flex flex-wrap gap-4">
+                            <Link
+                                href="https://github.com/jaklabs"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="btn-secondary group inline-flex items-center"
+                            >
+                                <Github className="mr-2 w-5 h-5" />
+                                Read the code
+                            </Link>
+                            <Link href="/contact" className="btn-primary group inline-flex items-center">
+                                Talk about an engagement
+                                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                            </Link>
+                        </div>
+                    </motion.div>
+                </div>
+            </section>
+
             {/* CTA */}
-            <section className="section-padding">
+            <section className="section-padding bg-secondary/30">
                 <div className="container-custom">
                     <div className="text-center max-w-2xl mx-auto">
                         <h2 className="heading-lg mb-6">
                             Ready to Work <span className="text-gradient-neon">Together</span>?
                         </h2>
                         <p className="text-white/60 mb-8">
-                            Let us show you how I can help — or tell you honestly that you do not need me.
+                            I will show you how I can help — or tell you honestly that you do not need me.
                         </p>
                         <Link href="/contact" className="btn-primary group">
                             Get in Touch

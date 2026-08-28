@@ -6,11 +6,11 @@ import type { Metadata } from 'next'
 // described what it was.
 export const metadata: Metadata = {
   title: 'About JD Kemp',
-  description: "One senior engineer in the Lansing area. I built the software my own service business runs on, and now I build it for other local businesses.",
+  description: "One engineer in the Lansing area. I built the software my own service business runs on, I build it for other local businesses, and I take forward-deployed engineering contracts.",
   alternates: { canonical: '/about' },
   openGraph: {
     title: 'About JD Kemp | JAK Labs',
-    description: "One senior engineer in the Lansing area. I built the software my own service business runs on, and now I build it for other local businesses.",
+    description: "One engineer in the Lansing area. I built the software my own service business runs on, I build it for other local businesses, and I take forward-deployed engineering contracts.",
     url: '/about',
     type: 'website',
   },
