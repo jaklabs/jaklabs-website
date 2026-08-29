@@ -101,7 +101,7 @@ export default function RankLanding() {
               <span className="dot" />
               <span className="dot" />
               <span className="dot" />
-              <span className="ttl">aura scan ~/code/my-project</span>
+              <span className="ttl">python3 -m aurarank.scan ~/code/my-project</span>
             </div>
             <div className="cbody">
               <div>
@@ -192,7 +192,7 @@ export default function RankLanding() {
           <div className="proof">
             <span className="k">verify before you run it</span>
             <pre className="block bare">
-              <b>grep -rnE &apos;requests|urllib|http|socket|subprocess|eval&apos; aura/</b>
+              <b>grep -rnE &apos;requests|urllib|http|socket|aiohttp|httpx|ssl&apos; aurarank/</b>
               {'\n\n'}
               <u>the only matches are the docstrings telling you to run this command</u>
             </pre>
@@ -220,6 +220,21 @@ export default function RankLanding() {
                 can&rsquo;t phone home.
               </p>
             </div>
+          </div>
+
+          <div className="panel" style={{ marginTop: 18 }}>
+            <h3>One caveat, because a half-true guarantee is worse than none</h3>
+            <p style={{ fontSize: 16 }}>
+              The scanner does use <code>subprocess</code> — to run <code>git</code>, which is how it
+              reads your commit history. A grep can&rsquo;t tell &ldquo;runs git&rdquo; from
+              &ldquo;runs anything,&rdquo; so that one is enforced by a test:{' '}
+              <a href="https://github.com/jaklabs/aura-rank/blob/main/tests/test_no_network.py">
+                test_no_network.py
+              </a>{' '}
+              parses every module and fails the build if a subprocess call ever invokes something other
+              than <code>git</code>, if a network library is imported, or if <code>shell=True</code>,{' '}
+              <code>eval</code> or <code>exec</code> appear. CI runs it on every push.
+            </p>
           </div>
         </div>
       </section>
@@ -334,7 +349,7 @@ export default function RankLanding() {
             of its commits</em>, so a project you sent three patches to isn&rsquo;t counted as yours.
           </p>
           <pre className="block">
-            <b>$ python3 -m aura.portfolio ~/code/*/</b>
+            <b>$ python3 -m aurarank.portfolio ~/code/*/</b>
             {`
 
   +--------------------------------------------------------------+
@@ -427,10 +442,10 @@ export default function RankLanding() {
           <pre className="block" style={{ textAlign: 'left', maxWidth: 620, margin: '0 auto' }}>
             {`$ git clone https://github.com/jaklabs/aura-rank
 $ cd aura-rank
-$ `}<b>python3 -m aura.scan ~/code/your-project</b>{`
+$ `}<b>python3 -m aurarank.scan ~/code/your-project</b>{`
 
 `}<u># and when you want the whole picture</u>{`
-$ `}<b>python3 -m aura.portfolio ~/code/*/</b>
+$ `}<b>python3 -m aurarank.portfolio ~/code/*/</b>
           </pre>
         </div>
       </section>
