@@ -33,7 +33,11 @@ const mono = DM_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://rank.jaklabs.io'),
-  title: 'Aura — a developer rank that never sees your code',
+  // `absolute` opts out of the root layout's '%s | JAK Labs' template. Aura is a
+  // product in its own right, not an agency page, and the suffix undercut that.
+  title: {
+    absolute: 'Aura — a developer rank that never sees your code',
+  },
   description:
     'An open-source developer rank. It reads your repositories offline and grades them across four '
     + 'measurable dimensions — and your source never leaves your machine, verifiably. No account, '
