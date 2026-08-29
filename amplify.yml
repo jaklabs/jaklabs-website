@@ -14,4 +14,16 @@ frontend:
   cache:
     paths:
       - node_modules/**/*
-      - .next/cache/**/*
+      # Webpack's cache only — NOT all of .next/cache.
+      #
+      # .next/cache also holds Next's fetch Data Cache, and persisting that
+      # across builds means a rebuild restores STALE API responses and
+      # re-renders old content. The symptom is not a build failure: the build
+      # goes green and the site keeps serving the previous data, so a CMS change
+      # looks like it simply never published and no amount of rebuilding fixes
+      # it. Cover-image updates sat invisible through two clean rebuilds before
+      # this was found.
+      #
+      # Webpack's cache is the part actually worth keeping — it is what makes
+      # repeat builds fast, and it carries no content.
+      - .next/cache/webpack/**/*
