@@ -1,0 +1,370 @@
+/*
+ * Aura landing page styles.
+ *
+ * Every selector is scoped under `.aura-root`. This page deliberately does not
+ * inherit the agency site's visual identity -- it sells a free developer tool to
+ * developers, who bounce off agency marketing -- so it carries its own palette
+ * and type. Scoping keeps that from leaking into the rest of jaklabs.io.
+ *
+ * The palette IS the tier ladder: colour temperature from cold slate (Dormant)
+ * to white-hot (Apex). Product logic made visual, rather than decoration.
+ */
+
+.aura-root {
+  --bg: #0a0b0e;
+  --panel: #121419;
+  --panel2: #181b22;
+  --line: #242832;
+  --line-soft: #1c1f27;
+  --ink: #edeff3;
+  --body: #9ba4b2;
+  --dim: #666e7c;
+
+  --t1: #5a606c;
+  --t2: #7e4c2e;
+  --t3: #a86024;
+  --t4: #ce7e20;
+  --t5: #e39c2d;
+  --t6: #f0be4e;
+  --t7: #f8de86;
+  --t8: #fff4d6;
+
+  --heat: var(--t5);
+  --cool: #6fc7dc;
+  --heat-wash: rgba(227, 156, 45, 0.1);
+  --cool-wash: rgba(111, 199, 220, 0.1);
+  --code: #0d0f13;
+
+  color-scheme: dark;
+  background: var(--bg);
+  color: var(--body);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+@media (prefers-color-scheme: light) {
+  .aura-root {
+    --bg: #f2f2f0;
+    --panel: #fbfbfa;
+    --panel2: #e8e9e6;
+    --line: #d2d4cf;
+    --line-soft: #e0e2dd;
+    --ink: #14161a;
+    --body: #4c525c;
+    --dim: #7b828d;
+    --t2: #8a4e24;
+    --t3: #9c5714;
+    --t4: #a96a10;
+    --t5: #8a6212;
+    --t6: #7a5a16;
+    --t7: #6b5324;
+    --t8: #4e4433;
+    --cool: #186e82;
+    --heat-wash: rgba(138, 98, 18, 0.1);
+    --cool-wash: rgba(24, 110, 130, 0.09);
+    --code: #ebece8;
+    color-scheme: light;
+  }
+}
+
+.aura-root * { box-sizing: border-box; }
+.aura-root .wrap { max-width: 1020px; margin: 0 auto; padding: 0 24px; }
+.aura-root h1,
+.aura-root h2,
+.aura-root h3 {
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  color: var(--ink);
+  margin: 0;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.aura-root code,
+.aura-root pre { font-family: var(--font-mono), ui-monospace, Menlo, monospace; }
+.aura-root strong { color: var(--ink); font-weight: 600; }
+.aura-root a { color: var(--cool); }
+.aura-root p { margin: 0; }
+
+.aura-root .eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.aura-root section { padding: 78px 0; border-top: 1px solid var(--line-soft); }
+.aura-root section h2 { font-size: clamp(24px, 3.4vw, 33px); font-weight: 700; margin-top: 10px; }
+.aura-root .sub { max-width: 66ch; margin: 16px 0 40px; }
+.aura-root .sub.tight { margin-bottom: 0; }
+.aura-root .sub.center { margin-left: auto; margin-right: auto; }
+
+/* ---------- hero ---------- */
+.aura-root .hero { position: relative; padding: 78px 0 66px; overflow: hidden; }
+.aura-root .hero::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 14%;
+  width: min(900px, 120vw);
+  aspect-ratio: 1;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, var(--heat-wash) 0%, transparent 62%);
+  transition: background 0.5s ease;
+}
+.aura-root .hero .wrap { position: relative; z-index: 1; text-align: center; }
+.aura-root .hero h1 {
+  font-size: clamp(38px, 7vw, 72px);
+  font-weight: 800;
+  line-height: 1.02;
+  margin: 22px 0 0;
+}
+.aura-root .hero h1 .g { color: var(--heat); transition: color 0.4s ease; }
+.aura-root .lede {
+  font-size: clamp(18px, 2.1vw, 21px);
+  max-width: 56ch;
+  margin: 24px auto 0;
+}
+
+/* ---------- rank card ---------- */
+.aura-root .card {
+  margin: 44px auto 0;
+  max-width: 620px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+  font-family: var(--font-mono), monospace;
+  text-align: left;
+  overflow-x: auto;
+}
+.aura-root .card .top {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line-soft);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: var(--panel2);
+}
+.aura-root .card .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.aura-root .card .ttl { font-size: 11.5px; color: var(--dim); letter-spacing: 0.1em; margin-left: 6px; }
+.aura-root .card .cbody { padding: 24px 26px; }
+.aura-root .card .grade {
+  font-family: var(--font-display), sans-serif;
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--heat);
+  line-height: 1;
+  transition: color 0.4s ease;
+}
+.aura-root .card .score {
+  font-size: 15px;
+  color: var(--dim);
+  margin-left: 10px;
+  font-family: var(--font-mono), monospace;
+}
+.aura-root .card .means { font-size: 13.5px; color: var(--body); margin-top: 9px; line-height: 1.5; }
+.aura-root .card .dims { margin-top: 22px; display: grid; gap: 9px; }
+.aura-root .card .row {
+  display: grid;
+  grid-template-columns: 104px 1fr 38px;
+  align-items: center;
+  gap: 12px;
+  font-size: 12.5px;
+}
+.aura-root .card .row .k { color: var(--dim); }
+.aura-root .card .track { height: 6px; background: var(--panel2); position: relative; overflow: hidden; }
+.aura-root .card .fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--heat);
+  transition: width 0.5s cubic-bezier(0.2, 0.7, 0.3, 1), background 0.4s ease;
+}
+.aura-root .card .row .v { text-align: right; color: var(--ink); }
+.aura-root .card .foot {
+  margin-top: 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+/* ---------- tier chips ---------- */
+.aura-root .chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  justify-content: center;
+  margin: 26px auto 0;
+  max-width: 640px;
+}
+.aura-root .chip {
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.04em;
+  padding: 6px 11px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--dim);
+  cursor: pointer;
+  transition: color 0.18s, border-color 0.18s, background 0.18s;
+}
+.aura-root .chip:hover { color: var(--ink); border-color: var(--body); }
+.aura-root .chip[aria-pressed='true'] { color: var(--bg); font-weight: 500; }
+.aura-root .chip:focus-visible { outline: 2px solid var(--cool); outline-offset: 2px; }
+.aura-root .hint { font-size: 12.5px; color: var(--dim); margin-top: 14px; text-align: center; }
+
+/* ---------- command ---------- */
+.aura-root .cmd {
+  margin: 34px auto 0;
+  max-width: 620px;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--line);
+  background: var(--code);
+}
+.aura-root .cmd code {
+  flex: 1;
+  padding: 15px 18px;
+  font-size: 14px;
+  color: var(--ink);
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: left;
+}
+.aura-root .cmd .p { color: var(--dim); }
+.aura-root .cmd button {
+  border: none;
+  border-left: 1px solid var(--line);
+  background: var(--panel2);
+  color: var(--body);
+  font-family: var(--font-mono), monospace;
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0 18px;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.aura-root .cmd button:hover { color: var(--heat); }
+.aura-root .cmd button:focus-visible { outline: 2px solid var(--cool); outline-offset: -2px; }
+.aura-root .sub-cmd { text-align: center; font-size: 13.5px; color: var(--dim); margin-top: 14px; }
+
+/* ---------- blocks ---------- */
+.aura-root .panel { border: 1px solid var(--line); background: var(--panel); padding: 26px 28px; }
+.aura-root .panel h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.aura-root .panel p { font-size: 15px; }
+.aura-root .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.aura-root .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 860px) {
+  .aura-root .grid2,
+  .aura-root .grid3 { grid-template-columns: 1fr; }
+}
+.aura-root pre.block {
+  background: var(--code);
+  border: 1px solid var(--line);
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.65;
+  margin: 0;
+  color: var(--body);
+}
+.aura-root pre.block b { color: var(--heat); font-weight: 500; }
+.aura-root pre.block i { color: var(--cool); font-style: normal; }
+.aura-root pre.block u { color: var(--dim); text-decoration: none; }
+.aura-root pre.bare { background: transparent; border: none; padding: 0; }
+
+.aura-root .proof { border: 1px solid var(--cool); background: var(--cool-wash); padding: 26px 28px; }
+.aura-root .proof .k {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cool);
+  display: block;
+  margin-bottom: 10px;
+}
+
+/* ---------- table ---------- */
+.aura-root .tbl { overflow-x: auto; border: 1px solid var(--line); background: var(--panel); }
+.aura-root table { border-collapse: collapse; width: 100%; min-width: 560px; }
+.aura-root th,
+.aura-root td { text-align: left; padding: 13px 18px; border-bottom: 1px solid var(--line-soft); }
+.aura-root th {
+  font-family: var(--font-mono), monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--dim);
+  background: var(--panel2);
+}
+.aura-root td { font-size: 15px; }
+.aura-root td:first-child { color: var(--ink); font-weight: 600; }
+.aura-root tr:last-child td { border-bottom: none; }
+.aura-root .yes { color: var(--heat); font-family: var(--font-mono), monospace; font-size: 12.5px; }
+.aura-root .no { color: var(--dim); font-family: var(--font-mono), monospace; font-size: 12.5px; }
+
+/* ---------- ladder ---------- */
+.aura-root .ladder { display: grid; border: 1px solid var(--line); overflow: hidden; }
+.aura-root .rung {
+  display: grid;
+  grid-template-columns: 8px 128px 1fr;
+  align-items: center;
+  border-bottom: 1px solid var(--line-soft);
+  background: var(--panel);
+}
+.aura-root .rung:last-child { border-bottom: none; }
+.aura-root .rung .sw { align-self: stretch; }
+.aura-root .rung .nm {
+  padding: 13px 16px;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 15.5px;
+  color: var(--ink);
+}
+.aura-root .rung .ds { padding: 13px 18px 13px 0; font-size: 14.5px; }
+.aura-root .rung .ds .r {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  color: var(--dim);
+  margin-right: 10px;
+}
+
+.aura-root .anchors { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+.aura-root .anchor {
+  font-family: var(--font-mono), monospace;
+  font-size: 12.5px;
+  border: 1px solid var(--line);
+  padding: 7px 12px;
+  background: var(--panel);
+}
+.aura-root .anchor b { color: var(--heat); font-weight: 500; }
+
+.aura-root .limits { padding-left: 20px; margin: 0; }
+.aura-root .limits li { margin-bottom: 11px; }
+.aura-root .limits li::marker { color: var(--dim); }
+
+.aura-root footer { border-top: 1px solid var(--line-soft); padding: 44px 0 64px; font-size: 14.5px; }
+.aura-root footer .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+.aura-root footer .brand {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  color: var(--ink);
+  font-size: 17px;
+}
+.aura-root footer .muted { color: var(--dim); font-size: 13.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aura-root * { transition: none !important; }
+}

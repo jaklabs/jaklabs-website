@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
+import { SiteChrome } from '@/components/layout/SiteChrome'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://jaklabs.io'),
@@ -114,9 +115,9 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans">
-      <Navbar />
+      <SiteChrome><Navbar /></SiteChrome>
       <main>{children}</main>
-      <Footer />
+      <SiteChrome><Footer /></SiteChrome>
       </body>
       </html>
   )
