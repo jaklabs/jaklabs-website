@@ -23,6 +23,7 @@ const footerLinks = {
         { name: 'Ops-Automation Build', href: '/services#ops-automation' },
         { name: 'Embedded Engineering', href: '/services#embedded' },
         { name: 'Free website audit', href: '/website-audit' },
+        { name: 'Aura Rank (free tool)', href: '/aura' },
     ],
     industries: [
         { name: 'Home & Trade Services', href: '/industries/home-and-trade-services' },

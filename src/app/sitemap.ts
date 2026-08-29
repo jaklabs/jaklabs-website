@@ -27,6 +27,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // The audit tool is the highest-intent page on the site.
     { url: `${BASE}/website-audit`, changeFrequency: 'monthly', priority: 0.95 },
     { url: `${BASE}/blog`, changeFrequency: 'weekly', priority: 0.9 },
+    // The free tool. Linkable on its own merits, which is what earns the
+    // inbound — the agency pages convert, this one gets shared.
+    { url: `${BASE}/aura`, changeFrequency: 'monthly', priority: 0.8 },
     // The industry pages are the SEO/GEO surface: one page per category the
     // CRM can file a client under, written the way that buyer searches.
     { url: `${BASE}/industries`, changeFrequency: 'monthly', priority: 0.8 },
