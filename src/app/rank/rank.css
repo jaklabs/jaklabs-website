@@ -368,3 +368,17 @@
 @media (prefers-reduced-motion: reduce) {
   .aura-root * { transition: none !important; }
 }
+
+/* ---------- you-are-here scatter ---------- */
+.aura-root .plot { border: 1px solid var(--line); background: var(--panel); padding: 20px; overflow-x: auto; }
+.aura-root .plot svg { display: block; min-width: 620px; width: 100%; height: auto; }
+.aura-root .plot .grid { stroke: var(--line-soft); stroke-width: 1; }
+.aura-root .plot .ax { fill: var(--dim); font-size: 11px; font-family: var(--font-mono), monospace; }
+.aura-root .plot .axl { fill: var(--heat); font-size: 11px; letter-spacing: 2px; font-weight: 600;
+  font-family: var(--font-mono), monospace; }
+.aura-root .plot .pt { fill: var(--t7); opacity: 0.92; }
+.aura-root .plot .pl { fill: var(--t7); font-size: 12px; font-family: var(--font-mono), monospace; }
+.aura-root .plot .you { fill: var(--cool); stroke: var(--panel); stroke-width: 2; }
+.aura-root .plot .youhalo { fill: var(--cool); opacity: 0.18; }
+.aura-root .plot .youl { fill: var(--cool); font-size: 12.5px; font-weight: 600;
+  font-family: var(--font-mono), monospace; }

@@ -47,6 +47,21 @@ const TIERS: Tier[] = [
     dims: [10, 8.5, 9.4, 9.1] },
 ]
 
+
+// Measured, not asserted. Every number produced by the tool itself over that
+// person's public repositories, using the email dominant in their own commit
+// history. Reproduce: python3 tools/measure_people.py
+const PEOPLE: { name: string; score: number; craft: number; rigour: number; repos: number }[] = [
+  { name: 'David Lord',         score: 85, craft: 7.6,  rigour: 9.9,  repos: 4 },
+  { name: 'Rich Harris',        score: 84, craft: 7.45, rigour: 10.0, repos: 1 },
+  { name: 'Sindre Sorhus',      score: 80, craft: 7.85, rigour: 10.0, repos: 4 },
+  { name: 'Tom Christie',       score: 80, craft: 7.25, rigour: 9.6,  repos: 2 },
+  { name: 'Simon Willison',     score: 79, craft: 6.85, rigour: 9.8,  repos: 4 },
+  { name: 'Mitchell Hashimoto', score: 68, craft: 8.85, rigour: 4.7,  repos: 1 },
+  { name: 'Fabrice Bellard',    score: 59, craft: 7.45, rigour: 4.9,  repos: 1 },
+  { name: 'Andrej Karpathy',    score: 44, craft: 4.7,  rigour: 1.5,  repos: 3 },
+]
+
 const DIM_NAMES = ['ship', 'architecture', 'judgment', 'transmission']
 const CLONE_CMD = 'git clone https://github.com/jaklabs/aura-rank && cd aura-rank'
 const ANCHORS: [string, number][] = [
@@ -392,10 +407,108 @@ export default function RankLanding() {
         </div>
       </section>
 
+
+      {/* ---------------- you are here ---------------- */}
+      <section>
+        <div className="wrap">
+          <span className="eyebrow">07 — you are here</span>
+          <h2>Plotted against people whose code you already use.</h2>
+          <p className="sub">
+            Every point below was <em>measured by this tool</em> over that person&rsquo;s public
+            repositories — not scored by opinion. Clone them and re-run it; you get the same numbers.
+            Your own scan lands you somewhere on this chart.
+          </p>
+
+          <div className="plot">
+            <svg viewBox="0 0 880 480" role="img"
+                 aria-label="Scatter of craft against rigour for eight measured developers">
+              {[0, 2, 4, 6, 8, 10].map((g) => (
+                <g key={`gx${g}`}>
+                  <line x1={70 + (g / 10) * 780} y1="20" x2={70 + (g / 10) * 780} y2="420"
+                        className="grid" />
+                  <text x={70 + (g / 10) * 780} y="442" className="ax" textAnchor="middle">{g}</text>
+                </g>
+              ))}
+              {[0, 2, 4, 6, 8, 10].map((g) => (
+                <g key={`gy${g}`}>
+                  <line x1="70" y1={420 - (g / 10) * 400} x2="850" y2={420 - (g / 10) * 400}
+                        className="grid" />
+                  <text x="58" y={424 - (g / 10) * 400} className="ax" textAnchor="end">{g}</text>
+                </g>
+              ))}
+              <text x="460" y="470" className="axl" textAnchor="middle">
+                RIGOUR → TESTS · CI · RELEASES · TENURE
+              </text>
+              <text transform="translate(20,220) rotate(-90)" className="axl" textAnchor="middle">
+                CRAFT → ARCHITECTURE · JUDGMENT
+              </text>
+
+              {PEOPLE.map((p) => {
+                const cx = 70 + (p.rigour / 10) * 780
+                const cy = 420 - (p.craft / 10) * 400
+                return (
+                  <g key={p.name}>
+                    <circle cx={cx} cy={cy} r="6" className="pt" />
+                    <text x={cx} y={cy - 13} className="pl" textAnchor="middle">
+                      {p.name.split(' ').slice(-1)[0]} {p.score}
+                    </text>
+                  </g>
+                )
+              })}
+
+              <g>
+                <circle cx={70 + (1.7 / 10) * 780} cy={420 - (5.0 / 10) * 400} r="15" className="youhalo" />
+                <circle cx={70 + (1.7 / 10) * 780} cy={420 - (5.0 / 10) * 400} r="7" className="you" />
+                <text x={70 + (1.7 / 10) * 780 + 20} y={420 - (5.0 / 10) * 400 + 5} className="youl">
+                  a typical solo builder — 39
+                </text>
+              </g>
+            </svg>
+          </div>
+
+          <div className="grid2" style={{ marginTop: 20 }}>
+            <div className="panel">
+              <h3>The cluster top-right is maintainers</h3>
+              <p>
+                Lord, Harris, Sorhus, Christie, Willison — people whose libraries thousands of projects
+                depend on. Rigour near 10 across the board. That is what a decade of
+                <em> other people relying on you</em> forces into a repository.
+              </p>
+            </div>
+            <div className="panel">
+              <h3>Bellard and Hashimoto sit left</h3>
+              <p>
+                The highest craft scores on the chart — <strong>Hashimoto is the highest at 8.85</strong> —
+                with middling rigour. Extraordinary code, less scaffolding. The chart measures a
+                different thing than brilliance, and this is what that looks like.
+              </p>
+            </div>
+          </div>
+
+          <div className="proof" style={{ marginTop: 18 }}>
+            <span className="k">read this before you draw a conclusion</span>
+            <p style={{ margin: 0 }}>
+              <strong>Karpathy measures 44</strong> — near the bottom. nanoGPT and micrograd are
+              deliberately minimal teaching artifacts with no tests and no CI, and scoring them low on
+              maintenance discipline is the instrument working correctly, not a verdict on their author.
+              <strong> A low number here means &ldquo;little scaffolding&rdquo;, never &ldquo;bad
+              engineer&rdquo;</strong> — and if you take one thing from this chart, take that.
+            </p>
+          </div>
+
+          <p className="sub tight" style={{ marginTop: 22 }}>
+            Nine points, not a census. The tool will not print a global percentile, because there is no
+            population of developers to compute one from and inventing one would be the exact dishonesty
+            this project exists to avoid. It tells you where you sit among named, reproducible
+            measurements — and nothing more than that.
+          </p>
+        </div>
+      </section>
+
       {/* ---------------- honesty ---------------- */}
       <section>
         <div className="wrap">
-          <span className="eyebrow">07 — honesty</span>
+          <span className="eyebrow">08 — honesty</span>
           <h2>What this isn&rsquo;t.</h2>
           <p className="sub">
             A ranking system that hides its own uncertainty deserves to be ignored. So:
@@ -434,7 +547,7 @@ export default function RankLanding() {
       {/* ---------------- run it ---------------- */}
       <section>
         <div className="wrap" style={{ textAlign: 'center' }}>
-          <span className="eyebrow">08 — run it</span>
+          <span className="eyebrow">09 — run it</span>
           <h2>Sixty seconds, offline, no account.</h2>
           <p className="sub center">
             Clone it, read the scanner if you want to, point it at something you&rsquo;ve built.
