@@ -7,12 +7,20 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 type NavLink = { name: string; href: string; dropdown?: { name: string; href: string }[] }
 
+// Hood Dev sits at the end, after the buying path.
+//
+// The nav's job is Services -> Free Audit -> Contact for a business owner. The
+// school is a different product for a different person (a developer), so it is
+// present and findable without interrupting that sequence. Putting it earlier
+// would make the site look like it sells two unrelated things before a visitor
+// has worked out what the first one is.
 const navLinks: NavLink[] = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
     { name: 'Free Audit', href: '/website-audit' },
     { name: 'Blog', href: '/blog' },
+    { name: 'Hood Dev', href: '/hood-dev' },
     { name: 'Contact', href: '/contact' },
 ]
 

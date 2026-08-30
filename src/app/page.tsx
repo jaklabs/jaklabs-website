@@ -1,4 +1,4 @@
-import { Hero, Services, Industries, WhyChooseUs, CTA } from '@/components/sections'
+import { Hero, Services, Industries, WhyChooseUs, CTA, HoodDev } from '@/components/sections'
 
 export default function Home() {
     return (
@@ -8,6 +8,7 @@ export default function Home() {
             <Services />
             <WhyChooseUs />
             <CTA />
+            <HoodDev />
         </>
     )
 }
