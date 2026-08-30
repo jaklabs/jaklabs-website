@@ -351,6 +351,13 @@ export default function EngineeringPage() {
               like. If I am not the right person for it I will say so, and it costs you one
               email.
             </p>
+            <p className="text-white/50 mb-8 text-sm">
+              If you are a developer rather than someone hiring one, I also run a school —{' '}
+              <Link href="/hood-dev" className="text-neon-purple hover:text-neon-pink">
+                Hood Dev
+              </Link>
+              , which teaches the messy half of this job. Free while I build it.
+            </p>
             <div className="flex flex-wrap gap-4">
               <Link href="/contact" className="btn-primary">
                 Start a conversation

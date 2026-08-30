@@ -14,6 +14,7 @@ const footerLinks = {
     company: [
         { name: 'About JD', href: '/about' },
         { name: 'Engineering', href: '/engineering' },
+        { name: 'Hood Dev (school)', href: '/hood-dev' },
         { name: 'Blog', href: '/blog' },
         { name: 'Contact', href: '/contact' },
     ],
