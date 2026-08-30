@@ -190,6 +190,22 @@ export class ApiStack extends cdk.Stack {
 
     blogsResource.addMethod('GET', blogsIntegration)
     blogResource.addMethod('GET', blogsIntegration)
+
+    // Authenticated listing, so the CRM can actually see drafts.
+    //
+    // GET /blogs is deliberately public — the website fetches published posts
+    // unauthenticated — which means API Gateway never runs the authorizer on it
+    // and requestContext.authorizer is always undefined. isAdmin() therefore
+    // could never be true there, so `?status=draft` was silently ignored for
+    // EVERYONE and the blog admin only ever showed published posts. It did not
+    // fail; it just quietly showed the wrong thing.
+    //
+    // /admin/blogs rather than /blogs/admin on purpose: a literal child of
+    // /blogs would sit beside {slug} and shadow any post whose slug happened to
+    // be "admin". Separate prefix, no collision possible.
+    const adminResource = this.api.root.addResource('admin')
+    const adminBlogsResource = adminResource.addResource('blogs')
+    adminBlogsResource.addMethod('GET', blogsIntegration, authOptions)
     blogsResource.addMethod('POST', blogsIntegration, authOptions)
     blogResource.addMethod('PUT', blogsIntegration, authOptions)
     blogResource.addMethod('DELETE', blogsIntegration, authOptions)

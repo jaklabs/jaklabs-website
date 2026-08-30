@@ -66,6 +66,60 @@ export async function getBlog(event: APIGatewayProxyEvent): Promise<APIGatewayPr
   }
 }
 
+/**
+ * Listing for the CRM admin: any status, and it refuses rather than silently
+ * degrading if the caller is not an admin.
+ *
+ * The public listBlogs below quietly rewrites status to 'published' when
+ * isAdmin() is false. On the public route that is correct — an anonymous reader
+ * asking for drafts should get published posts, not an error. But it meant the
+ * admin UI, which calls the same public route, asked for drafts and received
+ * published posts with a 200 and no indication anything had been substituted.
+ * A wrong answer that looks like a right one.
+ *
+ * So this route does the opposite: authenticated, and 403 if you are not an
+ * admin. Same underlying query, honest about failure.
+ */
+export async function listBlogsForAdmin(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  try {
+    if (!isAdmin(event)) return error('Admin access required', 403)
+
+    const q = event.queryStringParameters || {}
+    const status = q.status
+    const limit = Math.min(parseInt(q.limit || '50'), 100)
+    const nextToken = q.nextToken
+      ? JSON.parse(Buffer.from(q.nextToken, 'base64').toString())
+      : undefined
+
+    // No status given means every status, which is what an admin index wants —
+    // one list showing drafts and published together.
+    const statuses = status ? [status] : ['draft', 'published']
+    const pages = await Promise.all(statuses.map((s) => docClient.send(new QueryCommand({
+      TableName: BLOGS_TABLE, IndexName: 'GSI1',
+      KeyConditionExpression: 'GSI1PK = :pk',
+      ExpressionAttributeValues: { ':pk': `STATUS#${s}` },
+      ScanIndexForward: false, Limit: limit,
+      ExclusiveStartKey: statuses.length === 1 ? nextToken : undefined,
+    }))))
+
+    const items = pages.flatMap((r) => (r.Items || []) as BlogPost[])
+      .sort((a, b) => String(b.updatedAt || '').localeCompare(String(a.updatedAt || '')))
+
+    const response: PaginatedResponse<BlogPost> = {
+      items, count: items.length,
+      // Only meaningful for a single-status query; merging two cursors would be
+      // a lie, so it is omitted rather than guessed.
+      nextToken: statuses.length === 1 && pages[0].LastEvaluatedKey
+        ? Buffer.from(JSON.stringify(pages[0].LastEvaluatedKey)).toString('base64')
+        : undefined,
+    }
+    return success(response)
+  } catch (err) {
+    console.error('listBlogsForAdmin failed:', err)
+    return serverError('Could not list posts')
+  }
+}
+
 export async function listBlogs(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   try {
     const queryParams = event.queryStringParameters || {}
@@ -189,10 +243,15 @@ export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayPr
   console.log('Event:', JSON.stringify(event, null, 2))
   const method = event.httpMethod
   const hasSlug = event.pathParameters?.slug
+  // /admin/blogs runs behind the Cognito authorizer, so claims are present and
+  // isAdmin() can be true. /blogs is public and never sees claims.
+  const isAdminRoute = (event.resource || event.path || '').startsWith('/admin/')
 
   try {
     switch (method) {
-      case 'GET': return hasSlug ? getBlog(event) : listBlogs(event)
+      case 'GET':
+        if (isAdminRoute) return listBlogsForAdmin(event)
+        return hasSlug ? getBlog(event) : listBlogs(event)
       case 'POST': return createBlog(event)
       case 'PUT': case 'PATCH': return updateBlog(event)
       case 'DELETE': return deleteBlog(event)
