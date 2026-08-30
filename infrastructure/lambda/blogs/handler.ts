@@ -21,7 +21,14 @@ export async function createBlog(event: APIGatewayProxyEvent): Promise<APIGatewa
 
     const now = getCurrentTimestamp()
     const id = generateId()
-    const slug = generateSlug(body.title)
+    // An explicit slug wins, normalised through the same function so a caller
+    // cannot inject anything odd. Falls back to deriving from the title.
+    //
+    // Before this, body.slug was accepted by the type and silently discarded:
+    // a client that set its own slug got a different one back and had no reason
+    // to look. The slug is the permanent public URL — the author should decide
+    // it, and a title edit must never move a page that has been linked to.
+    const slug = generateSlug(body.slug || body.title)
     // Sanitise ONCE, up front, so everything derived from the body — the
     // excerpt, the reading time — is derived from what will actually be stored.
     const safeContent = sanitizeHtml(body.content)

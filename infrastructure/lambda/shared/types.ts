@@ -33,6 +33,9 @@ export interface Category {
 
 export interface CreateBlogInput {
   title: string
+  /** Optional. Normalised, then used as the permanent URL. Derived from the
+   *  title when omitted — and never changed by a later title edit. */
+  slug?: string
   excerpt: string
   content: string
   coverImage?: string
