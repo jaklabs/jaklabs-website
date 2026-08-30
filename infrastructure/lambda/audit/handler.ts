@@ -1,6 +1,10 @@
 import chromium from '@sparticuz/chromium'
 import puppeteer from 'puppeteer-core'
-import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+// `import type` so a type-only dependency is erased at runtime rather than
+// resolved. Without this the module cannot be loaded outside the bundler —
+// which is exactly what a test does.
+import type { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
+import { assertPublicHttpUrl, resolvesPublicly } from './url-guard'
 import { success, error, validationError, serverError } from '../shared/response'
 
 /**
@@ -78,57 +82,6 @@ const BOOKING_WORDS = ['book', 'appointment', 'schedule', 'consult', 'reserve',
  * Hostnames are checked by name here; the DNS-rebinding case (a name that
  * resolves to a private address) is handled by resolving before we navigate.
  */
-function assertPublicHttpUrl(raw: string): URL {
-  let u: URL
-  try {
-    u = new URL(/^https?:\/\//i.test(raw) ? raw : `https://${raw}`)
-  } catch {
-    throw new Error("That doesn't look like a web address. Try something like example.com")
-  }
-  if (u.protocol !== 'http:' && u.protocol !== 'https:') throw new Error('Only http and https addresses can be checked')
-  if (u.username || u.password) throw new Error('Addresses with credentials in them cannot be checked')
-
-  const host = u.hostname.toLowerCase()
-  if (host === 'localhost' || host.endsWith('.localhost') || host.endsWith('.internal')
-      || host.endsWith('.local') || host === '::1' || host === '[::1]') {
-    throw new Error('That address is not reachable from the public internet')
-  }
-  // Literal private IPv4. A hostname resolving to one is caught after DNS.
-  const v4 = /^(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/.exec(host)
-  if (v4) {
-    const [a, b] = [Number(v4[1]), Number(v4[2])]
-    if (a === 10 || a === 127 || a === 0
-        || (a === 172 && b >= 16 && b <= 31)
-        || (a === 192 && b === 168)
-        || (a === 169 && b === 254)          // link-local: the metadata endpoint
-        || (a === 100 && b >= 64 && b <= 127) // carrier-grade NAT
-        || a >= 224) {
-      throw new Error('That address is not reachable from the public internet')
-    }
-  }
-  if (!host.includes('.')) throw new Error("That doesn't look like a web address. Try something like example.com")
-  return u
-}
-
-async function resolvesPublicly(hostname: string): Promise<boolean> {
-  const dns = await import('node:dns/promises')
-  try {
-    const addrs = await dns.lookup(hostname, { all: true })
-    return addrs.every(({ address }) => {
-      const m = /^(\d{1,3})\.(\d{1,3})\./.exec(address)
-      if (!m) return !/^(::1|fc|fd|fe80)/i.test(address)   // IPv6 private ranges
-      const [a, b] = [Number(m[1]), Number(m[2])]
-      return !(a === 10 || a === 127 || a === 0 || a >= 224
-               || (a === 172 && b >= 16 && b <= 31)
-               || (a === 192 && b === 168)
-               || (a === 169 && b === 254)
-               || (a === 100 && b >= 64 && b <= 127))
-    })
-  } catch {
-    return false
-  }
-}
-
 export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   if (event.httpMethod === 'OPTIONS') return success({})
   if (event.httpMethod !== 'POST') return error('Method not allowed', 405)
