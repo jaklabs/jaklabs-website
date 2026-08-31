@@ -57,6 +57,15 @@ const navLinks: NavLink[] = [
             { name: 'Verdikt', href: '/verdikt' },
         ],
     },
+    // Engineering gets its own top-level slot rather than a dropdown.
+    //
+    // It used to be reachable only from the footer and /about, on the reasoning
+    // that a local business owner never needs it. True — but the reader it IS
+    // for (an engineering lead deciding whether to hand a customer relationship
+    // to a contractor) arrives looking for exactly this, and burying the page
+    // that argues for the contract work behind two other links cost more than
+    // the extra nav item does.
+    { name: 'Engineering', href: '/engineering' },
     { name: 'Contact', href: '/contact' },
 ]
 
@@ -89,7 +98,7 @@ export function Navbar() {
                         </span>
                     </Link>
 
-                    <div className="hidden md:flex items-center space-x-8">
+                    <div className="hidden lg:flex items-center space-x-6">
                         {navLinks.map((link) => (
                             <div
                                 key={link.name}
@@ -148,14 +157,14 @@ export function Navbar() {
                         ))}
                     </div>
 
-                    <div className="hidden md:block">
+                    <div className="hidden lg:block">
                         <Link href="/contact" className="btn-primary">
                             Get Started
                         </Link>
                     </div>
 
                     <button
-                        className="md:hidden text-white p-2"
+                        className="lg:hidden text-white p-2"
                         onClick={() => setIsOpen(!isOpen)}
                         aria-label="Toggle menu"
                     >
@@ -171,7 +180,7 @@ export function Navbar() {
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="md:hidden bg-secondary border-t border-white/10"
+                        className="lg:hidden bg-secondary border-t border-white/10"
                     >
                         <div className="container-custom py-4 space-y-2">
                             {navLinks.map((link) => (
