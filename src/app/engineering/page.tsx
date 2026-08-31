@@ -155,8 +155,8 @@ export default function EngineeringPage() {
              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.16), transparent 62%)' }} />
         <div className="container-custom max-w-4xl">
           <div className="fx-reveal">
-            <p className="subheading mb-4">Forward-deployed engineering</p>
-            <h1 className="heading-xl mb-8">
+            <p className="subheading mb-4 text-center">Forward-deployed engineering</p>
+            <h1 className="heading-xl mb-8 text-center">
               I don&apos;t need to learn your customer.{' '}
               <span className="text-gradient-neon">I am your customer.</span>
             </h1>
@@ -222,8 +222,8 @@ export default function EngineeringPage() {
              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.12), transparent 62%)' }} />
         <div className="container-custom max-w-4xl">
           <div className="mb-10 fx-reveal">
-            <p className="subheading mb-4">Scope it in thirty seconds</p>
-            <h2 className="heading-lg mb-6">
+            <p className="subheading mb-4 text-center">Scope it in thirty seconds</p>
+            <h2 className="heading-lg mb-6 text-center">
               Tell me the shape of the problem.{' '}
               <span className="text-gradient-neon">I&apos;ll tell you if I&apos;m the wrong person.</span>
             </h2>
@@ -251,8 +251,8 @@ export default function EngineeringPage() {
              style={{ background: 'radial-gradient(circle, rgba(191,90,242,0.13), transparent 62%)' }} />
         <div className="container-custom max-w-4xl">
           <div className="mb-16 fx-reveal">
-            <p className="subheading mb-4">Read the code</p>
-            <h2 className="heading-lg mb-6">
+            <p className="subheading mb-4 text-center">Read the code</p>
+            <h2 className="heading-lg mb-6 text-center">
               Three things I built, and the{' '}
               <span className="text-gradient-neon">decisions inside them</span>
             </h2>
@@ -309,8 +309,8 @@ export default function EngineeringPage() {
              style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.09), transparent 62%)' }} />
         <div className="container-custom max-w-4xl">
           <div className="mb-12 fx-reveal">
-            <p className="subheading mb-4">The part most portfolios leave out</p>
-            <h2 className="heading-lg mb-6">
+            <p className="subheading mb-4 text-center">The part most portfolios leave out</p>
+            <h2 className="heading-lg mb-6 text-center">
               Three bugs that only <span className="text-gradient-neon">appear in production</span>
             </h2>
             <p className="text-white/70">
@@ -346,8 +346,8 @@ export default function EngineeringPage() {
         <div className="container-custom max-w-4xl">
           <div className="grid lg:grid-cols-2 gap-16 fx-stagger">
             <div>
-              <p className="subheading mb-4">The stack</p>
-              <h2 className="heading-lg mb-6">Whole-stack, which is the job</h2>
+              <p className="subheading mb-4 text-center">The stack</p>
+              <h2 className="heading-lg mb-6 text-center">Whole-stack, which is the job</h2>
               <div className="space-y-4 text-white/70">
                 <p>
                   <span className="text-white">Languages</span> — TypeScript, Python, JavaScript.
@@ -377,8 +377,8 @@ export default function EngineeringPage() {
             </div>
 
             <div>
-              <p className="subheading mb-4">How an engagement runs</p>
-              <h2 className="heading-lg mb-6">Short, scoped, and yours at the end</h2>
+              <p className="subheading mb-4 text-center">How an engagement runs</p>
+              <h2 className="heading-lg mb-6 text-center">Short, scoped, and yours at the end</h2>
               <div className="space-y-5 text-white/70">
                 <p>
                   <span className="text-white">Weeks, not quarters.</span> A defined stretch
@@ -412,7 +412,7 @@ export default function EngineeringPage() {
              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.15), transparent 62%)' }} />
         <div className="container-custom max-w-4xl">
           <div className="fx-reveal">
-            <h2 className="heading-lg mb-6">
+            <h2 className="heading-lg mb-6 text-center">
               Available for <span className="text-gradient-neon">embedded contracts</span>
             </h2>
             <p className="text-white/70 mb-8">

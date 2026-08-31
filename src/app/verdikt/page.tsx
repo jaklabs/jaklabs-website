@@ -193,9 +193,19 @@ const LAYERS = [
   },
 ]
 
+/**
+ * The section label.
+ *
+ * A rule on BOTH sides, not just trailing. The single trailing rule was correct
+ * when the heading block was left-aligned — it pushed the eye rightward into the
+ * heading. Centred, that same rule reads as the label having slid off to the
+ * left, so the shape has to become symmetrical or the centring looks like a
+ * mistake rather than a decision.
+ */
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
     <p className="vk-eyebrow mb-4 flex items-center gap-3">
+      <span className="h-px flex-1" style={{ background: 'var(--vk-border)' }} />
       <span>{children}</span>
       <span className="h-px flex-1" style={{ background: 'var(--vk-border)' }} />
     </p>
@@ -209,7 +219,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>Verdikt · a JAK Labs product</Eyebrow>
-            <h1 className="heading-xl mb-6 vk-fg">
+            <h1 className="heading-xl mb-6 vk-fg text-center">
               Every trading book tells you to keep a journal.{' '}
               <span className="vk-grad">Almost nobody does.</span>
             </h1>
@@ -288,7 +298,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>Why gamify it</Eyebrow>
-            <h2 className="heading-lg vk-fg mb-6">
+            <h2 className="heading-lg vk-fg mb-6 text-center">
               Discipline is a habit problem,{' '}
               <span className="vk-dim">not an information problem.</span>
             </h2>
@@ -338,7 +348,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>Auto-import</Eyebrow>
-            <h2 className="heading-lg vk-fg mb-6">
+            <h2 className="heading-lg vk-fg mb-6 text-center">
               It reads your fills so you don&rsquo;t retype them.
             </h2>
             <p className="mb-8">
@@ -364,7 +374,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>While you trade</Eyebrow>
-            <h2 className="heading-lg vk-fg mb-6">
+            <h2 className="heading-lg vk-fg mb-6 text-center">
               A coach that watches you, and is{' '}
               <span className="vk-grad">structurally unable to watch the market.</span>
             </h2>
@@ -412,7 +422,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>Finding your edge</Eyebrow>
-            <h2 className="heading-lg vk-fg mb-6">
+            <h2 className="heading-lg vk-fg mb-6 text-center">
               Every journal will show you a win rate.{' '}
               <span className="vk-dim">This one refuses to, until the sample earns it.</span>
             </h2>
@@ -512,7 +522,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>The advice boundary</Eyebrow>
-            <h2 className="heading-lg vk-fg mb-6">
+            <h2 className="heading-lg vk-fg mb-6 text-center">
               The coach comments on the trader, never on the market.
             </h2>
             <p className="mb-8">
@@ -565,7 +575,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>What this is not</Eyebrow>
-            <h2 className="heading-lg vk-fg mb-6">
+            <h2 className="heading-lg vk-fg mb-6 text-center">
               It is a journal. It does not tell you what to buy.
             </h2>
             <p className="mb-8">
@@ -589,7 +599,7 @@ export default function VerdiktPage() {
         <div className="container-custom max-w-4xl">
           <div>
             <Eyebrow>Start the streak</Eyebrow>
-            <h2 className="heading-lg vk-fg mb-6">Fourteen days from now, you have a record.</h2>
+            <h2 className="heading-lg vk-fg mb-6 text-center">Fourteen days from now, you have a record.</h2>
             <p className="mb-8">
               Free to start, read-only broker access, and an engine that will tell you plainly when
               your own numbers do not say anything yet.

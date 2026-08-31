@@ -246,8 +246,8 @@ export default function HoodDevPage() {
       <section className="pt-32 pb-16">
         <div className="container-custom max-w-4xl">
           <div>
-            <p className="subheading mb-4">Hood Dev · a JAK Labs school</p>
-            <h1 className="heading-xl mb-6">
+            <p className="subheading mb-4 text-center">Hood Dev · a JAK Labs school</p>
+            <h1 className="heading-xl mb-6 text-center">
               Every course tells you what to learn.{' '}
               <span className="text-gradient-neon">None of them look under your hood.</span>
             </h1>
@@ -284,8 +284,8 @@ export default function HoodDevPage() {
       <section className="py-16 bg-secondary/30">
         <div className="container-custom max-w-4xl">
           <div>
-            <p className="subheading mb-4">Who it is for</p>
-            <h2 className="heading-lg mb-6">
+            <p className="subheading mb-4 text-center">Who it is for</p>
+            <h2 className="heading-lg mb-6 text-center">
               The stuck mid-level developer. <span className="text-white/40">Not beginners.</span>
             </h2>
             <div className="space-y-4 text-white/70">
@@ -313,8 +313,8 @@ export default function HoodDevPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <div className="mb-10">
-            <p className="subheading mb-4">The Teardown · assessment structure</p>
-            <h2 className="heading-lg mb-6">Seven phases, numbered from zero</h2>
+            <p className="subheading mb-4 text-center">The Teardown · assessment structure</p>
+            <h2 className="heading-lg mb-6 text-center">Seven phases, numbered from zero</h2>
             <p className="text-white/70">
               You are graded on the <span className="text-white">path</span>, not the artifact — in
               2026 the artifact proves nothing, because a model could have made it.
@@ -349,8 +349,8 @@ export default function HoodDevPage() {
       <section className="py-16 bg-secondary/30">
         <div className="container-custom max-w-4xl">
           <div className="mb-10">
-            <p className="subheading mb-4">Leaks · the weakness taxonomy</p>
-            <h2 className="heading-lg mb-6">
+            <p className="subheading mb-4 text-center">Leaks · the weakness taxonomy</p>
+            <h2 className="heading-lg mb-6 text-center">
               Type is orthogonal to competence.{' '}
               <span className="text-gradient-neon">Leaks are what&rsquo;s missing.</span>
             </h2>
@@ -417,8 +417,8 @@ export default function HoodDevPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <div className="mb-10">
-            <p className="subheading mb-4">How it refuses to be astrology</p>
-            <h2 className="heading-lg">Four rules, and none of them are negotiable</h2>
+            <p className="subheading mb-4 text-center">How it refuses to be astrology</p>
+            <h2 className="heading-lg text-center">Four rules, and none of them are negotiable</h2>
           </div>
           <div className="grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2">
             {PRINCIPLES.map((p) => (
@@ -436,8 +436,8 @@ export default function HoodDevPage() {
       <section className="py-16 bg-secondary/30">
         <div className="container-custom max-w-4xl">
           <div className="mb-10">
-            <p className="subheading mb-4">Ranks · evidence-based, never time-based</p>
-            <h2 className="heading-lg">You cannot sit your way up this ladder</h2>
+            <p className="subheading mb-4 text-center">Ranks · evidence-based, never time-based</p>
+            <h2 className="heading-lg text-center">You cannot sit your way up this ladder</h2>
           </div>
           <div className="overflow-x-auto rounded-xl border border-white/10">
             <table className="w-full min-w-[640px] text-sm">
@@ -482,7 +482,7 @@ export default function HoodDevPage() {
       <section className="section-padding">
         <div className="container-custom max-w-4xl">
           <div>
-            <p className="subheading mb-4">Where this actually stands</p>
+            <p className="subheading mb-4 text-center">Where this actually stands</p>
             <div className="rounded-r-xl border-l-[3px] border-accent-coral bg-secondary-dark p-6 sm:p-7">
               <p className="text-white/70">
                 <span className="font-semibold text-white">Read this before you sit it.</span> The
@@ -517,8 +517,8 @@ export default function HoodDevPage() {
       <section className="py-20 bg-secondary/30">
         <div className="container-custom max-w-4xl">
           <div>
-            <p className="subheading mb-4">Start</p>
-            <h2 className="heading-lg mb-6">Find out what you&rsquo;re actually missing.</h2>
+            <p className="subheading mb-4 text-center">Start</p>
+            <h2 className="heading-lg mb-6 text-center">Find out what you&rsquo;re actually missing.</h2>
             <p className="mb-8 text-white/70">
               Forty minutes, in the browser, free. Or start with the zero-friction version:{' '}
               <Link href="/aura" className="text-neon-purple hover:text-neon-pink">
