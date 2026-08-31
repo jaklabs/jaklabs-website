@@ -153,8 +153,8 @@ export default function EngineeringPage() {
       <section className="relative pt-32 pb-16">
         <div className="fx-lamp fx-lamp-l -top-32" aria-hidden="true"
              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.16), transparent 62%)' }} />
-        <div className="container-custom">
-          <div className="max-w-3xl fx-reveal">
+        <div className="container-custom max-w-4xl">
+          <div className="fx-reveal">
             <p className="subheading mb-4">Forward-deployed engineering</p>
             <h1 className="heading-xl mb-8">
               I don&apos;t need to learn your customer.{' '}
@@ -190,7 +190,7 @@ export default function EngineeringPage() {
       <section className="relative py-16 bg-secondary/30 overflow-hidden">
         <div className="fx-lamp fx-lamp-r -top-40" aria-hidden="true"
              style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10), transparent 62%)' }} />
-        <div className="container-custom">
+        <div className="container-custom max-w-4xl">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 fx-stagger">
             {[
               ['$155K', 'invoiced through software I wrote and operate'],
@@ -204,7 +204,7 @@ export default function EngineeringPage() {
               </div>
             ))}
           </div>
-          <p className="mt-8 text-sm text-white/40 max-w-3xl">
+          <p className="mt-8 text-sm text-white/40">
             Those four are the only numbers I claim. There is no client count, no satisfaction
             score, and no team — and where a figure would flatter me but isn&apos;t true, it
             isn&apos;t here.
@@ -220,8 +220,8 @@ export default function EngineeringPage() {
       <section className="relative section-padding overflow-hidden">
         <div className="fx-lamp fx-lamp-r top-10" aria-hidden="true"
              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.12), transparent 62%)' }} />
-        <div className="container-custom">
-          <div className="max-w-3xl mb-10 fx-reveal">
+        <div className="container-custom max-w-4xl">
+          <div className="mb-10 fx-reveal">
             <p className="subheading mb-4">Scope it in thirty seconds</p>
             <h2 className="heading-lg mb-6">
               Tell me the shape of the problem.{' '}
@@ -233,7 +233,7 @@ export default function EngineeringPage() {
             </p>
           </div>
 
-          <div className="max-w-3xl fx-reveal">
+          <div className="fx-reveal">
             <EngagementScoper />
             <p className="mt-6 text-sm text-white/40">
               This runs entirely in your browser and there is no model behind it — the same four
@@ -249,8 +249,8 @@ export default function EngineeringPage() {
       <section className="relative section-padding">
         <div className="fx-lamp fx-lamp-l top-1/4" aria-hidden="true"
              style={{ background: 'radial-gradient(circle, rgba(191,90,242,0.13), transparent 62%)' }} />
-        <div className="container-custom">
-          <div className="max-w-3xl mb-16 fx-reveal">
+        <div className="container-custom max-w-4xl">
+          <div className="mb-16 fx-reveal">
             <p className="subheading mb-4">Read the code</p>
             <h2 className="heading-lg mb-6">
               Three things I built, and the{' '}
@@ -307,8 +307,8 @@ export default function EngineeringPage() {
       <section className="relative section-padding bg-secondary/30 overflow-hidden">
         <div className="fx-lamp fx-lamp-r top-0" aria-hidden="true"
              style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.09), transparent 62%)' }} />
-        <div className="container-custom">
-          <div className="max-w-3xl mb-12 fx-reveal">
+        <div className="container-custom max-w-4xl">
+          <div className="mb-12 fx-reveal">
             <p className="subheading mb-4">The part most portfolios leave out</p>
             <h2 className="heading-lg mb-6">
               Three bugs that only <span className="text-gradient-neon">appear in production</span>
@@ -320,7 +320,7 @@ export default function EngineeringPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8 fx-stagger">
+          <div className="space-y-10 fx-stagger">
             {BUGS.map((b, i) => (
               <div
                 key={b.symptom}
@@ -343,7 +343,7 @@ export default function EngineeringPage() {
 
       {/* Stack + how I work */}
       <section className="section-padding">
-        <div className="container-custom">
+        <div className="container-custom max-w-4xl">
           <div className="grid lg:grid-cols-2 gap-16 fx-stagger">
             <div>
               <p className="subheading mb-4">The stack</p>
@@ -410,8 +410,8 @@ export default function EngineeringPage() {
       <section className="relative section-padding bg-secondary/30 overflow-hidden">
         <div className="fx-lamp fx-lamp-l bottom-0" aria-hidden="true"
              style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.15), transparent 62%)' }} />
-        <div className="container-custom">
-          <div className="max-w-2xl fx-reveal">
+        <div className="container-custom max-w-4xl">
+          <div className="fx-reveal">
             <h2 className="heading-lg mb-6">
               Available for <span className="text-gradient-neon">embedded contracts</span>
             </h2>
