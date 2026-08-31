@@ -437,3 +437,153 @@
 @media (prefers-reduced-motion: reduce) {
   .verdikt-skin * { transition: none !important; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   /engineering — motion and lighting
+   ══════════════════════════════════════════════════════════════════════════
+   Scoped under .fx-page so nothing here reaches the rest of the site.
+
+   WHY SCROLL-DRIVEN CSS RATHER THAN A JS OBSERVER
+
+   The reveals below use `animation-timeline: view()`, which the browser drives
+   off scroll position with no JavaScript at all. That matters more here than it
+   would elsewhere, because of who reads this page: an engineering lead who opens
+   it from a DM, skims for artifacts and leaves. Three properties follow from
+   doing it in CSS, and all three are the reason:
+
+   1. NO FLASH OF HIDDEN CONTENT. A JS observer has to hide the content first and
+      reveal it on intersection, so a slow hydration shows a blank page to exactly
+      the reader who is skimming. Here the hidden state exists only inside an
+      @supports block the browser has already resolved before it paints.
+
+   2. NO-JS AND OLD-BROWSER SAFE BY CONSTRUCTION. Firefox does not support this
+      yet. It gets the page with no animation, fully legible, no fallback code
+      needed — the @supports simply does not match.
+
+   3. NOTHING TO HYDRATE. The reveal costs zero bytes of JS on a page whose whole
+      argument is that I do not add moving parts without a reason.
+
+   The one thing that genuinely needs JS is the pointer light, because a cursor
+   position is not derivable from scroll. It is one rAF-throttled listener, it is
+   off under reduced motion, and it is off entirely on touch devices where there
+   is no cursor to follow.
+   ══════════════════════════════════════════════════════════════════════════ */
+
+.fx-page {
+  position: relative;
+  isolation: isolate;
+}
+
+/* ── The pointer light ──────────────────────────────────────────────────── */
+/* Fixed, behind everything, pointer-events: none. Position comes from two
+   custom properties the client component writes; it sits parked in the middle
+   until the first pointermove, so it never jumps in from a corner. */
+.fx-lamp-pointer {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 700ms ease;
+  background: radial-gradient(
+    38rem 38rem at var(--fx-x, 50%) var(--fx-y, 40%),
+    rgba(168, 85, 247, 0.13),
+    rgba(191, 90, 242, 0.05) 42%,
+    transparent 68%
+  );
+}
+.fx-lamp-pointer[data-lit='true'] { opacity: 1; }
+
+/* ── Ambient section lamps ──────────────────────────────────────────────── */
+/* One soft light per section, brightest while that section owns the viewport.
+   This is the "lighting as you go" — the page is not uniformly lit, so moving
+   down it feels like walking past windows rather than scrolling a document. */
+.fx-lamp {
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+  width: min(46rem, 100%);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  filter: blur(30px);
+  opacity: 0.5;
+}
+.fx-lamp-l { left: -14rem; }
+.fx-lamp-r { right: -14rem; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .fx-lamp {
+      opacity: 0;
+      animation: fx-lamp-up linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    /* Content rises as it enters. `both` holds the end state so a section that
+       has been scrolled past stays put rather than fading back out. */
+    .fx-reveal {
+      animation: fx-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 46%;
+    }
+
+    /* Staggered children. --i is set inline per item; each one finishes a little
+       later than the last, so a grid resolves left-to-right instead of as a
+       single block. */
+    .fx-stagger > * {
+      animation: fx-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry calc(42% + (var(--i, 0) * 9%));
+    }
+
+    /* The figures count up in emphasis rather than value — a real count-up needs
+       JS and says nothing a reader could not read faster themselves. */
+    .fx-pop {
+      animation: fx-pop linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 50%;
+    }
+  }
+}
+
+@keyframes fx-rise {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fx-pop {
+  from { opacity: 0; transform: translateY(14px) scale(0.94); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes fx-lamp-up {
+  0%   { opacity: 0; }
+  50%  { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+
+/* ── Cursor spotlight on a card ─────────────────────────────────────────── */
+/* The card lights from wherever the cursor is inside it. Falls back to a plain
+   border-brightening on touch, where --sx/--sy are never written. */
+.fx-spot {
+  position: relative;
+  transition: border-color 0.25s ease;
+}
+.fx-spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    16rem 16rem at var(--sx, 50%) var(--sy, 50%),
+    rgba(168, 85, 247, 0.13),
+    transparent 70%
+  );
+}
+@media (hover: hover) and (pointer: fine) {
+  .fx-spot:hover::before { opacity: 1; }
+  .fx-spot:hover { border-color: rgba(168, 85, 247, 0.35); }
+}
+.fx-spot > * { position: relative; }

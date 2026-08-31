@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { PointerLight, SpotlightCard } from '@/components/engineering/PointerLight'
+import { EngagementScoper } from '@/components/engineering/EngagementScoper'
 
 /**
  * The second front door.
@@ -13,10 +15,23 @@ import Link from 'next/link'
  * So it is linked from the footer and from /about, not from the main nav. The
  * local buyer never needs it; the person I send it to lands on it directly.
  *
- * A server component with no animation on purpose — this reader will open it
- * from a DM on a laptop, skim for artifacts, and click into GitHub. Every claim
- * below is checkable, and the bugs are included because the bugs are the
- * credential. Nobody who has only built demos writes those paragraphs.
+ * MOTION, added 2026-08-31. This file used to say "no animation on purpose",
+ * on the reasoning that the reader skims and leaves. That reasoning was about
+ * not making them WAIT, and it was right — so the motion here is built to not
+ * cost them anything:
+ *
+ *   • The reveals are `animation-timeline: view()` in CSS. The browser drives
+ *     them off scroll with no JavaScript, so there is nothing to hydrate and no
+ *     flash of hidden content on a slow connection. A browser without support
+ *     (Firefox today) renders the page static and fully legible.
+ *   • The only script is the pointer light and the card spotlights: two rAF-
+ *     throttled listeners that write CSS variables and never touch React state.
+ *     Both are off under prefers-reduced-motion and on devices with no cursor.
+ *   • Every word remains server-rendered. Nothing on this page waits on JS to
+ *     become readable, which is the property the old comment was protecting.
+ *
+ * Every claim below is checkable, and the bugs are included because the bugs are
+ * the credential. Nobody who has only built demos writes those paragraphs.
  */
 
 export const metadata: Metadata = {
@@ -66,7 +81,8 @@ const ARTIFACTS = [
         + 'non-HTTP schemes, and .internal/.local names are all refused.',
       'DNS is resolved and checked before the fetch, because a public hostname can point at a '
         + 'private address and a URL allowlist alone would never catch it.',
-      '14 attack vectors, tested against the deployed endpoint rather than a local mock.',
+      '36 tests against that boundary — 24 blocked inputs, 11 that must still be allowed, and a '
+        + 'bounds check — run against the guard rather than a local mock.',
     ],
     honest:
       'Security judgement on a public endpoint is what an FDE gets trusted with on day one in '
@@ -128,11 +144,17 @@ const BUGS = [
 
 export default function EngineeringPage() {
   return (
-    <>
+    <div className="fx-page">
+      {/* The one piece of lighting that needs a cursor. Self-disabling under
+          reduced motion and on touch — see the component. */}
+      <PointerLight />
+
       {/* Hero */}
-      <section className="pt-32 pb-16">
+      <section className="relative pt-32 pb-16">
+        <div className="fx-lamp fx-lamp-l -top-32" aria-hidden="true"
+             style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.16), transparent 62%)' }} />
         <div className="container-custom">
-          <div className="max-w-3xl">
+          <div className="max-w-3xl fx-reveal">
             <p className="subheading mb-4">Forward-deployed engineering</p>
             <h1 className="heading-xl mb-8">
               I don&apos;t need to learn your customer.{' '}
@@ -165,16 +187,18 @@ export default function EngineeringPage() {
       </section>
 
       {/* The numbers */}
-      <section className="py-16 bg-secondary/30">
+      <section className="relative py-16 bg-secondary/30 overflow-hidden">
+        <div className="fx-lamp fx-lamp-r -top-40" aria-hidden="true"
+             style={{ background: 'radial-gradient(circle, rgba(34,211,238,0.10), transparent 62%)' }} />
         <div className="container-custom">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 fx-stagger">
             {[
               ['$155K', 'invoiced through software I wrote and operate'],
               ['3,235', 'transactions auto-categorised'],
               ['~140 hrs', 'of admin removed from my own week'],
               ['1', 'engineer — nothing to production is somebody else\'s job'],
-            ].map(([figure, label]) => (
-              <div key={figure}>
+            ].map(([figure, label], i) => (
+              <div key={figure} className="fx-pop" style={{ '--i': i } as React.CSSProperties}>
                 <div className="text-4xl font-bold text-gradient-neon mb-2">{figure}</div>
                 <div className="text-sm text-white/60">{label}</div>
               </div>
@@ -188,10 +212,45 @@ export default function EngineeringPage() {
         </div>
       </section>
 
-      {/* Artifacts */}
-      <section className="section-padding">
+      {/* The scoper.
+          Placed straight after the figures and before the artifacts: the reader
+          has just been given four numbers and is deciding whether to keep
+          reading. An interactive thing that can tell them "no" earns more of
+          that decision than another paragraph would. */}
+      <section className="relative section-padding overflow-hidden">
+        <div className="fx-lamp fx-lamp-r top-10" aria-hidden="true"
+             style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.12), transparent 62%)' }} />
         <div className="container-custom">
-          <div className="max-w-3xl mb-16">
+          <div className="max-w-3xl mb-10 fx-reveal">
+            <p className="subheading mb-4">Scope it in thirty seconds</p>
+            <h2 className="heading-lg mb-6">
+              Tell me the shape of the problem.{' '}
+              <span className="text-gradient-neon">I&apos;ll tell you if I&apos;m the wrong person.</span>
+            </h2>
+            <p className="text-white/70">
+              Four questions, then a real engagement brief you can forward to whoever signs off —
+              including the cases where the honest answer is that you need someone else.
+            </p>
+          </div>
+
+          <div className="max-w-3xl fx-reveal">
+            <EngagementScoper />
+            <p className="mt-6 text-sm text-white/40">
+              This runs entirely in your browser and there is no model behind it — the same four
+              answers always produce the same brief. That is deliberate: an LLM verdict is not
+              reproducible and cannot be audited afterwards, which is the same rule I apply to the
+              scoring and ranking code below. Nothing you tap is transmitted anywhere.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Artifacts */}
+      <section className="relative section-padding">
+        <div className="fx-lamp fx-lamp-l top-1/4" aria-hidden="true"
+             style={{ background: 'radial-gradient(circle, rgba(191,90,242,0.13), transparent 62%)' }} />
+        <div className="container-custom">
+          <div className="max-w-3xl mb-16 fx-reveal">
             <p className="subheading mb-4">Read the code</p>
             <h2 className="heading-lg mb-6">
               Three things I built, and the{' '}
@@ -205,7 +264,10 @@ export default function EngineeringPage() {
 
           <div className="space-y-12">
             {ARTIFACTS.map((a, i) => (
-              <div key={a.name} className="border-t border-white/10 pt-8">
+              <SpotlightCard
+                key={a.name}
+                className="fx-reveal rounded-2xl border border-white/10 bg-secondary-dark/40 p-6 sm:p-8"
+              >
                 <div className="flex items-baseline gap-4 mb-4 flex-wrap">
                   <span className="text-sm text-neon-purple font-mono">
                     {String(i + 1).padStart(2, '0')}
@@ -235,16 +297,18 @@ export default function EngineeringPage() {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </SpotlightCard>
             ))}
           </div>
         </div>
       </section>
 
       {/* The bugs */}
-      <section className="section-padding bg-secondary/30">
+      <section className="relative section-padding bg-secondary/30 overflow-hidden">
+        <div className="fx-lamp fx-lamp-r top-0" aria-hidden="true"
+             style={{ background: 'radial-gradient(circle, rgba(249,115,22,0.09), transparent 62%)' }} />
         <div className="container-custom">
-          <div className="max-w-3xl mb-12">
+          <div className="max-w-3xl mb-12 fx-reveal">
             <p className="subheading mb-4">The part most portfolios leave out</p>
             <h2 className="heading-lg mb-6">
               Three bugs that only <span className="text-gradient-neon">appear in production</span>
@@ -256,9 +320,13 @@ export default function EngineeringPage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {BUGS.map((b) => (
-              <div key={b.symptom} className="border-l-2 border-neon-purple/40 pl-6">
+          <div className="grid lg:grid-cols-3 gap-8 fx-stagger">
+            {BUGS.map((b, i) => (
+              <div
+                key={b.symptom}
+                className="border-l-2 border-neon-purple/40 pl-6"
+                style={{ '--i': i } as React.CSSProperties}
+              >
                 <div className="text-xs uppercase tracking-wide text-white/40 mb-2">Symptom</div>
                 <p className="font-medium mb-4">{b.symptom}</p>
                 <div className="text-xs uppercase tracking-wide text-white/40 mb-2">Cause</div>
@@ -276,7 +344,7 @@ export default function EngineeringPage() {
       {/* Stack + how I work */}
       <section className="section-padding">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16">
+          <div className="grid lg:grid-cols-2 gap-16 fx-stagger">
             <div>
               <p className="subheading mb-4">The stack</p>
               <h2 className="heading-lg mb-6">Whole-stack, which is the job</h2>
@@ -339,9 +407,11 @@ export default function EngineeringPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding bg-secondary/30">
+      <section className="relative section-padding bg-secondary/30 overflow-hidden">
+        <div className="fx-lamp fx-lamp-l bottom-0" aria-hidden="true"
+             style={{ background: 'radial-gradient(circle, rgba(168,85,247,0.15), transparent 62%)' }} />
         <div className="container-custom">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl fx-reveal">
             <h2 className="heading-lg mb-6">
               Available for <span className="text-gradient-neon">embedded contracts</span>
             </h2>
@@ -382,6 +452,6 @@ export default function EngineeringPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   )
 }
