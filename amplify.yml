@@ -4,6 +4,18 @@ frontend:
     preBuild:
       commands:
         - npm ci
+        # Bake server-side env into the build.
+        #
+        # Amplify app-level variables are reliably present at BUILD time; what
+        # reaches the SSR compute runtime is not. /api/revalidate read
+        # process.env.REVALIDATE_SECRET at runtime, got undefined, and failed
+        # closed with a 503 even though the variable was set on the app.
+        #
+        # Writing it into .env.production means Next resolves it during the
+        # build, which is the part that is dependable. NOT prefixed
+        # NEXT_PUBLIC_, so it stays server-only and is never shipped to a
+        # browser bundle.
+        - echo "REVALIDATE_SECRET=$REVALIDATE_SECRET" >> .env.production
     build:
       commands:
         - npm run build
