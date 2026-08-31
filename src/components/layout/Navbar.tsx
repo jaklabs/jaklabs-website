@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { Menu, X, ChevronDown } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -75,6 +75,35 @@ export function Navbar() {
     const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
     const [mobileDropdown, setMobileDropdown] = useState<string | null>(null)
 
+    // The dropdown closed the instant the cursor left the trigger, which made it
+    // very hard to actually reach — you had to travel straight down, and any
+    // diagonal path towards an item dismissed the menu first. Two things caused
+    // that and both are fixed:
+    //
+    //   1. A DEAD GAP. The panel used `mt-2`, so 8px of nothing sat between the
+    //      trigger and the menu. That gap belonged to no element, so crossing it
+    //      fired mouseleave. The margin is now padding INSIDE the positioned
+    //      wrapper, so the hoverable area is continuous while the menu still
+    //      looks detached.
+    //
+    //   2. NO GRACE PERIOD. Closing is now deferred, so a cursor that clips a
+    //      neighbouring item on its way down does not lose the menu. Re-entering
+    //      cancels the pending close.
+    //
+    // 220ms is long enough to cross a corner and short enough that the menu never
+    // feels stuck open.
+    const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+    const openDropdown = (name: string) => {
+        if (closeTimer.current) clearTimeout(closeTimer.current)
+        setActiveDropdown(name)
+    }
+    const scheduleClose = () => {
+        if (closeTimer.current) clearTimeout(closeTimer.current)
+        closeTimer.current = setTimeout(() => setActiveDropdown(null), 220)
+    }
+    useEffect(() => () => { if (closeTimer.current) clearTimeout(closeTimer.current) }, [])
+
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 50)
@@ -103,8 +132,8 @@ export function Navbar() {
                             <div
                                 key={link.name}
                                 className="relative"
-                                onMouseEnter={() => link.dropdown && setActiveDropdown(link.name)}
-                                onMouseLeave={() => setActiveDropdown(null)}
+                                onMouseEnter={() => link.dropdown && openDropdown(link.name)}
+                                onMouseLeave={() => link.dropdown && scheduleClose()}
                             >
                                 <Link
                                     href={link.href}
@@ -137,20 +166,22 @@ export function Navbar() {
                                         }
                                         transition={{ duration: 0.2 }}
                                         aria-hidden={activeDropdown !== link.name}
-                                        className={`absolute top-full left-0 mt-2 w-56 bg-secondary border border-white/10 rounded-xl shadow-xl overflow-hidden ${
+                                        className={`absolute top-full left-0 pt-2 w-56 ${
                                             activeDropdown === link.name ? '' : 'pointer-events-none'
                                         }`}
                                     >
-                                        {link.dropdown.map((item) => (
-                                            <Link
-                                                key={item.name}
-                                                href={item.href}
-                                                tabIndex={activeDropdown === link.name ? undefined : -1}
-                                                className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors"
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        ))}
+                                        <div className="bg-secondary border border-white/10 rounded-xl shadow-xl overflow-hidden">
+                                            {link.dropdown.map((item) => (
+                                                <Link
+                                                    key={item.name}
+                                                    href={item.href}
+                                                    tabIndex={activeDropdown === link.name ? undefined : -1}
+                                                    className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors"
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            ))}
+                                        </div>
                                     </motion.div>
                                 )}
                             </div>
