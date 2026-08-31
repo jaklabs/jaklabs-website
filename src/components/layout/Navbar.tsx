@@ -38,7 +38,25 @@ const navLinks: NavLink[] = [
         ],
     },
     { name: 'Blog', href: '/blog' },
-    { name: 'Hood Dev', href: '/hood-dev' },
+    // The two products, grouped — same reasoning as Free Tools above.
+    //
+    // Hood Dev was a flat item until Verdikt needed a door too. Adding a second
+    // flat item would have made an eight-item header and pushed Contact towards
+    // the edge, so they share one. "Products" rather than "Services" on purpose:
+    // Services is client work I sell my time for, these are things that exist
+    // whether or not anyone buys them, and collapsing that distinction in the nav
+    // would make the pricing conversation harder later.
+    //
+    // The parent goes to /hood-dev, the older and better-developed of the two, so
+    // a click that never opens the menu still lands somewhere real.
+    {
+        name: 'Products',
+        href: '/hood-dev',
+        dropdown: [
+            { name: 'Hood Dev', href: '/hood-dev' },
+            { name: 'Verdikt', href: '/verdikt' },
+        ],
+    },
     { name: 'Contact', href: '/contact' },
 ]
 

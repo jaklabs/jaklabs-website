@@ -42,6 +42,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // The school. A different audience again — developers, not buyers — and the
     // only route from this site to hood.jaklabs.io.
     { url: `${BASE}/hood-dev`, changeFrequency: 'monthly', priority: 0.7 },
+    // The trading journal. A third audience — traders — and the only route from
+    // this site to verdikt.jaklabs.io.
+    { url: `${BASE}/verdikt`, changeFrequency: 'monthly', priority: 0.7 },
   ] as const).map((p) => ({ ...p, lastModified: new Date() }))
 
   // A blog API outage must not produce a sitemap missing every post — better to
