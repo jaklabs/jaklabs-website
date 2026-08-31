@@ -165,6 +165,38 @@ export async function listBlogs(event: APIGatewayProxyEvent): Promise<APIGateway
   }
 }
 
+/**
+ * Tell the website a post's published state changed, so it drops the cached
+ * blog index instead of serving a stale one.
+ *
+ * Amplify's SSR hosting keeps the ISR cache per Lambda instance with no shared
+ * store, so time-based `revalidate` is unreliable — a published post sat
+ * invisible on the index for over six minutes and only appeared after a full
+ * rebuild. Rather than the site guessing when to refresh, the CMS tells it.
+ *
+ * Deliberately best-effort. If revalidation fails the post is still published
+ * and correct in the database; the index is just stale until the next
+ * regeneration. Failing the write because a cache hint did not land would be
+ * strictly worse.
+ */
+async function revalidateSite(slug: string): Promise<void> {
+  const url = process.env.SITE_REVALIDATE_URL
+  const secret = process.env.REVALIDATE_SECRET
+  if (!url || !secret) return
+
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-revalidate-secret': secret },
+      body: JSON.stringify({ slug }),
+      signal: AbortSignal.timeout(4000),
+    })
+    if (!res.ok) console.warn(`Revalidate returned ${res.status} for ${slug}`)
+  } catch (err) {
+    console.warn(`Revalidate call failed for ${slug}:`, err)
+  }
+}
+
 export async function updateBlog(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   try {
     if (!isAdmin(event)) return error('Admin access required', 403)
@@ -217,6 +249,16 @@ export async function updateBlog(event: APIGatewayProxyEvent): Promise<APIGatewa
       ExpressionAttributeNames: Object.keys(expressionNames).length > 0 ? expressionNames : undefined,
       ExpressionAttributeValues: expressionValues, ReturnValues: 'ALL_NEW',
     }))
+
+    // Only when the published state actually changed. A title tweak on a draft
+    // has no effect on what the site is serving, and revalidating on every edit
+    // would drop the cache for nothing.
+    const wasPublished = existing.status === 'published'
+    const nowPublished = (result.Attributes?.status ?? existing.status) === 'published'
+    if (wasPublished !== nowPublished || (nowPublished && body.content !== undefined)) {
+      await revalidateSite(String(result.Attributes?.slug ?? slug))
+    }
+
     return success(result.Attributes)
   } catch (err) {
     console.error('Error updating blog:', err)

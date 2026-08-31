@@ -52,6 +52,16 @@ export class ApiStack extends cdk.Stack {
         MEDIA_BUCKET: mediaBucket.bucketName,
         CLOUDFRONT_DOMAIN: cdk.Fn.importValue('JakLabs-CloudFrontDomain'),
         NODE_OPTIONS: '--enable-source-maps',
+        // Tell the site when a post's published state changes. Amplify keeps
+        // the ISR cache per Lambda instance with no shared store, so a
+        // published post can sit invisible on /blog until a full rebuild —
+        // it did, for over six minutes, on 2026-08-31.
+        SITE_REVALIDATE_URL: 'https://jaklabs.io/api/revalidate',
+        // Shared secret, not a user credential: it authorises "the CMS may tell
+        // me a post changed". Same value in the Amplify env. Rotating it means
+        // changing both, and the worst case if it leaks is somebody making the
+        // blog index regenerate.
+        REVALIDATE_SECRET: process.env.REVALIDATE_SECRET ?? '__REVALIDATE_SECRET__',
       },
     })
 
