@@ -57,6 +57,7 @@ const navLinks: NavLink[] = [
             { name: 'Verdikt', href: '/verdikt' },
             { name: 'Ops Platform', href: '/ops-platform' },
             { name: 'Telehealth', href: '/telehealth' },
+            { name: 'Quarry', href: '/quarry' },
         ],
     },
     // Engineering gets its own top-level slot rather than a dropdown.

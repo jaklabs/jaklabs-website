@@ -906,3 +906,161 @@
   from { opacity: 0; filter: blur(6px); transform: translateY(12px) scale(0.99); }
   to   { opacity: 1; filter: blur(0); transform: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   /quarry — the growth-compliance engine skin
+   ══════════════════════════════════════════════════════════════════════════
+   Signal-orange on near-black, from the design artifact, plus the three verdict
+   colours that ARE the product: green, yellow, red. Fifth scoped skin.
+
+   The flare here is the verdict stamp. Everywhere else on the site motion is a
+   fade or a slide; here the classifier pills snap in — a stamp landing on a
+   page. That is the product's whole gesture (a verdict, delivered, with a
+   citation) and it is the one animation on this site that is arguing something
+   rather than decorating.
+   ══════════════════════════════════════════════════════════════════════════ */
+.quarry-skin {
+  --qy-ground: #161719;
+  --qy-panel: #1e2023;
+  --qy-panel-2: #26292d;
+  --qy-line: #31353a;
+  --qy-ink: #eceae4;
+  --qy-muted: #9a9ea7;
+  --qy-faint: #676c74;
+  --qy-sig: #f2793f;
+  --qy-sig-soft: #ff8b53;
+  --qy-sig-ghost: #2c1d13;
+  --qy-green: #5cc47c;
+  --qy-green-bg: #15291c;
+  --qy-yellow: #e0b053;
+  --qy-yellow-bg: #2a2213;
+  --qy-red: #e7645c;
+  --qy-red-bg: #2c1615;
+
+  background: var(--qy-ground);
+  color: var(--qy-muted);
+  font-family: var(--font-hanken), system-ui, sans-serif;
+}
+
+.quarry-skin h1,
+.quarry-skin h2,
+.quarry-skin h3 {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.06;
+  color: var(--qy-ink);
+  text-wrap: balance;
+}
+.quarry-skin .qy-mono,
+.quarry-skin .qy-eyebrow {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+.quarry-skin .qy-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--qy-sig);
+}
+.quarry-skin .qy-ink { color: var(--qy-ink); }
+.quarry-skin .qy-faint { color: var(--qy-faint); }
+.quarry-skin .qy-sig { color: var(--qy-sig); }
+
+.quarry-skin .qy-panel {
+  background: var(--qy-panel);
+  border: 1px solid var(--qy-line);
+  border-radius: 14px;
+}
+.quarry-skin .qy-panel-2 { background: var(--qy-panel-2); }
+
+.quarry-skin .qy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 8px;
+  background: var(--qy-sig);
+  color: #fff;
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+.quarry-skin .qy-btn:hover { transform: translateY(-1px); background: var(--qy-sig-soft); }
+.quarry-skin .qy-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 8px;
+  border: 1px solid var(--qy-line);
+  color: var(--qy-ink);
+  transition: border-color 0.15s ease;
+}
+.quarry-skin .qy-btn-ghost:hover { border-color: var(--qy-sig); }
+
+/* The verdict pill. Colour is doing semantic work here, so it is never the ONLY
+   signal — every pill carries its word (GREEN / YELLOW / RED) as text, which is
+   what a colour-blind reader and a screen reader both get. */
+.quarry-skin .qy-pill {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.quarry-skin .qy-g { color: var(--qy-green); background: var(--qy-green-bg); }
+.quarry-skin .qy-y { color: var(--qy-yellow); background: var(--qy-yellow-bg); }
+.quarry-skin .qy-r { color: var(--qy-red); background: var(--qy-red-bg); }
+
+/* The terminal sample. Near-black regardless of the panel around it, because a
+   terminal that matches the page stops reading as a terminal. */
+.quarry-skin .qy-term {
+  background: #0f100d;
+  border: 1px solid var(--qy-line);
+  border-radius: 12px;
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-size: 13.5px;
+  color: #d7d4cc;
+  overflow-x: auto;
+}
+.quarry-skin .qy-term .ln { display: block; white-space: pre; line-height: 1.75; }
+.quarry-skin .qy-term .dim { color: #7d8072; }
+
+@media (prefers-reduced-motion: reduce) {
+  .quarry-skin * { transition: none !important; }
+}
+
+/* ── Motion: the stamp ──────────────────────────────────────────────────── */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .quarry-skin .qy-in {
+      animation: qy-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 3% entry 44%;
+    }
+    .quarry-skin .qy-stagger > * {
+      animation: qy-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 3% entry calc(40% + (var(--i, 0) * 9%));
+    }
+    /* Verdicts land one after another, each pill snapping down from slightly
+       oversize. Reads as a stamp rather than a fade. */
+    .quarry-skin .qy-verdict {
+      animation: qy-stamp linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry calc(34% + (var(--i, 0) * 13%));
+    }
+  }
+}
+@keyframes qy-rise {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes qy-stamp {
+  0%   { opacity: 0; transform: scale(1.14); }
+  70%  { opacity: 1; transform: scale(0.985); }
+  100% { opacity: 1; transform: scale(1); }
+}

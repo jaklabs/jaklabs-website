@@ -51,6 +51,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // The telehealth platform, for licence or acquisition. Built and owned, no
     // operator yet — the page states that rather than implying otherwise.
     { url: `${BASE}/telehealth`, changeFrequency: 'monthly', priority: 0.8 },
+    // Quarry — the growth-compliance engine. Early access; the register is still
+    // private pending the attorney sign-off, and the page says so.
+    { url: `${BASE}/quarry`, changeFrequency: 'monthly', priority: 0.8 },
   ] as const).map((p) => ({ ...p, lastModified: new Date() }))
 
   // A blog API outage must not produce a sitemap missing every post — better to
