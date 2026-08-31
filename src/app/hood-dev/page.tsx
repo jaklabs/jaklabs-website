@@ -199,7 +199,7 @@ function BlockingOrder() {
         'Blocking order: fundamentals and debugging gate reading, which gates systems design, which '
         + 'gates production. Delivery gates ambiguity, which gates communication and feeds verification.'
       }
-      className="h-auto w-full max-w-2xl font-mono"
+      className="mx-auto h-auto w-full max-w-2xl font-mono"
     >
       <defs>
         <marker id="hd-arrow" markerWidth="7" markerHeight="7" refX="6" refY="2.6" orient="auto">
@@ -244,8 +244,8 @@ export default function HoodDevPage() {
   return (
     <>
       <section className="pt-32 pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <p className="subheading mb-4">Hood Dev · a JAK Labs school</p>
             <h1 className="heading-xl mb-6">
               Every course tells you what to learn.{' '}
@@ -282,8 +282,8 @@ export default function HoodDevPage() {
       </section>
 
       <section className="py-16 bg-secondary/30">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <p className="subheading mb-4">Who it is for</p>
             <h2 className="heading-lg mb-6">
               The stuck mid-level developer. <span className="text-white/40">Not beginners.</span>
@@ -311,8 +311,8 @@ export default function HoodDevPage() {
       </section>
 
       <section className="section-padding">
-        <div className="container-custom">
-          <div className="max-w-3xl mb-10">
+        <div className="container-custom max-w-4xl">
+          <div className="mb-10">
             <p className="subheading mb-4">The Teardown · assessment structure</p>
             <h2 className="heading-lg mb-6">Seven phases, numbered from zero</h2>
             <p className="text-white/70">
@@ -320,7 +320,7 @@ export default function HoodDevPage() {
               2026 the artifact proves nothing, because a model could have made it.
             </p>
           </div>
-          <div className="max-w-3xl space-y-2">
+          <div className="space-y-2">
             {PHASES.map((p, i) => (
               <div
                 key={p.name}
@@ -347,8 +347,8 @@ export default function HoodDevPage() {
       </section>
 
       <section className="py-16 bg-secondary/30">
-        <div className="container-custom">
-          <div className="max-w-3xl mb-10">
+        <div className="container-custom max-w-4xl">
+          <div className="mb-10">
             <p className="subheading mb-4">Leaks · the weakness taxonomy</p>
             <h2 className="heading-lg mb-6">
               Type is orthogonal to competence.{' '}
@@ -390,7 +390,7 @@ export default function HoodDevPage() {
             </table>
           </div>
 
-          <p className="mt-6 max-w-3xl text-white/70">
+          <p className="mt-6 text-white/70">
             <span className="font-semibold text-accent-coral">
               L7, L8 and L9 are the ones no competitor measures at all
             </span>{' '}
@@ -403,7 +403,7 @@ export default function HoodDevPage() {
               The blocking order
             </p>
             <BlockingOrder />
-            <p className="mt-6 max-w-3xl text-sm text-white/70">
+            <p className="mt-6 text-sm text-white/70">
               <span className="font-semibold text-white">Hard rule:</span> if fundamentals or
               debugging score above 60, your track opens with them regardless of what you wanted to
               learn. You cannot teach systems design to someone who cannot debug — they fail and
@@ -415,8 +415,8 @@ export default function HoodDevPage() {
       </section>
 
       <section className="section-padding">
-        <div className="container-custom">
-          <div className="max-w-3xl mb-10">
+        <div className="container-custom max-w-4xl">
+          <div className="mb-10">
             <p className="subheading mb-4">How it refuses to be astrology</p>
             <h2 className="heading-lg">Four rules, and none of them are negotiable</h2>
           </div>
@@ -434,8 +434,8 @@ export default function HoodDevPage() {
       </section>
 
       <section className="py-16 bg-secondary/30">
-        <div className="container-custom">
-          <div className="max-w-3xl mb-10">
+        <div className="container-custom max-w-4xl">
+          <div className="mb-10">
             <p className="subheading mb-4">Ranks · evidence-based, never time-based</p>
             <h2 className="heading-lg">You cannot sit your way up this ladder</h2>
           </div>
@@ -470,7 +470,7 @@ export default function HoodDevPage() {
               </tbody>
             </table>
           </div>
-          <p className="mt-6 max-w-3xl text-white/70">
+          <p className="mt-6 text-white/70">
             <span className="font-semibold text-white">Bay Time is earned, not scheduled.</span> You
             cannot buy an hour of one-to-one. You reach it by shipping something real, and the session
             is about <em>your</em> project — never a curriculum walkthrough. Earned access gets
@@ -480,8 +480,8 @@ export default function HoodDevPage() {
       </section>
 
       <section className="section-padding">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <p className="subheading mb-4">Where this actually stands</p>
             <div className="rounded-r-xl border-l-[3px] border-accent-coral bg-secondary-dark p-6 sm:p-7">
               <p className="text-white/70">
@@ -515,8 +515,8 @@ export default function HoodDevPage() {
       </section>
 
       <section className="py-20 bg-secondary/30">
-        <div className="container-custom">
-          <div className="max-w-2xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <p className="subheading mb-4">Start</p>
             <h2 className="heading-lg mb-6">Find out what you&rsquo;re actually missing.</h2>
             <p className="mb-8 text-white/70">

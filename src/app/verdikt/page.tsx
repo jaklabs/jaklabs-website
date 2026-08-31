@@ -206,8 +206,8 @@ export default function VerdiktPage() {
   return (
     <div className={`verdikt-skin ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
       <section className="pt-32 pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>Verdikt · a JAK Labs product</Eyebrow>
             <h1 className="heading-xl mb-6 vk-fg">
               Every trading book tells you to keep a journal.{' '}
@@ -285,8 +285,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>Why gamify it</Eyebrow>
             <h2 className="heading-lg vk-fg mb-6">
               Discipline is a habit problem,{' '}
@@ -313,8 +313,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>What&rsquo;s in it</Eyebrow>
           </div>
           <div className="vk-grid sm:grid-cols-2 lg:grid-cols-3">
@@ -335,8 +335,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>Auto-import</Eyebrow>
             <h2 className="heading-lg vk-fg mb-6">
               It reads your fills so you don&rsquo;t retype them.
@@ -361,8 +361,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>While you trade</Eyebrow>
             <h2 className="heading-lg vk-fg mb-6">
               A coach that watches you, and is{' '}
@@ -391,7 +391,7 @@ export default function VerdiktPage() {
               </div>
             ))}
           </div>
-          <div className="mt-8 max-w-3xl space-y-5">
+          <div className="mt-8 space-y-5">
             <p className="vk-note text-sm">
               Every one of those is about <span className="vk-fg">restraint or adherence</span>. None
               of them can be &ldquo;take this trade.&rdquo; That isn&rsquo;t a policy — a function
@@ -409,8 +409,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>Finding your edge</Eyebrow>
             <h2 className="heading-lg vk-fg mb-6">
               Every journal will show you a win rate.{' '}
@@ -435,7 +435,7 @@ export default function VerdiktPage() {
               </div>
             ))}
           </div>
-          <div className="mt-8 max-w-3xl space-y-5">
+          <div className="mt-8 space-y-5">
             <p className="vk-note text-sm">
               This is where the name comes from. Not a dashboard, not a score, not a streak — a{' '}
               <span className="vk-fg">verdict</span>, delivered only when your own trades have earned
@@ -464,8 +464,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>About your keys</Eyebrow>
             <div
               className="rounded-[0.875rem] p-6 sm:p-7"
@@ -509,8 +509,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>The advice boundary</Eyebrow>
             <h2 className="heading-lg vk-fg mb-6">
               The coach comments on the trader, never on the market.
@@ -562,8 +562,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-16">
-        <div className="container-custom">
-          <div className="max-w-3xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>What this is not</Eyebrow>
             <h2 className="heading-lg vk-fg mb-6">
               It is a journal. It does not tell you what to buy.
@@ -586,8 +586,8 @@ export default function VerdiktPage() {
       </section>
 
       <section className="pb-24">
-        <div className="container-custom">
-          <div className="max-w-2xl">
+        <div className="container-custom max-w-4xl">
+          <div>
             <Eyebrow>Start the streak</Eyebrow>
             <h2 className="heading-lg vk-fg mb-6">Fourteen days from now, you have a record.</h2>
             <p className="mb-8">
