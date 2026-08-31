@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
+import { NenHexagon, NenBars } from '@/components/nen/Hexagon'
 
 /**
  * 水見式 Water Divination — the second free tool.
@@ -97,6 +98,50 @@ export default function NenPage() {
               The other one — Aura Rank
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* The chart the tool prints. Two views of one reading — see the component
+          header for why the page carries both rather than picking one. */}
+      <section className="section-padding border-t border-white/10">
+        <div className="container-custom max-w-4xl">
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-muted">
+            One reading, plotted
+          </p>
+          <h2 className="heading-md mb-4">The hexagon is the answer sheet</h2>
+          <p className="mb-10 max-w-2xl text-muted-foreground">
+            This is a real reading of a real repository. Six numbers that sum to a hundred, drawn on
+            a wheel whose order is fixed by canon — which is what makes the affinity arithmetic below
+            it mean anything at all.
+          </p>
+
+          <div className="grid items-center gap-10 rounded-xl border border-white/10 bg-black/40 p-6 sm:p-8 lg:grid-cols-5">
+            <div className="lg:col-span-3">
+              <NenHexagon />
+            </div>
+            <div className="lg:col-span-2">
+              <NenBars />
+              <div className="mt-6 border-t border-white/10 pt-5">
+                <p className="font-mono text-sm font-semibold" style={{ color: '#72BE94' }}>
+                  CONJURER <span className="font-normal text-muted">具現化系 · 49.0%</span>
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Serious and highly strung. You materialise structure from rules: types, schemas,
+                  contracts. You decide what a thing is before you let it exist.
+                </p>
+                <p className="mt-3 font-mono text-xs text-muted">
+                  opposite: emitter — 40% affinity
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <p className="mt-8 max-w-2xl text-muted-foreground">
+            The dashed line is the one that costs you. It runs between your dominant category and the
+            vertex three positions away, and the gap along it is the reason the tool reports a{' '}
+            <span className="text-white">margin</span> and not just a winner — 49 against 20 is a
+            result, 21 against 20 is a coin toss in a costume.
+          </p>
         </div>
       </section>
 
