@@ -105,28 +105,44 @@ export function Navbar() {
                                     {link.dropdown && <ChevronDown className="w-4 h-4" />}
                                 </Link>
 
+                                {/* Always mounted, hidden by opacity — NOT by AnimatePresence.
+                                    *
+                                    * It used to unmount when closed, which meant the five pages
+                                    * behind these two menus (/website-audit, /aura, /nen,
+                                    * /hood-dev, /verdikt) had no <a> pointing at them in any
+                                    * served HTML. A crawler reads the response, not a hover, so
+                                    * grouping those items into dropdowns had quietly cut every one
+                                    * of them off from the site's internal linking — the exact
+                                    * reach the grouping was meant to give them.
+                                    *
+                                    * Kept in the DOM and animated instead. pointer-events-none and
+                                    * aria-hidden keep it out of the way of a mouse and a screen
+                                    * reader while closed; the href is there either way. */}
                                 {link.dropdown && (
-                                    <AnimatePresence>
-                                        {activeDropdown === link.name && (
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                exit={{ opacity: 0, y: 10 }}
-                                                transition={{ duration: 0.2 }}
-                                                className="absolute top-full left-0 mt-2 w-56 bg-secondary border border-white/10 rounded-xl shadow-xl overflow-hidden"
+                                    <motion.div
+                                        initial={false}
+                                        animate={
+                                            activeDropdown === link.name
+                                                ? { opacity: 1, y: 0 }
+                                                : { opacity: 0, y: 10 }
+                                        }
+                                        transition={{ duration: 0.2 }}
+                                        aria-hidden={activeDropdown !== link.name}
+                                        className={`absolute top-full left-0 mt-2 w-56 bg-secondary border border-white/10 rounded-xl shadow-xl overflow-hidden ${
+                                            activeDropdown === link.name ? '' : 'pointer-events-none'
+                                        }`}
+                                    >
+                                        {link.dropdown.map((item) => (
+                                            <Link
+                                                key={item.name}
+                                                href={item.href}
+                                                tabIndex={activeDropdown === link.name ? undefined : -1}
+                                                className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors"
                                             >
-                                                {link.dropdown.map((item) => (
-                                                    <Link
-                                                        key={item.name}
-                                                        href={item.href}
-                                                        className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/5 transition-colors"
-                                                    >
-                                                        {item.name}
-                                                    </Link>
-                                                ))}
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
+                                                {item.name}
+                                            </Link>
+                                        ))}
+                                    </motion.div>
                                 )}
                             </div>
                         ))}
