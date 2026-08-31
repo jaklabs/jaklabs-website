@@ -18,7 +18,25 @@ const navLinks: NavLink[] = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
-    { name: 'Free Audit', href: '/website-audit' },
+    // The three free things, under one item.
+    //
+    // Listing them flat would have made a nine-item header, and the tools would
+    // have crowded out Services and Contact — the two links that actually earn
+    // money. Grouped, they stay one hover away and the buying path stays
+    // legible.
+    //
+    // The parent still goes somewhere: /website-audit is the highest-intent
+    // page on the site, so a click that never opens the menu lands on the best
+    // of the three rather than a dead heading.
+    {
+        name: 'Free Tools',
+        href: '/website-audit',
+        dropdown: [
+            { name: 'Website Audit', href: '/website-audit' },
+            { name: 'Aura Rank', href: '/aura' },
+            { name: '水見式 Nen Test', href: '/nen' },
+        ],
+    },
     { name: 'Blog', href: '/blog' },
     { name: 'Hood Dev', href: '/hood-dev' },
     { name: 'Contact', href: '/contact' },
