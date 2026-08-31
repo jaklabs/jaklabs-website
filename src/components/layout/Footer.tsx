@@ -25,6 +25,7 @@ const footerLinks = {
         { name: 'Embedded Engineering', href: '/services#embedded' },
         { name: 'Free website audit', href: '/website-audit' },
         { name: 'Aura Rank (free tool)', href: '/aura' },
+        { name: '水見式 Nen test (free tool)', href: '/nen' },
     ],
     industries: [
         { name: 'Home & Trade Services', href: '/industries/home-and-trade-services' },

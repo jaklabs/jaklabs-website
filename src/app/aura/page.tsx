@@ -351,6 +351,9 @@ export default function AuraPage() {
               <Link href="/engineering" className="btn-secondary">
                 Who built it
               </Link>
+              <Link href="/nen" className="btn-secondary">
+                The unserious one
+              </Link>
             </div>
           </div>
 
