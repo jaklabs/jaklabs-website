@@ -48,6 +48,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // The Haslett codebase offered as an acquirable asset. A fourth audience —
     // multi-shop operators — and the highest-value page on the site per visit.
     { url: `${BASE}/ops-platform`, changeFrequency: 'monthly', priority: 0.8 },
+    // The telehealth platform, for licence or acquisition. Built and owned, no
+    // operator yet — the page states that rather than implying otherwise.
+    { url: `${BASE}/telehealth`, changeFrequency: 'monthly', priority: 0.8 },
   ] as const).map((p) => ({ ...p, lastModified: new Date() }))
 
   // A blog API outage must not produce a sitemap missing every post — better to

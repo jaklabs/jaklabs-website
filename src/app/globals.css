@@ -770,3 +770,139 @@
   from { transform: translateX(-100%); }
   to   { transform: translateX(100%); }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   /telehealth — the platform skin
+   ══════════════════════════════════════════════════════════════════════════
+   Teal on deep green-black, from the design artifact's dark palette, with a
+   SERIF display face (Newsreader) for the h1. That serif is the whole flare:
+   it is the only serif on jaklabs.io, and it reads as clinical and considered
+   rather than startup-loud — which is the register a healthcare operator buys
+   in. Everything else on the site shouts a little; this page should not.
+
+   Fourth scoped skin. Purple = the site, cyan = Verdikt, brass = Haslett,
+   teal = this. Each sells to a different person and none of them should be
+   hoisted to :root.
+   ══════════════════════════════════════════════════════════════════════════ */
+.tele-skin {
+  --tl-ground: #0f1a1c;
+  --tl-panel: #152426;
+  --tl-panel-2: #1b3032;
+  --tl-line: #264042;
+  --tl-ink: #e7efed;
+  --tl-muted: #96aaa6;
+  --tl-faint: #647a76;
+  --tl-teal: #43c0af;
+  --tl-teal-soft: #5bd0bf;
+  --tl-teal-ghost: #123230;
+  --tl-ready: #4fc9b5;
+  --tl-caution: #e0ac5f;
+
+  background: var(--tl-ground);
+  color: var(--tl-muted);
+  font-family: var(--font-instrument), system-ui, sans-serif;
+}
+
+.tele-skin h1 {
+  font-family: var(--font-newsreader), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.06;
+  color: var(--tl-ink);
+  text-wrap: balance;
+}
+.tele-skin h2,
+.tele-skin h3 {
+  font-family: var(--font-instrument), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--tl-ink);
+  text-wrap: balance;
+}
+.tele-skin .tl-mono,
+.tele-skin .tl-eyebrow {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+.tele-skin .tl-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tl-teal);
+}
+.tele-skin .tl-ink { color: var(--tl-ink); }
+.tele-skin .tl-faint { color: var(--tl-faint); }
+.tele-skin .tl-teal { color: var(--tl-teal); }
+
+.tele-skin .tl-panel {
+  background: var(--tl-panel);
+  border: 1px solid var(--tl-line);
+  border-radius: 14px;
+}
+.tele-skin .tl-panel-2 { background: var(--tl-panel-2); }
+
+.tele-skin .tl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 8px;
+  background: var(--tl-teal);
+  color: var(--tl-ground);
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+.tele-skin .tl-btn:hover { transform: translateY(-1px); background: var(--tl-teal-soft); }
+.tele-skin .tl-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 8px;
+  border: 1px solid var(--tl-line);
+  color: var(--tl-ink);
+  transition: border-color 0.15s ease;
+}
+.tele-skin .tl-btn-ghost:hover { border-color: var(--tl-teal); }
+
+/* Status indicator. Says "built and passing", never "in use" — there is no
+   operator yet and the page says so out loud. */
+.tele-skin .tl-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--tl-ready);
+  animation: tl-pulse 2.6s infinite;
+}
+@keyframes tl-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(79, 201, 181, 0.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(79, 201, 181, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(79, 201, 181, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tele-skin .tl-pulse { animation: none; }
+  .tele-skin * { transition: none !important; }
+}
+
+/* Motion signature: content resolves from soft to sharp as it arrives, rather
+   than sliding (Haslett) or rising (engineering). Reads as something coming
+   into focus, which suits a page about verification. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .tele-skin .tl-in {
+      animation: tl-focus linear both;
+      animation-timeline: view();
+      animation-range: entry 3% entry 46%;
+    }
+    .tele-skin .tl-stagger > * {
+      animation: tl-focus linear both;
+      animation-timeline: view();
+      animation-range: entry 3% entry calc(42% + (var(--i, 0) * 8%));
+    }
+  }
+}
+@keyframes tl-focus {
+  from { opacity: 0; filter: blur(6px); transform: translateY(12px) scale(0.99); }
+  to   { opacity: 1; filter: blur(0); transform: none; }
+}
