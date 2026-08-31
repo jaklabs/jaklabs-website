@@ -55,6 +55,7 @@ const navLinks: NavLink[] = [
         dropdown: [
             { name: 'Hood Dev', href: '/hood-dev' },
             { name: 'Verdikt', href: '/verdikt' },
+            { name: 'Ops Platform', href: '/ops-platform' },
         ],
     },
     // Engineering gets its own top-level slot rather than a dropdown.

@@ -587,3 +587,186 @@
   .fx-spot:hover { border-color: rgba(168, 85, 247, 0.35); }
 }
 .fx-spot > * { position: relative; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   /ops-platform — the Haslett skin
+   ══════════════════════════════════════════════════════════════════════════
+   Brass on cool charcoal, taken from the design artifact's dark palette. This
+   is the third scoped skin on the site and the most different on purpose:
+   Verdikt is cyan-on-charcoal, the rest of jaklabs.io is purple, and this one is
+   warm. It has to be, because it is selling to a different person entirely — a
+   multi-shop operator deciding whether to buy an asset, not a developer and not
+   a local owner booking an audit.
+
+   The visual idea is an INSTRUMENT PANEL rather than a landing page. Brass,
+   tabular numerals, hairline rules, a live indicator. The page is arguing that
+   the software is real and running, so it should look like a readout of
+   something running rather than a brochure about it.
+
+   Scoped for the same reason the other two are: these tokens are warm and light
+   where the site is cool and dark, and hoisting them would restyle everything.
+   ══════════════════════════════════════════════════════════════════════════ */
+.haslett-skin {
+  --hz-ground: #14181e;
+  --hz-panel: #1c212a;
+  --hz-panel-2: #232936;
+  --hz-line: #2c3340;
+  --hz-ink: #ece9e2;
+  --hz-muted: #9aa2b1;
+  --hz-faint: #6b7482;
+  --hz-brass: #d29a4a;
+  --hz-brass-soft: #e0ac5f;
+  --hz-brass-ghost: #2a2418;
+  --hz-good: #6fb488;
+
+  background: var(--hz-ground);
+  color: var(--hz-muted);
+  font-family: var(--font-plex-sans), system-ui, sans-serif;
+}
+
+.haslett-skin h1,
+.haslett-skin h2,
+.haslett-skin h3 {
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  color: var(--hz-ink);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.haslett-skin .hz-mono,
+.haslett-skin .hz-eyebrow {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+}
+.haslett-skin .hz-eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--hz-brass);
+}
+.haslett-skin .hz-ink { color: var(--hz-ink); }
+.haslett-skin .hz-faint { color: var(--hz-faint); }
+.haslett-skin .hz-brass { color: var(--hz-brass); }
+
+.haslett-skin .hz-panel {
+  background: var(--hz-panel);
+  border: 1px solid var(--hz-line);
+  border-radius: 14px;
+}
+.haslett-skin .hz-panel-2 { background: var(--hz-panel-2); }
+
+/* Numbers are tabular so a column of them lines up like a ledger. On a page
+   whose argument is "these are real production figures", digits that jitter
+   between rows undercut the claim more than they should. */
+.haslett-skin .hz-num {
+  font-family: var(--font-plex-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--hz-ink);
+}
+
+.haslett-skin .hz-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 8px;
+  background: var(--hz-brass);
+  color: var(--hz-ground);
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, background 0.15s ease;
+}
+.haslett-skin .hz-btn:hover {
+  transform: translateY(-1px);
+  background: var(--hz-brass-soft);
+}
+.haslett-skin .hz-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 8px;
+  border: 1px solid var(--hz-line);
+  color: var(--hz-ink);
+  transition: border-color 0.15s ease;
+}
+.haslett-skin .hz-btn-ghost:hover { border-color: var(--hz-brass); }
+
+/* ── The live indicator ─────────────────────────────────────────────────── */
+/* The one piece of motion that is making a claim rather than decorating one:
+   this software is running right now. It pulses slowly — a fast blink would
+   read as an alarm, which is the opposite of the point. */
+.haslett-skin .hz-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--hz-good);
+  animation: hz-pulse 2.4s infinite;
+}
+@keyframes hz-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(111, 180, 136, 0.5); }
+  70%  { box-shadow: 0 0 0 7px rgba(111, 180, 136, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(111, 180, 136, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .haslett-skin .hz-pulse { animation: none; }
+  .haslett-skin * { transition: none !important; }
+}
+
+/* ── Motion signature ───────────────────────────────────────────────────── */
+/* Deliberately NOT /engineering's rise-and-glow. This page slides in from the
+   left against a brass rule that draws itself, which reads as a panel being
+   filled in rather than content floating up — the instrument-panel idea again.
+   Same scroll-driven CSS technique, no JS, no flash, degrades to static. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .haslett-skin .hz-in {
+      animation: hz-slide linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 44%;
+    }
+    .haslett-skin .hz-stagger > * {
+      animation: hz-slide linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry calc(40% + (var(--i, 0) * 8%));
+    }
+    /* The rule under a section heading draws left-to-right as it arrives. */
+    .haslett-skin .hz-rule {
+      animation: hz-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 6% entry 40%;
+    }
+    /* The readout sweeps once with a brass sheen when it comes into view. */
+    .haslett-skin .hz-sheen { position: relative; overflow: hidden; }
+    .haslett-skin .hz-sheen::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(
+        105deg,
+        transparent 35%,
+        rgba(210, 154, 74, 0.10) 50%,
+        transparent 65%
+      );
+      animation: hz-sweep linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 55%;
+    }
+  }
+}
+
+@keyframes hz-slide {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes hz-draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes hz-sweep {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(100%); }
+}
