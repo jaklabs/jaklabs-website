@@ -4,10 +4,63 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { success, created, noContent, error, notFound, validationError, serverError } from '../shared/response'
 import { generateId, generateSlug, calculateReadingTime, getCurrentTimestamp, formatDateKey, getUserFromEvent, isAdmin, validateRequired, sanitizeHtml, toPlainText, buildExcerpt } from '../shared/utils'
 import { BlogPost, CreateBlogInput, UpdateBlogInput, PaginatedResponse } from '../shared/types'
+import { AmplifyClient, StartJobCommand } from '@aws-sdk/client-amplify'
 
 const client = new DynamoDBClient({})
 const docClient = DynamoDBDocumentClient.from(client, { marshallOptions: { removeUndefinedValues: true } })
 const BLOGS_TABLE = process.env.BLOGS_TABLE!
+
+const amplify = new AmplifyClient({})
+const AMPLIFY_APP_ID = process.env.AMPLIFY_APP_ID
+const AMPLIFY_BRANCH = process.env.AMPLIFY_BRANCH || 'main'
+
+/**
+ * Rebuild the marketing site.
+ *
+ * WHY THIS EXISTS AT ALL, given the site already has an ISR revalidate route.
+ *
+ * Because revalidation here is unreliable for pages that are ALREADY cached, and
+ * every interesting bulk edit is exactly that case — attaching covers to nine
+ * live posts, publishing a batch. jaklabs-website's own harness records the
+ * failure: an edit sat stale well past `revalidate = 300`, and a transient API
+ * error once got rendered as zero posts and cached, so /blog served "No articles
+ * found" until it was rebuilt. A rebuild is the dependable path, so the admin UI
+ * gets the dependable path.
+ *
+ * WHY IT IS SAFE TO EXPOSE
+ *
+ * It takes no input. There is nothing to inject: the app id and branch come from
+ * the environment, not the request body, so the worst an authenticated admin can
+ * do is rebuild the site they are already able to edit. It is admin-only behind
+ * the Cognito authorizer, same as every write route.
+ *
+ * If AMPLIFY_APP_ID is unset it fails closed with a 503 that says so, rather
+ * than returning 200 and leaving someone to wonder why nothing changed — the
+ * same rule the site's revalidate route follows.
+ */
+export async function rebuildSite(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  try {
+    if (!isAdmin(event)) return error('Admin access required', 403)
+    if (!AMPLIFY_APP_ID) {
+      return error('Rebuild is not configured — AMPLIFY_APP_ID is unset', 503)
+    }
+
+    const res = await amplify.send(new StartJobCommand({
+      appId: AMPLIFY_APP_ID,
+      branchName: AMPLIFY_BRANCH,
+      jobType: 'RELEASE',
+    }))
+
+    return success({
+      jobId: res.jobSummary?.jobId,
+      status: res.jobSummary?.status,
+      branch: AMPLIFY_BRANCH,
+    })
+  } catch (err) {
+    console.error('Error starting rebuild:', err)
+    return serverError('Could not start the rebuild')
+  }
+}
 
 export async function createBlog(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   try {
@@ -295,13 +348,16 @@ export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayPr
   // /admin/blogs runs behind the Cognito authorizer, so claims are present and
   // isAdmin() can be true. /blogs is public and never sees claims.
   const isAdminRoute = (event.resource || event.path || '').startsWith('/admin/')
+  const isRebuildRoute = (event.resource || event.path || '').includes('/admin/rebuild')
 
   try {
     switch (method) {
       case 'GET':
         if (isAdminRoute) return listBlogsForAdmin(event)
         return hasSlug ? getBlog(event) : listBlogs(event)
-      case 'POST': return createBlog(event)
+      case 'POST':
+        if (isRebuildRoute) return rebuildSite(event)
+        return createBlog(event)
       case 'PUT': case 'PATCH': return updateBlog(event)
       case 'DELETE': return deleteBlog(event)
       case 'OPTIONS': return success({})

@@ -5,6 +5,7 @@ import * as dynamodb from 'aws-cdk-lib/aws-dynamodb'
 import * as s3 from 'aws-cdk-lib/aws-s3'
 import * as cognito from 'aws-cdk-lib/aws-cognito'
 import * as logs from 'aws-cdk-lib/aws-logs'
+import * as iam from 'aws-cdk-lib/aws-iam'
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs'
 import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs'
 import { Construct } from 'constructs'
@@ -44,6 +45,16 @@ export class ApiStack extends cdk.Stack {
     // BLOGS LAMBDA
     const blogsLambda = new NodejsFunction(this, 'BlogsFunction', {
       ...lambdaConfig,
+      // The DynamoDB clients stay external — they are unquestionably in the
+      // Node 20 runtime. @aws-sdk/client-amplify is NOT listed here, so esbuild
+      // bundles it, which is deliberate: the runtime's SDK coverage is not
+      // guaranteed per-client, and a missing module surfaces as a 502 at the
+      // moment somebody presses Rebuild rather than at deploy time. Bundling it
+      // costs a few KB and removes the question.
+      bundling: {
+        ...lambdaConfig.bundling,
+        externalModules: ['@aws-sdk/client-dynamodb', '@aws-sdk/lib-dynamodb'],
+      },
       functionName: 'jaklabs-blogs',
       entry: path.join(__dirname, '../lambda/blogs/handler.ts'),
       handler: 'handler',
@@ -62,8 +73,25 @@ export class ApiStack extends cdk.Stack {
         // changing both, and the worst case if it leaks is somebody making the
         // blog index regenerate.
         REVALIDATE_SECRET: process.env.REVALIDATE_SECRET ?? '__REVALIDATE_SECRET__',
+        // The rebuild the CRM's admin UI triggers after a bulk edit.
+        //
+        // Revalidation above is the fast path for a NEW post; it is not
+        // reliable for a page already in the cache, which is every bulk edit —
+        // attaching covers to nine live posts, publishing a batch. A rebuild is
+        // the dependable path, so the admin gets a button for it rather than
+        // needing a shell and an AWS profile.
+        AMPLIFY_APP_ID: 'd2g3om101yl18r',
+        AMPLIFY_BRANCH: 'main',
       },
     })
+
+    // Only StartJob, and only on this one app. The Lambda has no reason to read
+    // build logs, change the app, or touch any other Amplify app in the account
+    // — and this account also hosts trademaster-gamified.
+    blogsLambda.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['amplify:StartJob'],
+      resources: [`arn:aws:amplify:${this.region}:${this.account}:apps/d2g3om101yl18r/branches/main/jobs/*`],
+    }))
 
     // AUDIT LAMBDA
     //
@@ -216,6 +244,11 @@ export class ApiStack extends cdk.Stack {
     const adminResource = this.api.root.addResource('admin')
     const adminBlogsResource = adminResource.addResource('blogs')
     adminBlogsResource.addMethod('GET', blogsIntegration, authOptions)
+    // POST /admin/rebuild — takes no body. The app id and branch come from the
+    // Lambda's environment, so there is nothing in the request to inject and the
+    // worst an authenticated admin can do is rebuild a site they can already
+    // edit.
+    adminResource.addResource('rebuild').addMethod('POST', blogsIntegration, authOptions)
     blogsResource.addMethod('POST', blogsIntegration, authOptions)
     blogResource.addMethod('PUT', blogsIntegration, authOptions)
     blogResource.addMethod('DELETE', blogsIntegration, authOptions)
