@@ -78,6 +78,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     alternates: { canonical: url },
     openGraph: {
       type: 'article',
+      // Next does NOT merge this object with the root layout's openGraph — it
+      // replaces it — so siteName and locale have to be repeated here or they
+      // vanish on exactly the pages that get shared. og:site_name is the
+      // attribution line Facebook prints under the card; without it the card
+      // shows the bare domain.
+      siteName: 'JAK Labs',
+      locale: 'en_US',
       url,
       title: post.title,
       description: post.excerpt,

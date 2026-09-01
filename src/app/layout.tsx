@@ -4,6 +4,29 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { SiteChrome } from '@/components/layout/SiteChrome'
 
+/**
+ * Facebook App ID, for fb:app_id.
+ *
+ * NOT a secret — it is published in the HTML by definition, which is why it
+ * lives here rather than in an env var or Secrets Manager.
+ *
+ * It is also NOT required for link previews, whatever Facebook's sharing
+ * debugger says when it lists the property as "missing". The image, title and
+ * description all render without it. What it actually buys is attribution:
+ * shares of this domain get tied to a Facebook App so they show up in that
+ * app's Insights.
+ *
+ * Empty string means the tag is omitted entirely. That is deliberate — an
+ * fb:app_id has to be a real numeric ID for an app you own, and emitting a
+ * placeholder or somebody else's number is worse than emitting nothing: it
+ * fails validation, or it attributes your shares to a stranger.
+ *
+ * To turn it on: create an app at developers.facebook.com/apps, copy the App
+ * ID, and paste it below. Applied at the root so every page carries it, not
+ * just the blog.
+ */
+const FB_APP_ID = ''
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://jaklabs.io'),
   // A template, so every page gets its own title with the brand appended rather
@@ -17,6 +40,7 @@ export const metadata: Metadata = {
   keywords: ['operations software', 'small business software michigan', 'CRM for service business',
              'scheduling software', 'invoicing software', 'Lansing', 'Michigan', 'custom software'],
   alternates: { canonical: '/' },
+  ...(FB_APP_ID ? { other: { 'fb:app_id': FB_APP_ID } } : {}),
   openGraph: {
     title: 'Operations Software for Michigan Service Businesses | JAK Labs',
     description: 'I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds $2,500–$10,000.',
