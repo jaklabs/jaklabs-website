@@ -107,10 +107,58 @@ function normalise(p: Partial<BlogPost>): BlogPost {
   }
 }
 
-/** Published posts, newest first. Drafts are never returned to an anonymous caller. */
+/**
+ * Published posts, newest first. Drafts are never returned to an anonymous caller.
+ *
+ * PAGINATED, and it has to be.
+ *
+ * This used to send no `limit`, so it took the API's default — which is 10. On
+ * 2026-08-31 seven posts were published at once, the catalogue went to 15, and
+ * the five oldest silently vanished from /blog and from the sitemap. Nothing
+ * errored. The index looked completely normal; it was just missing a third of
+ * the archive, and the only reason it was caught was counting the links after a
+ * publish.
+ *
+ * Bumping the limit would have moved the same bug to post 51 — the handler caps
+ * `limit` at 50 (`Math.min(parseInt(q.limit || '10'), 50)`), so any fixed number
+ * is a cliff waiting for the archive to grow into it. Following `nextToken` has
+ * no cliff.
+ *
+ * MAX_PAGES is a runaway guard, not a cap: at 50 per page it allows 1,000 posts,
+ * and if it were ever hit it logs loudly rather than returning a quietly short
+ * list. A truncation nobody can see is the thing this function is now designed
+ * against.
+ */
+const PAGE_SIZE = 50
+const MAX_PAGES = 20
+
 export async function getBlogPosts(category?: string): Promise<BlogPost[]> {
-  const qs = category ? `?status=published&category=${encodeURIComponent(category)}` : '?status=published'
-  const { items } = await get<{ items: Partial<BlogPost>[] }>(`/blogs${qs}`, { items: [] })
+  const base = category
+    ? `?status=published&category=${encodeURIComponent(category)}`
+    : '?status=published'
+
+  const items: Partial<BlogPost>[] = []
+  let nextToken: string | undefined
+  let page = 0
+
+  do {
+    const qs = `${base}&limit=${PAGE_SIZE}${nextToken ? `&nextToken=${encodeURIComponent(nextToken)}` : ''}`
+    const res = await get<{ items: Partial<BlogPost>[]; nextToken?: string }>(
+      `/blogs${qs}`,
+      { items: [] },
+    )
+    items.push(...res.items)
+    nextToken = res.nextToken
+    page += 1
+  } while (nextToken && page < MAX_PAGES)
+
+  if (nextToken) {
+    console.error(
+      `blog API: stopped after ${MAX_PAGES} pages with more posts remaining — `
+      + `the index is truncated at ${items.length}. Raise MAX_PAGES.`,
+    )
+  }
+
   return items
     .map(normalise)
     .sort((a, b) => (b.publishedAt || '').localeCompare(a.publishedAt || ''))
