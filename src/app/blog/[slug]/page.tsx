@@ -50,6 +50,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const url = `/blog/${post.slug}`
   const image = post.coverImage || FALLBACK_COVER
 
+  /**
+   * Facebook needs the DIMENSIONS, not just the URL.
+   *
+   * Without og:image:width/height Facebook cannot lay the card out until it has
+   * fetched and measured the image itself, so the FIRST share of a link — the
+   * one that matters, because that is the post going up — renders small or with
+   * no image at all. It looks correct later, once their scraper has caught up
+   * and cached it, which is exactly why this is easy to miss: whoever reports it
+   * is told to re-check and by then it works.
+   *
+   * Every cover is generated at 1200x630 by
+   * marketing/scripts/make-covers-v5.py, and the stock fallback is the same
+   * shape, so these are constants rather than something to measure per post.
+   * 1200x630 is also the ratio Facebook and LinkedIn both render as a large
+   * card; below 600x315 they both drop to the small thumbnail layout.
+   */
+  const OG_W = 1200
+  const OG_H = 630
+
   return {
     // The root template appends the brand; adding it here renders it twice.
     title: post.title,
@@ -66,13 +85,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       modifiedTime: post.updatedAt || undefined,
       authors: [post.authorName],
       tags: post.tags,
-      images: [{ url: image, alt: post.title }],
+      images: [{
+        url: image,
+        width: OG_W,
+        height: OG_H,
+        alt: post.title,
+        // PNG for the generated covers; the stock fallback is a JPEG. Naming
+        // the wrong type is worse than omitting it, so only claim it when the
+        // extension says so.
+        type: image.endsWith('.png') ? 'image/png' : 'image/jpeg',
+      }],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [image],
+      images: [{ url: image, width: OG_W, height: OG_H, alt: post.title }],
     },
   }
 }
