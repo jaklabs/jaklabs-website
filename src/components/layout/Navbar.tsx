@@ -68,7 +68,19 @@ const navLinks: NavLink[] = [
     // to a contractor) arrives looking for exactly this, and burying the page
     // that argues for the contract work behind two other links cost more than
     // the extra nav item does.
-    { name: 'Engineering', href: '/engineering' },
+    // Two pages for one reader, grouped. /engineering argues I can be dropped
+    // into someone else's customer problem and ship; /fractional argues the
+    // commercial shape — part-time, month-to-month, cheaper than a hire. Same
+    // evidence, different question, so they sit together rather than competing
+    // for a slot.
+    {
+        name: 'Engineering',
+        href: '/engineering',
+        dropdown: [
+            { name: 'Forward-Deployed', href: '/engineering' },
+            { name: 'Fractional AI', href: '/fractional' },
+        ],
+    },
     { name: 'Contact', href: '/contact' },
 ]
 

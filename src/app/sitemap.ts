@@ -39,6 +39,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // A different audience entirely — linked, but not competing with the
     // local-business pages for the same searches.
     { url: `${BASE}/engineering`, changeFrequency: 'monthly', priority: 0.7 },
+    // The commercial framing of the same case: part-time, month-to-month.
+    { url: `${BASE}/fractional`, changeFrequency: 'monthly', priority: 0.8 },
     // The school. A different audience again — developers, not buyers — and the
     // only route from this site to hood.jaklabs.io.
     { url: `${BASE}/hood-dev`, changeFrequency: 'monthly', priority: 0.7 },
