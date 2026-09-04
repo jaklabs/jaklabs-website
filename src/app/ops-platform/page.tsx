@@ -15,19 +15,20 @@ import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
  * software vendor does not.
  *
  * ⚠️ EVERY FIGURE IS REGISTER-BACKED. jak-labs/content-engine/facts.toml:
- *   $155K invoiced ......... haslett-invoiced
- *   ~95% collected ......... haslett-collected
- *   240 jobs ............... haslett-jobs      (derived 2026-08-31, see below)
+ *   $216K invoiced ......... haslett-invoiced
+ *   $610 over 30d late ..... haslett-collected
+ *   253 jobs ............... haslett-jobs      (re-derived 2026-09-04, see below)
  *   3,235 transactions ..... haslett-transactions
  *   ~140 hrs ............... haslett-hours     — an ESTIMATE, labelled as one
  *
  * TWO CLAIMS FROM THE DESIGN ARTIFACT DID NOT SURVIVE VERIFICATION:
  *
- * 1. "170+ jobs run end-to-end" was stale and low. The real figure is 240, and
- *    getting there mattered: the table's item count reads 326, but that table
- *    also holds BILL records and cancelled/unscheduled work — two record types
- *    sharing one table, so the raw count is not a job count. 240 is
- *    status ∈ {COMPLETE, BILLED, PAID}. The derivation is in the register.
+ * 1. "170+ jobs run end-to-end" was stale and low. The figure is 253 as of
+ *    2026-09-04, and getting there mattered: the table's item count reads 332,
+ *    but it also holds BILL records and cancelled/unscheduled work — two record
+ *    types sharing one table, so the raw count is not a job count. 253 is
+ *    status ∈ {COMPLETE, BILLED, PAID}; 323 is the count of real jobs of any
+ *    status. The derivation is in the register.
  *
  * 2. "~$245 / tech / month" for ServiceTitan and Jobber is NOT here and must not
  *    come back. ServiceTitan does not publish pricing at all, so that number has
@@ -75,8 +76,8 @@ const MAILTO =
   )
 
 const METRICS = [
-  { n: '$155K', k: 'invoiced through it · ~95% collected' },
-  { n: '240', k: 'jobs carried to complete, billed or paid' },
+  { n: '$216K', k: 'invoiced through it · $610 over 30 days late' },
+  { n: '253', k: 'jobs carried to complete, billed or paid' },
   { n: '3,235', k: 'bank transactions auto-categorised' },
   { n: '~140', unit: ' hrs', k: 'of admin removed from my week (my estimate)' },
 ]
@@ -151,7 +152,7 @@ export const metadata: Metadata = {
     url: '/ops-platform',
     title: 'Own the software that runs a real business.',
     description:
-      '$155K invoiced and 240 jobs carried through it — in my own company. Acquire the codebase, '
+      '$216K invoiced and 253 jobs carried through it — in my own company. Acquire the codebase, '
       + 'and the engineer who built it deploys it on yours.',
   },
 }

@@ -193,7 +193,7 @@ export default function EngineeringPage() {
         <div className="container-custom max-w-4xl">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 fx-stagger">
             {[
-              ['$155K', 'invoiced through software I wrote and operate'],
+              ['$216K', 'invoiced through software I wrote and operate'],
               ['3,235', 'transactions auto-categorised'],
               ['~140 hrs', 'of admin removed from my own week'],
               ['1', 'engineer — nothing to production is somebody else\'s job'],

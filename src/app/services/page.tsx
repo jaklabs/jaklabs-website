@@ -70,7 +70,7 @@ const pricingPlans = [
         features: [
             { category: 'What gets automated', items: ['Lead intake → ticketing → scheduling → invoicing', 'Receipt and document OCR', 'QuickBooks / Plaid sync and clean books', 'The follow-up that only happens when someone remembers'] },
             { category: 'Built on your stack', items: ['Your tools where they work, replaced where they do not', 'AWS, Terraform-managed', 'Yours to keep — no platform lock-in'] },
-            { category: 'Why me', items: ['I built exactly this for Haslett Handyman and I still operate it', '$155K invoiced at ~95% collected', '3,235 transactions auto-categorised', '~140 hours of admin removed'] },
+            { category: 'Why me', items: ['I built exactly this for Haslett Handyman and I still operate it', '$216K invoiced at ~99% collected', '3,235 transactions auto-categorised', '~140 hours of admin removed'] },
             { category: 'Optional after', items: ['$1–2K/month to keep it running, improved and supported'] },
         ]
     },

@@ -27,7 +27,7 @@ import Link from 'next/link'
  *   phases 0–6 ............... ASSESSMENT-ENGINE.md
  *   rank gates ............... ASSESSMENT-ENGINE.md §ranks
  *   zero-network scoring ..... tests/test_engine.py::test_the_scoring_path_makes_no_network_calls
- *   $155K invoiced ........... content-engine/facts.toml → haslett-invoiced
+ *   $216K invoiced ........... content-engine/facts.toml → haslett-invoiced
  *
  * WHAT IS STILL NOT CLAIMED, deliberately: no student count, no outcomes, no
  * placement rate, no pricing beyond free. Sittings so far are zero and VISION.md
@@ -500,7 +500,7 @@ export default function HoodDevPage() {
             </div>
             <p className="mt-8 text-white/70">
               The person building it runs a live production business on software he wrote himself —
-              $155K invoiced through it, one engineer. The curriculum is the thing I would have wanted
+              $216K invoiced through it, one engineer. The curriculum is the thing I would have wanted
               at the point I was stuck.
             </p>
             <p className="mt-4 text-sm text-white/40">

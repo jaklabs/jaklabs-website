@@ -430,7 +430,7 @@ export default function AboutPage() {
                         className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
                     >
                         {[
-                            { figure: '$155K', label: 'invoiced through software I wrote and operate' },
+                            { figure: '$216K', label: 'invoiced through software I wrote and operate' },
                             { figure: '3,235', label: 'transactions categorised without anyone touching them' },
                             { figure: '~140 hrs', label: 'of admin taken out of my own week' },
                             { figure: '1', label: 'engineer — start to production, including the infrastructure' },

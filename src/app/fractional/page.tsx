@@ -92,7 +92,7 @@ const GETTING = [
 // Every figure register-backed. See the header note for the three the source
 // document got wrong.
 const NUMBERS = [
-  { n: '$155K', k: 'invoiced through it, ~95% collected' },
+  { n: '$216K', k: 'invoiced through it · $610 over 30 days late' },
   { n: '3,235', k: 'transactions auto-categorised' },
   { n: '51', k: 'scheduled automations — 18 of them moving real money' },
   { n: '~140', unit: ' hrs', k: 'of owner admin removed (my estimate)' },

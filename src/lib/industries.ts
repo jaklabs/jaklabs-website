@@ -84,7 +84,7 @@ export const INDUSTRIES: Industry[] = [
       },
     ],
     proof:
-      'I run Haslett Handyman on software I wrote: $155K invoiced, 3,235 transactions '
+      'I run Haslett Handyman on software I wrote: $216K invoiced, 3,235 transactions '
       + 'auto-categorised, and about 140 hours of admin taken out of my week.',
     offer: 'ops',
     tier: 1,
