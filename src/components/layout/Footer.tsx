@@ -58,9 +58,16 @@ export function Footer() {
                 <span className="text-white">Labs</span>
               </span>
                         </Link>
+                        {/* The old copy read "Premier marketing consulting and application
+    development... We help you stand out" — two services next.config.mjs
+    redirects away from, in a voice that implies a team. This sits on
+    EVERY page, so it was the most-repeated sentence on the site and the
+    last place the old positioning survived after the logo tagline and
+    the share card were fixed. First person, because JAK Labs is one
+    person and that is the argument. */}
                         <p className="text-white/60 mb-6 max-w-md">
-                            Premier marketing consulting and application development for service-based businesses.
-                            We help you stand out, attract clients, and grow your business.
+                            I build the scheduling, quoting and invoicing software that lets a local
+                            service business run without its owner. One engineer, Lansing, Michigan.
                         </p>
                         <div className="space-y-3">
                             {/* NOT jdakemp@jaklabs.io — the apex domain has no MX record, so that
