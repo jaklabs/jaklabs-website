@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { INDUSTRIES, ALSO_SERVED, OFFERS } from '@/lib/industries'
+import { social } from '@/lib/social'
 
 /**
  * The industries hub.
@@ -22,12 +23,12 @@ export const metadata: Metadata = {
     + 'management, staffing, logistics, and software teams shipping AI. What I build for each, '
     + 'and what it costs.',
   alternates: { canonical: '/industries' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/industries',
     title: 'Industries I Build For | JAK Labs',
     description: 'What I build for each kind of business, and what it costs.',
-  },
+  }),
 }
 
 export default function IndustriesPage() {

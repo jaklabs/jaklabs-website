@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { PointerLight, SpotlightCard } from '@/components/engineering/PointerLight'
 import { EngagementScoper } from '@/components/engineering/EngagementScoper'
+import { social } from '@/lib/social'
 
 /**
  * The second front door.
@@ -41,13 +42,13 @@ export const metadata: Metadata = {
     + 'learn the customer\'s domain, and ship production software on their real data. '
     + 'Public artifacts, the stack, and the bugs.',
   alternates: { canonical: '/engineering' },
-  openGraph: {
+  ...social('engineering', {
     type: 'website',
     url: '/engineering',
     title: 'Forward-Deployed Engineering | JD Kemp',
     description:
       'I do not need to learn your customer — I am your customer, and I can build.',
-  },
+  }),
 }
 
 const ARTIFACTS = [

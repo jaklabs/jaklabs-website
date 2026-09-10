@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Newsreader, Instrument_Sans, IBM_Plex_Mono } from 'next/font/google'
+import { social } from '@/lib/social'
 
 /**
  * The telehealth platform — offered for licence or acquisition.
@@ -158,14 +159,14 @@ export const metadata: Metadata = {
     + 'isolation, an LLM reliability layer and 608 passing tests. HIPAA-ready architecture. '
     + 'Built and owned by me, awaiting its first operator.',
   alternates: { canonical: '/telehealth' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/telehealth',
     title: 'The platform for people who want to be the platform.',
     description:
       'Multi-tenant telehealth infrastructure with hard tenant isolation and a reliability layer '
       + 'in front of the model. Licence it or acquire it.',
-  },
+  }),
 }
 
 function Head({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) {

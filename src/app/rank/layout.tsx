@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Bricolage_Grotesque, DM_Mono, Instrument_Sans } from 'next/font/google'
 import './rank.css'
+import { social } from '@/lib/social'
 
 /**
  * Aura lives at rank.jaklabs.io but is served by this app, so it needs its own
@@ -45,7 +46,7 @@ export const metadata: Metadata = {
   keywords: ['developer rank', 'code quality', 'static analysis', 'open source',
              'developer portfolio', 'engineering assessment', 'offline'],
   alternates: { canonical: 'https://rank.jaklabs.io' },
-  openGraph: {
+  ...social('default', {
     title: 'Aura — a developer rank that never sees your code',
     description:
       'Grades your repositories offline, across four dimensions it can measure and four it refuses '
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
     url: 'https://rank.jaklabs.io',
     siteName: 'Aura',
     type: 'website',
-  },
+  }),
   twitter: {
     card: 'summary_large_image',
     title: 'Aura — a developer rank that never sees your code',

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { social } from '@/lib/social'
 
 /**
  * Verdikt on the parent site.
@@ -70,14 +71,14 @@ export const metadata: Metadata = {
     'Streaks, XP and leagues wrapped around trade logging, with an edge engine that refuses to '
     + 'render a verdict until your sample earns it. Read-only broker access. A JAK Labs product.',
   alternates: { canonical: '/verdikt' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/verdikt',
     title: 'Every trading book tells you to keep a journal. Almost nobody does.',
     description:
       'So this one is built like Duolingo instead of like a spreadsheet — and it will not call '
       + 'anything an edge until the numbers say so.',
-  },
+  }),
 }
 
 // The 14-day strip. 0.5 is a partial day — the habit is not all-or-nothing, and a

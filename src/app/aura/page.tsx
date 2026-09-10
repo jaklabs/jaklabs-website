@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Terminal, ShieldCheck, GitBranch, ArrowRight, Ban, Check } from 'lucide-react'
+import { social } from '@/lib/social'
 
 /**
  * The free tool, on the agency site.
@@ -27,14 +28,14 @@ export const metadata: Metadata = {
     + 'them out of 100 — your source never leaves your machine, and you can verify that with '
     + 'one grep before you run it.',
   alternates: { canonical: '/aura' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/aura',
     title: 'Aura Rank — a developer rank that never sees your code',
     description:
       'One command, entirely offline. Eight grades, four measured dimensions, and four it '
       + 'refuses to guess at.',
-  },
+  }),
 }
 
 /** The ladder, cold to white-hot. Same bands the scanner ships with. */

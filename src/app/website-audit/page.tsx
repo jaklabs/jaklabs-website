@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import AuditTool from './AuditTool'
+import { social } from '@/lib/social'
 
 /**
  * The free website audit — the one page that reaches every kind of local
@@ -18,12 +19,12 @@ export const metadata: Metadata = {
     'Check your website the way a customer on a phone would. Seven checks, real answers, '
     + 'no signup — built by JD Kemp after auditing 456 Michigan business sites.',
   alternates: { canonical: '/website-audit' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/website-audit',
     title: 'Free Website Audit for Michigan Businesses',
     description: 'Seven checks, run on your homepage at phone width. Free, no signup.',
-  },
+  }),
 }
 
 const FAQ = [

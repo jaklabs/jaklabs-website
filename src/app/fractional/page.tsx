@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { PointerLight, SpotlightCard } from '@/components/engineering/PointerLight'
+import { social } from '@/lib/social'
 
 /**
  * Fractional AI engineering — the hire-me-part-time page.
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
     'A fractional AI engineer who has already shipped production AI into a real business. '
     + '8–20 hrs/week, month-to-month, embedded with your team. Deployment, not demos.',
   alternates: { canonical: '/fractional' },
-  openGraph: {
+  ...social('fractional', {
     type: 'website',
     url: '/fractional',
     siteName: 'JAK Labs',
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
     description:
       'Most companies do not need another AI demo. They need someone who will embed part-time and '
       + 'put a verified AI system into production on their real data.',
-  },
+  }),
 }
 
 const GETTING = [

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { getBlogPosts, getCategories } from '@/lib/blog-data'
 import BlogIndex from './BlogIndex'
+import { social } from '@/lib/social'
 
 /**
  * The blog index — a SERVER component.
@@ -18,13 +19,13 @@ export const metadata: Metadata = {
     'Practical writing on booking, intake and operations software for Michigan '
     + 'med spas, clinics and wellness businesses — from someone who audits their sites.',
   alternates: { canonical: '/blog' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/blog',
     title: 'Blog | JAK Labs',
     description:
       'Booking, intake and operations software for Michigan med spas, clinics and wellness businesses.',
-  },
+  }),
 }
 
 // Rebuild at most every five minutes. A blog does not need per-request

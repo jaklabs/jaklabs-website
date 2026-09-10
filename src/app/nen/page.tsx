@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { NenHexagon, NenBars } from '@/components/nen/Hexagon'
+import { social } from '@/lib/social'
 
 /**
  * 水見式 Water Divination — the second free tool.
@@ -36,12 +37,12 @@ export const metadata: Metadata = {
     + 'you which of the six categories you write like — citing what it read. Python, no '
     + 'dependencies, no network, MIT.',
   alternates: { canonical: '/nen' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/nen',
     title: '水見式 — find out your Nen type from the code you actually write',
     description: 'The glass is your repository. The aura is your commit history.',
-  },
+  }),
 }
 
 // From the tool's own table. Each row is a canon reaction, its category, and

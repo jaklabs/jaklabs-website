@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { social } from '@/lib/social'
 
 /**
  * Hood Dev on the parent site.
@@ -46,13 +47,13 @@ export const metadata: Metadata = {
     'A developer school that assesses how you actually work — seven phases, nine measured leaks, '
     + 'evidence cited — then builds the track around what it found. Free for 90 days from launch.',
   alternates: { canonical: '/hood-dev' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/hood-dev',
     title: 'Every course tells you what to learn. None of them look under your hood.',
     description:
       'Dev as a trade, not an academy. Assessed first, then a track built for your specific leaks.',
-  },
+  }),
 }
 
 // Phases 0–6 of the Teardown, in order. Phase 4 is starred because it is the one

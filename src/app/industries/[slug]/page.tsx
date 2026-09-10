@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { INDUSTRIES, getIndustry, industrySlugs, OFFERS } from '@/lib/industries'
+import { social } from '@/lib/social'
 
 /**
  * One page per industry, generated from the shared taxonomy.
@@ -43,12 +44,12 @@ export async function generateMetadata(
     title: ind.headline,
     description,
     alternates: { canonical: `/industries/${ind.slug}` },
-    openGraph: {
+    ...social('default', {
       type: 'website',
       url: `/industries/${ind.slug}`,
       title: `${ind.headline} | JAK Labs`,
       description,
-    },
+    }),
   }
 }
 

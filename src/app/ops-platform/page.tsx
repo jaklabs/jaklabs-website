@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
+import { social } from '@/lib/social'
 
 /**
  * The Haslett Ops Platform — the codebase offered as an acquirable asset.
@@ -147,14 +148,14 @@ export const metadata: Metadata = {
     + 'running a live company today. Acquire the codebase and I deploy it on your infrastructure. '
     + 'You own the IP.',
   alternates: { canonical: '/ops-platform' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/ops-platform',
     title: 'Own the software that runs a real business.',
     description:
       '$216K invoiced and 253 jobs carried through it — in my own company. Acquire the codebase, '
       + 'and the engineer who built it deploys it on yours.',
-  },
+  }),
 }
 
 function Head({ eyebrow, children }: { eyebrow: string; children: React.ReactNode }) {

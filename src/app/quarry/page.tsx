@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Bricolage_Grotesque, Hanken_Grotesk, IBM_Plex_Mono } from 'next/font/google'
+import { social } from '@/lib/social'
 
 /**
  * Quarry — the growth-compliance engine. Free to run, paid to ship inside
@@ -182,14 +183,14 @@ export const metadata: Metadata = {
     + '86 tactics, 10 channels, a deterministic classifier that never calls a model. Free to run; '
     + 'paid to ship inside something you sell.',
   alternates: { canonical: '/quarry' },
-  openGraph: {
+  ...social('default', {
     type: 'website',
     url: '/quarry',
     title: 'The growth engine that knows what’s legal.',
     description:
       'A linter for growth tactics. Aggressive, deterministic, cited — and it will not bless a '
       + 'tactic it cannot vouch for.',
-  },
+  }),
 }
 
 export default function QuarryPage() {
