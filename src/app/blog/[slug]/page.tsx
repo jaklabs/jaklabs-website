@@ -155,7 +155,9 @@ export default async function BlogPostPage({ params }: Props) {
                 url: 'https://jaklabs.io',
                 logo: {
                   '@type': 'ImageObject',
-                  url: 'https://jaklabs.io/images/jaklabs-logo.png',
+                  // The INK variant: Google renders a publisher logo on white,
+                  // and "Labs" is white ink in the standard wordmark.
+                  url: 'https://jaklabs.io/images/jaklabs-logo-ink.png',
                 },
               },
             },

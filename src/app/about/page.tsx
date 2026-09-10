@@ -293,8 +293,18 @@ export default function AboutPage() {
             <section ref={logoRef} className="py-32 bg-secondary/30">
                 <div className="container-custom">
                     <motion.div style={{ scale: logoScale, opacity: logoOpacity }} className="max-w-md mx-auto">
-                        <div className="relative aspect-square rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(168,85,247,0.4)]">
-                            <Image src="/images/jaklabs-logo.png" alt="JAKLabs Logo" fill className="object-contain p-8" />
+                        {/* The logo is now the transparent wordmark, so this plate needs
+    its own dark ground: without one the glow would sit around nothing,
+    and a 5.5:1 wordmark stranded in a square left most of the card
+    empty. Same reveal, sized to what it actually holds. */}
+                        <div className="relative aspect-[5/2] rounded-3xl overflow-hidden bg-secondary-dark shadow-[0_0_80px_rgba(168,85,247,0.4)]">
+                            <Image
+                                src="/images/jaklabs-logo.png"
+                                alt="JAK Labs"
+                                fill
+                                sizes="(max-width: 768px) 100vw, 448px"
+                                className="object-contain p-10"
+                            />
                         </div>
                     </motion.div>
                 </div>
