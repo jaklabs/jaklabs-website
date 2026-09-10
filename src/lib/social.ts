@@ -38,7 +38,7 @@ type OpenGraph = OmitFrom<NonNullable<Metadata['openGraph']>, 'images'>
 const CARDS = {
   default: [
     '/images/og-image.png',
-    'JAK Labs — operations software for local service businesses',
+    'It runs without me — the software my own service business runs on',
   ],
   about: [
     '/images/og-about.png',
