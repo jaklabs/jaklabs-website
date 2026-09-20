@@ -23,6 +23,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE, changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE}/services`, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/about`, changeFrequency: 'monthly', priority: 0.6 },
+    // The two outbound links to live builds are the whole point of this page,
+    // and a page missing from the sitemap is one a crawler reaches late or not
+    // at all — which would waste the links it carries.
+    { url: `${BASE}/work`, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/contact`, changeFrequency: 'monthly', priority: 0.7 },
     // The audit tool is the highest-intent page on the site.
     { url: `${BASE}/website-audit`, changeFrequency: 'monthly', priority: 0.95 },
