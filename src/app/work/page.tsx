@@ -18,9 +18,14 @@ import { social } from '@/lib/social'
  *
  * So each entry states the relationship plainly:
  *
- *   Haslett Handyman   — MY OWN COMPANY. Not a client, and saying so is the
- *                        stronger claim anyway: I run the business the software
- *                        runs, so the software has to survive a real Monday.
+ *   Haslett Handyman   — BUILT BY JAK LABS, and also owned by me. Both halves
+ *                        are true, and the BUILD is the half that belongs on a
+ *                        work page: JAK Labs did the development, the
+ *                        infrastructure and the ongoing IT, exactly as it would
+ *                        for anyone else. Ownership is disclosed rather than led
+ *                        with — it is a fact about the commercial relationship,
+ *                        not about who wrote the software, and leading with it
+ *                        gave away credit for a build JAK Labs did end to end.
  *   Morrell Ministries — a real 501(c)(3) I built and maintain the site for.
  *                        A forward-deployed engagement, NOT a paid engagement.
  *
@@ -46,23 +51,27 @@ import { social } from '@/lib/social'
  *   · No nofollow. These are not paid or sponsored placements; they are a
  *     description of work, and marking them sponsored would be inaccurate.
  *
- * Note that hasletthandyman.info and jaklabs.io have the same owner, so that
- * link is a portfolio entry rather than an independent endorsement and should
- * never be dressed up as one. The Morrell link is the genuine third-party one.
+ * One mechanical caveat, which is about the link graph and NOT about the copy:
+ * hasletthandyman.info and jaklabs.io share an owner, and Google infers that from
+ * registrar, host and analytics footprints — not from any sentence on this page.
+ * So disclosing it costs no ranking value, and hiding it would gain none. What it
+ * does mean is that the Morrell link is the genuinely independent one, and the
+ * Haslett pair is a build credit between two properties. Keep the anchors as
+ * brand names in both directions and that stays well inside editorial use.
  */
 
 export const metadata: Metadata = {
   title: 'Work',
   description:
-    'Two sites and the systems behind them: Haslett Handyman, the service business I own and run on '
-    + 'software I wrote, and Morrell Ministries, a Michigan 501(c)(3) I build and maintain the site for.',
+    'Two sites JAK Labs built end to end: Haslett Handyman, a Michigan service business running on '
+    + 'software written for it, and Morrell Ministries, a 501(c)(3) whose site I build and maintain.',
   alternates: { canonical: '/work' },
   ...social('default', {
     type: 'website',
     url: '/work',
     title: 'Work | JAK Labs',
     description:
-      'The sites and systems I have actually built and still run — one I own, one for a Michigan nonprofit.',
+      'Two sites JAK Labs built end to end, both live — a Michigan service business and a 501(c)(3).',
   }),
 }
 
@@ -83,7 +92,11 @@ const PROJECTS: Project[] = [
     name: 'Haslett Handyman',
     href: 'https://www.hasletthandyman.info',
     host: 'hasletthandyman.info',
-    relationship: 'My own company',
+    // "Built by JAK Labs" first, ownership second. The earlier copy led with
+    // ownership, which read as a disclaimer about the work rather than a
+    // disclosure about the buyer — and quietly gave away the credit for a build
+    // JAK Labs actually did end to end.
+    relationship: 'Built by JAK Labs · also owned by me',
     what: 'A handyman and property-maintenance business in Haslett, Michigan, and the software that runs it.',
     detail: [
       'Email arrives, a ticket is created, the job gets scheduled, the invoice goes out.',
@@ -116,9 +129,9 @@ export default function WorkPage() {
           <p className="subheading mb-4">Work</p>
           <h1 className="heading-xl mb-6">Two sites, and the systems behind them.</h1>
           <p className="text-lg text-white/70">
-            One is my own business. One is a nonprofit I build for. Neither is a logo on a wall —
-            both are running right now, and both links go straight to the live site so you can
-            check.
+            JAK Labs built both of these end to end — design, code, infrastructure and the
+            systems behind them. Neither is a logo on a wall: both are running right now, and both
+            links go straight to the live site so you can check.
           </p>
         </div>
       </section>
@@ -171,9 +184,10 @@ export default function WorkPage() {
           </div>
 
           <p className="mt-10 text-sm text-white/50">
-            This is work, not a client roster. JAK Labs has no paying clients yet, and a page that
-            implied otherwise would be the one claim on this site you could disprove in an
-            afternoon. If you want the engineering rather than the websites, that is on{' '}
+            This is work, not a client roster — I own Haslett Handyman as well as having built it,
+            and Morrell is a nonprofit rather than a paid engagement. Both are disclosed above for
+            that reason. The development, the infrastructure and the IT were the same work either
+            way. If you want the engineering rather than the websites, that is on{' '}
             <Link href="/engineering" className="text-primary hover:underline">
               the engineering page
             </Link>
