@@ -23,6 +23,7 @@ const services = [
     { id: 'ai-reliability', title: 'AI Reliability Audit', description: 'Your AI feature reviewed before it ships a wrong or unsafe answer. Eval harness, retrieval gates, a prioritised fix list.', href: '#ai-reliability' },
     { id: 'llm-sprint', title: 'LLM Integration Sprint', description: 'One production-ready AI feature, built end-to-end on your stack and your data — with the gates that keep it honest.', href: '#llm-sprint' },
     { id: 'ops-automation', title: 'Ops-Automation Build', description: 'One manual workflow automated: lead intake to ticketing to invoicing, receipt OCR, accounting sync. The Haslett build.', href: '#ops-automation' },
+    { id: 'local-seo', title: 'Local SEO Audit', description: 'Why a local business does not show up, in priority order — technical, local pack and structure. Fixed price, no retainer.', href: '#local-seo' },
     { id: 'embedded', title: 'Embedded Engineering', description: 'I join your team for a stretch and ship on your real systems. Forward-deployed, monthly, no recruiter.', href: '#embedded' },
 ]
 
@@ -45,6 +46,38 @@ const pricingPlans = [
             { category: 'What you get', items: ['An evaluation-harness design for your system', 'Retrieval-quality gate recommendations', 'A prioritised, plain-English fix list', 'A 45-minute walkthrough'] },
             { category: 'Why me', items: ['I built a PHI-grade reliability layer for a HIPAA telehealth platform', 'Eval + retrieval gates that verify output before it could reach a patient'] },
             { category: 'What happens next', items: ['The fix list is the scope for a build — priced separately, never assumed'] },
+        ]
+    },
+    {
+        // Added 2026-09-20, and it REVERSES a deliberate decision — /seo-marketing
+        // was 301'd to this page because "ranking for work you cannot take is
+        // worse than not ranking". JD now takes it, so the redirect comes off.
+        //
+        // ⚠️ SOLD AS A ONE-OFF, NEVER A RETAINER. That was the explicit choice:
+        // fixed scope and a published price, like everything else here. An SEO
+        // retainer is the one shape that commits time every month and is hardest
+        // to walk back once sold.
+        //
+        // ⚠️ NO RANKING PROMISES, EVER. "First page" and "#1 for your keyword"
+        // are outcomes no one controls, and the FTC treats an unsubstantiated
+        // outcome claim as deceptive regardless of intent. Everything under
+        // "What you get" is a deliverable; nothing is a result.
+        //
+        // The proof under "Why me" is all registered in content-engine/facts.toml:
+        // 456 sites swept, 154 with no tappable phone number, 217 console errors.
+        // That is a real corpus, gathered with tooling on this site, and it is
+        // stronger than any testimonial because a reader can run the free audit
+        // against their own site and see the same machine work.
+        id: 'local-seo',
+        title: 'Local SEO Audit',
+        subtitle: '$1,500 flat · about a week',
+        description: 'You are a local business, you know people search for what you do, and you are not the one they find.',
+        color: 'neon-cyan',
+        features: [
+            { category: 'What I check', items: ['The technical floor — speed, mobile, whether Google can index you at all', 'Google Business Profile and the local pack, which is what actually ranks locally', 'Page structure and internal links — what your site says it is about', 'Whether a phone on a phone can tap to call you'] },
+            { category: 'What you get', items: ['A prioritised fix list, worst-first, in plain English', 'The specific pages and the specific lines to change', 'A 45-minute walkthrough of why each one matters', 'Everything written so your own developer could do it'] },
+            { category: 'Why me', items: ['I swept 456 Michigan business sites with my own tooling and read every result', '154 of them had no tappable phone number on a mobile screen', 'I run a local service business, so I know which of these actually costs a call'] },
+            { category: 'What this is not', items: ['Not a retainer, and not a ranking promise — nobody can sell you a position', 'The fixes are quoted separately if you want me to do them, never assumed'] },
         ]
     },
     {

@@ -7,11 +7,11 @@ import { social } from '@/lib/social'
 // described what it was.
 export const metadata: Metadata = {
   title: 'Services & Pricing',
-  description: "AI Reliability Audit $2,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
+  description: "AI Reliability Audit $2,500 · Local SEO Audit $1,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
   alternates: { canonical: '/services' },
   ...social('services', {
     title: 'Services & Pricing | JAK Labs',
-    description: "AI Reliability Audit $2,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
+    description: "AI Reliability Audit $2,500 · Local SEO Audit $1,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
     url: '/services',
     type: 'website',
   }),
