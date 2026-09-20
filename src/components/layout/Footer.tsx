@@ -13,6 +13,10 @@ import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone } from 'lucide-reac
 const footerLinks = {
     company: [
         { name: 'About JD', href: '/about' },
+        // Sitewide, so the two outbound links on /work are reachable from every
+        // page rather than orphaned. A portfolio link nothing points at is a
+        // link nothing crawls.
+        { name: 'Work', href: '/work' },
         { name: 'Engineering', href: '/engineering' },
         { name: 'Hood Dev (school)', href: '/hood-dev' },
         { name: 'Blog', href: '/blog' },
