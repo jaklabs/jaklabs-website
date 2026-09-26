@@ -115,7 +115,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 40 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6, delay: 0.5 }}
-                        className="grid grid-cols-3 gap-8 mt-20 pt-10 border-t border-white/10"
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 pb-24 border-t border-white/10"
                     >
                         {[
                             { value: '456', label: 'Michigan sites I audited', color: 'text-neon-purple' },
@@ -139,12 +139,26 @@ export function Hero() {
                 </div>
             </motion.div>
 
-            {/* Scroll indicator */}
+            {/*
+              Scroll indicator.
+
+              It is absolutely positioned at the bottom centre of the hero, which
+              is exactly where the middle stat sits -- so it rendered ON TOP of
+              the "1" in "1 Engineer on your project", at every desktop size.
+              Two of three stats showed a number and the third showed a mouse.
+
+              Fixed by two changes that have to stay together: `pb-24` on the
+              stats grid above reserves the strip this sits in, and `hidden
+              sm:flex` keeps it off narrow screens where that padding would be
+              wasted height. `aria-hidden` because it is decoration -- a screen
+              reader announcing a scroll hint is noise.
+            */}
             <motion.div
+                aria-hidden="true"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1, duration: 0.6 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2"
+                className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
             >
                 <motion.div
                     animate={{ y: [0, 8, 0] }}
