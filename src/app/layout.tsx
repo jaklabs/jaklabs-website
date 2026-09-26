@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -25,6 +26,44 @@ import { SiteChrome } from '@/components/layout/SiteChrome'
  * ID, and paste it below. Applied at the root so every page carries it, not
  * just the blog.
  */
+
+/*
+ * The site's own type, SELF-HOSTED. Do not restore the Google <link>.
+ *
+ * Inter and Poppins are font-sans and font-heading in tailwind.config.ts, so
+ * they load on EVERY page. They were pulled in by a hand-written
+ * <link rel="stylesheet"> to fonts.googleapis.com -- render-blocking, and a
+ * third party on the critical path of every visit. It also survived the first
+ * pass of this work, because that pass grepped for `next/font/google` and this
+ * was a raw tag.
+ *
+ * Tailwind references these through the CSS variables below rather than by
+ * family name -- `sans: ['var(--font-inter)', ...]` -- because a local font gets
+ * a generated family name, so the old `sans: ['Inter', ...]` would match nothing
+ * and fall through to system-ui with no error anywhere.
+ */
+const inter = localFont({
+  src: [
+    { path: '../fonts/Inter/400.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/Inter/500.woff2', weight: '500', style: 'normal' },
+    { path: '../fonts/Inter/600.woff2', weight: '600', style: 'normal' },
+    { path: '../fonts/Inter/700.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-inter',
+  display: 'swap',
+})
+
+const poppins = localFont({
+  src: [
+    { path: '../fonts/Poppins/400.woff2', weight: '400', style: 'normal' },
+    { path: '../fonts/Poppins/500.woff2', weight: '500', style: 'normal' },
+    { path: '../fonts/Poppins/600.woff2', weight: '600', style: 'normal' },
+    { path: '../fonts/Poppins/700.woff2', weight: '700', style: 'normal' },
+  ],
+  variable: '--font-poppins',
+  display: 'swap',
+})
+
 const FB_APP_ID = ''
 
 export const metadata: Metadata = {
@@ -70,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-      <html lang="en">
+      <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -130,14 +169,11 @@ export default function RootLayout({
           }}
         />
       </head>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-        />
-      </head>
+      {/*
+        One <head>. There were two, and both shipped to production -- a document
+        may have exactly one, and the second existed only to hold the Google
+        Fonts <link> that is now gone.
+      */}
       <body className="font-sans">
       <SiteChrome><Navbar /></SiteChrome>
       <main>{children}</main>

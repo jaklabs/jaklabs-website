@@ -115,7 +115,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 40 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6, delay: 0.5 }}
-                        className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 pb-24 border-t border-white/10"
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 border-t border-white/10"
                     >
                         {[
                             { value: '456', label: 'Michigan sites I audited', color: 'text-neon-purple' },
@@ -140,38 +140,25 @@ export function Hero() {
             </motion.div>
 
             {/*
-              Scroll indicator.
+              There was a scroll indicator here -- a small animated mouse. It is
+              gone, deliberately, after producing two separate visual defects:
 
-              It is absolutely positioned at the bottom centre of the hero, which
-              is exactly where the middle stat sits -- so it rendered ON TOP of
-              the "1" in "1 Engineer on your project", at every desktop size.
-              Two of three stats showed a number and the third showed a mouse.
+                1. `absolute bottom-8 left-1/2` put it dead centre at the bottom
+                   of the hero, which is exactly where the middle stat sits. It
+                   rendered ON TOP of the "1" in "1 Engineer on your project", so
+                   two stats showed a number and the third showed a mouse.
+                2. Moved into normal flow instead, it cleared the stats but was
+                   then CLIPPED by the section itself -- this is
+                   `min-h-screen ... overflow-hidden` with vertically centred
+                   content, so anything below the stats is cut off once the
+                   content fills the viewport.
 
-              Fixed by two changes that have to stay together: `pb-24` on the
-              stats grid above reserves the strip this sits in, and `hidden
-              sm:flex` keeps it off narrow screens where that padding would be
-              wasted height. `aria-hidden` because it is decoration -- a screen
-              reader announcing a scroll hint is noise.
+              There is no safe position for it in this layout: absolute collides
+              with the stats, in-flow is clipped. It is decoration with no job --
+              nobody needs a mouse icon to discover that a page scrolls -- so the
+              third fix is to not have it. Re-adding it means changing the
+              section's height or overflow first, not tuning a margin.
             */}
-            <motion.div
-                aria-hidden="true"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1, duration: 0.6 }}
-                className="pointer-events-none absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:block"
-            >
-                <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="w-6 h-10 border-2 border-neon-purple/50 rounded-full flex items-start justify-center p-2"
-                >
-                    <motion.div
-                        animate={{ y: [0, 12, 0], opacity: [1, 0.5, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-1.5 h-1.5 bg-neon-purple rounded-full"
-                    />
-                </motion.div>
-            </motion.div>
         </section>
     )
 }

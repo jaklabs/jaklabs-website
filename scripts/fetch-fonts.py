@@ -17,6 +17,9 @@ UA = ('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 '
       '(KHTML, like Gecko) Chrome/120.0 Safari/537.36')
 
 FAMILIES = {
+    # The site's own type: font-sans and font-heading in tailwind.config.ts.
+    'Inter':               ['400', '500', '600', '700'],
+    'Poppins':             ['400', '500', '600', '700'],
     'Newsreader':          ['400', '500'],
     'Instrument Sans':     ['400', '500', '600', '700'],
     'IBM Plex Mono':       ['500', '600'],
