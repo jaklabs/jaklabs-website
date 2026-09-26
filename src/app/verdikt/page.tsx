@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import { social } from '@/lib/social'
 
 /**
@@ -50,15 +50,35 @@ import { social } from '@/lib/social'
 // The product's own typefaces, self-hosted at build and loaded only on this
 // route. Adding them to the site-wide <link> in layout.tsx would cost every
 // other page two font families it never renders.
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
+/*
+ * Fonts are SELF-HOSTED. Do not put `next/font/google` back.
+ *
+ * Amplify build 109 failed outright because next/font could not reach Google to
+ * fetch Instrument Sans -- a commit that only touched the homepage hero died on
+ * a network call for a font on a different page. Ten families were fetched at
+ * build time across five files, so any one of them being slow or rate-limited
+ * took the whole deploy down. It is also invisible locally, where the fonts are
+ * already cached, so it only ever fails in CI and looks like your code broke.
+ *
+ * The woff2 files in src/fonts are the latin subset at exactly the weights
+ * these pages use. Adding a weight means adding a file -- see
+ * scripts/fetch-fonts.py, which is the thing that downloaded them.
+ */
+
+const spaceGrotesk = localFont({
+  src: [
+    { path: '../../fonts/SpaceGrotesk/500.woff2', weight: '500', style: 'normal' },
+    { path: '../../fonts/SpaceGrotesk/600.woff2', weight: '600', style: 'normal' },
+    { path: '../../fonts/SpaceGrotesk/700.woff2', weight: '700', style: 'normal' },
+  ],
   variable: '--font-space-grotesk',
   display: 'swap',
 })
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
+const jetbrainsMono = localFont({
+  src: [
+    { path: '../../fonts/JetBrainsMono/400.woff2', weight: '400', style: 'normal' },
+    { path: '../../fonts/JetBrainsMono/500.woff2', weight: '500', style: 'normal' },
+  ],
   variable: '--font-jetbrains-mono',
   display: 'swap',
 })

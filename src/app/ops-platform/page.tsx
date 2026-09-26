@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Archivo, IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import { social } from '@/lib/social'
 
 /**
@@ -47,21 +47,44 @@ import { social } from '@/lib/social'
  * look like a readout of something running.
  */
 
-const archivo = Archivo({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
+/*
+ * Fonts are SELF-HOSTED. Do not put `next/font/google` back.
+ *
+ * Amplify build 109 failed outright because next/font could not reach Google to
+ * fetch Instrument Sans -- a commit that only touched the homepage hero died on
+ * a network call for a font on a different page. Ten families were fetched at
+ * build time across five files, so any one of them being slow or rate-limited
+ * took the whole deploy down. It is also invisible locally, where the fonts are
+ * already cached, so it only ever fails in CI and looks like your code broke.
+ *
+ * The woff2 files in src/fonts are the latin subset at exactly the weights
+ * these pages use. Adding a weight means adding a file -- see
+ * scripts/fetch-fonts.py, which is the thing that downloaded them.
+ */
+
+const archivo = localFont({
+  src: [
+    { path: '../../fonts/Archivo/600.woff2', weight: '600', style: 'normal' },
+    { path: '../../fonts/Archivo/700.woff2', weight: '700', style: 'normal' },
+    { path: '../../fonts/Archivo/800.woff2', weight: '800', style: 'normal' },
+  ],
   variable: '--font-archivo',
   display: 'swap',
 })
-const plexSans = IBM_Plex_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+const plexSans = localFont({
+  src: [
+    { path: '../../fonts/IBMPlexSans/400.woff2', weight: '400', style: 'normal' },
+    { path: '../../fonts/IBMPlexSans/500.woff2', weight: '500', style: 'normal' },
+    { path: '../../fonts/IBMPlexSans/600.woff2', weight: '600', style: 'normal' },
+  ],
   variable: '--font-plex-sans',
   display: 'swap',
 })
-const plexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['500', '600'],
+const plexMono = localFont({
+  src: [
+    { path: '../../fonts/IBMPlexMono/500.woff2', weight: '500', style: 'normal' },
+    { path: '../../fonts/IBMPlexMono/600.woff2', weight: '600', style: 'normal' },
+  ],
   variable: '--font-plex-mono',
   display: 'swap',
 })
