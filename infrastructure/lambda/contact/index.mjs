@@ -28,6 +28,28 @@ const ses = new SESClient({ region: 'us-east-1' });
 // nothing. Both of these are SES-verified, which Source requires.
 const RECIPIENT_EMAIL = 'jdakemp@gmail.com';
 
+// The FROM address, which is not the same thing as the TO address and must not
+// be collapsed back into one constant.
+//
+// This used to send as jdakemp@gmail.com. SES has that address verified, so the
+// API call succeeded and the handler logged nothing — but Gmail was receiving
+// mail claiming to be from @gmail.com that did not come from Google's servers.
+// gmail.com publishes `p=none; sp=quarantine`, so it is not rejected and there
+// is no bounce: it is dropped or filed on Gmail's own heuristics, silently.
+// Tested 2026-09-26 — SES accepted the send and the message never arrived in
+// the inbox, spam, or anywhere.
+//
+// jaklabs.io is a verified SES DOMAIN identity with DKIM enabled, so mail from
+// it is properly signed and aligned. Same fix already applied to the Cognito
+// pool, for the same reason — invitations from the default sender never arrived
+// either.
+//
+// ⚠️ The 200 this function returns does NOT mean the email arrived. It returns
+// success if EITHER the mail or the CRM write lands, which is deliberate (an
+// enquiry must survive one failing) and is also why this went unnoticed: the
+// CRM row alone satisfies the success path. Check SES metrics, not the response.
+const SENDER_EMAIL = 'no-reply@jaklabs.io';
+
 const ddb = DynamoDBDocumentClient.from(new DynamoDBClient({}), {
   marshallOptions: { removeUndefinedValues: true },
 });
@@ -157,7 +179,7 @@ export const handler = async (event) => {
     }
 
     const emailParams = {
-      Source: RECIPIENT_EMAIL,
+      Source: SENDER_EMAIL,
       Destination: { ToAddresses: [RECIPIENT_EMAIL] },
       Message: {
         Subject: { Data: `[JAKLabs Contact] ${String(subject).slice(0, 120)}`, Charset: 'UTF-8' },
