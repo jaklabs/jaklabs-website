@@ -30,7 +30,7 @@ export class ApiStack extends cdk.Stack {
     const { blogsTable, categoriesTable, mediaBucket, userPool } = props
 
     const lambdaConfig = {
-      runtime: lambda.Runtime.NODEJS_20_X,
+      runtime: lambda.Runtime.NODEJS_22_X,
       timeout: cdk.Duration.seconds(30),
       memorySize: 512,
       tracing: lambda.Tracing.ACTIVE,
@@ -107,7 +107,7 @@ export class ApiStack extends cdk.Stack {
       functionName: 'jaklabs-audit',
       entry: path.join(__dirname, '../lambda/audit/handler.ts'),
       handler: 'handler',
-      runtime: lambda.Runtime.NODEJS_20_X,
+      runtime: lambda.Runtime.NODEJS_22_X,
       timeout: cdk.Duration.seconds(60),
       memorySize: 1536,
       tracing: lambda.Tracing.ACTIVE,
