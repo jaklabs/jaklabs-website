@@ -107,7 +107,27 @@ export class ApiStack extends cdk.Stack {
       functionName: 'jaklabs-audit',
       entry: path.join(__dirname, '../lambda/audit/handler.ts'),
       handler: 'handler',
-      runtime: lambda.Runtime.NODEJS_22_X,
+      // ⚠️ NODEJS_20, DELIBERATELY, AND THE ONLY FUNCTION IN THIS STACK THAT IS.
+      //
+      // 9970a90 moved all four API Lambdas to nodejs22. The three that are plain
+      // JSON handlers were fine. THIS one bundles a Chromium binary, and on
+      // nodejs22 the browser fails to launch — so the audit answered
+      // `reachable: false` for every URL on earth, google.com included.
+      //
+      // It broke SILENTLY and with a DELAY, which is the part worth remembering:
+      // the deploy succeeded, the function returned HTTP 200 with
+      // `success: true`, and warm nodejs20 containers kept serving correct
+      // results for ~80 minutes. Only as they cycled out did cold starts land on
+      // nodejs22, so "it worked after I deployed" was true and meaningless.
+      // Nothing alarmed, because a swallowed browser-launch failure is rendered
+      // as a fact about the visitor's website: "That site didn't load."
+      //
+      // That is fleet rule 2 living inside a public-facing tool — the free audit
+      // on jaklabs.io, which the blog posts lead with — telling prospects their
+      // working site was down. Do NOT raise this to 22 again without launching
+      // the browser against a known-good URL first; a green deploy proves
+      // nothing here. See the runtime note in ~/claude-server/CLAUDE.md.
+      runtime: lambda.Runtime.NODEJS_20_X,
       timeout: cdk.Duration.seconds(60),
       memorySize: 1536,
       tracing: lambda.Tracing.ACTIVE,
