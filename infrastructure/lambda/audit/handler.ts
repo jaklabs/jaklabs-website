@@ -122,7 +122,38 @@ export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayPr
     try {
       await page.goto(target.toString(), { waitUntil: 'domcontentloaded', timeout: 20000 })
       await new Promise((r) => setTimeout(r, 2500))   // let deferred scripts fail
-    } catch {
+    } catch (err) {
+      // ⚠️ THIS USED TO BE A BARE `catch {}`, AND THAT IS HOW THIS TOOL SPENT AN
+      // EVENING TELLING EVERY VISITOR THEIR WORKING WEBSITE WAS DOWN.
+      //
+      // A runtime bump to nodejs22 broke Chromium's navigation. The browser
+      // still launched, so the outer handler never saw it; every page.goto threw
+      // and every throw became "That site didn't load. It may be down." The
+      // audit answered reachable:false for google.com and example.com, with
+      // HTTP 200 and success:true, and nothing alarmed.
+      //
+      // The runtime was the trigger. The DEFECT is right here: a failure to
+      // MEASURE was reported as a MEASUREMENT (fleet rule 2). Four different
+      // facts — their DNS is wrong, their server is slow, our renderer crashed,
+      // our browser is broken — all produced one sentence blaming them.
+      //
+      // So the error is now read, and ANYTHING WE DO NOT RECOGNISE IS TREATED AS
+      // OURS. The asymmetry is the whole argument: telling a prospect their site
+      // is broken when it is not costs trust we cannot get back and is invisible
+      // to us, while a 5xx is visible, alarmed, and costs one retry.
+      const msg = err instanceof Error ? `${err.name}: ${err.message}` : String(err)
+      // Faults that genuinely belong to the site being checked. Deliberately an
+      // ALLOWLIST: a new failure mode we have never seen is our problem until
+      // somebody looks at it and decides otherwise.
+      const theirs = /TimeoutError|ERR_NAME_NOT_RESOLVED|ERR_CONNECTION_REFUSED|ERR_CONNECTION_TIMED_OUT|ERR_CONNECTION_RESET|ERR_CONNECTION_CLOSED|ERR_ADDRESS_UNREACHABLE|ERR_EMPTY_RESPONSE|ERR_TOO_MANY_REDIRECTS|ERR_SSL|ERR_CERT|ERR_HTTP2|ERR_QUIC|ERR_SOCKET_NOT_CONNECTED|ERR_BLOCKED_BY/i
+        .test(msg)
+      if (!theirs) {
+        // Rethrown, so it reaches the outer catch: console.error + a 5xx. A
+        // caller that cannot get a number must be told it cannot get a number —
+        // send_batch refuses to mail stale figures on exactly this signal.
+        throw new Error(`navigation failed in a way that is probably OURS: ${msg}`)
+      }
+      console.warn('audit: site did not load', target.hostname, msg)
       return success({
         url: target.toString(), reachable: false,
         message: "That site didn't load. It may be down, or blocking automated checks.",
