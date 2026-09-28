@@ -172,6 +172,20 @@ export default function RankLanding() {
           <p className="sub-cmd">
             Python 3.9+ and <code>git</code>. Nothing else — there are no dependencies, deliberately.
           </p>
+          {/*
+            A link to the repository itself, not just the clone command.
+
+            This page had exactly two links on it: one deep link to a single test
+            file, and the footer. The clone command is copyable text, which is
+            useless to the majority of people arriving from a shared link on a
+            phone — they cannot clone, so the only thing they can do is leave.
+            Read the code, star it, skim the README: all of that needs an <a>.
+          */}
+          <p className="sub-cmd repo-link">
+            <a href="https://github.com/jaklabs/aura-rank" target="_blank" rel="noopener noreferrer">
+              Read the source on GitHub →
+            </a>
+          </p>
         </div>
       </div>
 

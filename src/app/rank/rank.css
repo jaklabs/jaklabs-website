@@ -254,6 +254,19 @@
 .aura-root .cmd button:focus-visible { outline: 2px solid var(--cool); outline-offset: -2px; }
 .aura-root .sub-cmd { text-align: center; font-size: 13.5px; color: var(--dim); margin-top: 14px; }
 
+/* The link to the repository. Deliberately visible rather than a quiet footer
+   link: most arrivals cannot run the clone command on the device they are
+   holding, and reading the source is the entire trust argument this page makes. */
+.aura-root .repo-link { margin-top: 10px; }
+.aura-root .repo-link a {
+  color: var(--cool);                       /* the page's own link colour */
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 2px;
+  text-decoration: none;
+  transition: border-color .2s ease, color .2s ease;
+}
+.aura-root .repo-link a:hover { color: var(--ink); border-bottom-color: var(--cool); }
+
 /* ---------- blocks ---------- */
 .aura-root .panel { border: 1px solid var(--line); background: var(--panel); padding: 26px 28px; }
 .aura-root .panel h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
