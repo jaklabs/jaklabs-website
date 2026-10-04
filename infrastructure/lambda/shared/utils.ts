@@ -35,6 +35,75 @@ export function isAdmin(event: any): boolean {
   return user?.groups.includes('Admins') || false
 }
 
+/** Who a written post is attributed to. */
+export interface Author { authorId: string; authorName: string }
+
+/**
+ * The IAM-signed machine caller, or null.
+ *
+ * WHY THIS EXISTS — and why it is not a second way to be an admin.
+ *
+ * `content-engine/push.py` runs in a terminal, which has no Cognito session.
+ * Getting a verified draft into the CRM therefore meant a human pasting a
+ * browser id token. The two shortcuts around that are both bad: invoking this
+ * Lambda directly with a hand-written `requestContext.authorizer.claims` forges
+ * the identity stamped onto the byline, and parking a 30-day refresh token in a
+ * secret store hands a month of impersonation to whatever reads it.
+ *
+ * So the engine gets its OWN identity instead, authenticated by AWS SigV4 on a
+ * route of its own. API Gateway verifies the signature before any code runs —
+ * exactly as the Cognito authorizer does for a person — and the post is authored
+ * by the machine rather than by a human it is pretending to be.
+ *
+ * ⚠️ BOTH CONDITIONS ARE LOAD-BEARING.
+ *
+ * The resource path must be a /machine/ route AND API Gateway must have attested
+ * an IAM principal. Neither alone is enough:
+ *
+ *   * `event.resource` is the matched route TEMPLATE, filled in by API Gateway,
+ *     not anything a client sends — but on its own it would mean a route whose
+ *     authorizer was later loosened to NONE still minted a machine author.
+ *   * `requestContext.identity.userArn` is populated only when IAM auth actually
+ *     ran, and is null on the Cognito routes and on public GET /blogs — but on
+ *     its own it would let any future IAM-authorised route author posts.
+ *
+ * Requiring both means the only way to be a machine author is to have signed a
+ * request to a route that was declared IAM-authorised in the stack.
+ *
+ * ⚠️ It returns an author, NOT admin rights. isAdmin() is untouched and still
+ * means "a Cognito user in the Admins group", so nothing that guards on it —
+ * draft visibility in the listings, update, delete — silently widens to the
+ * machine. A machine route that wants a capability has to be given it by name.
+ */
+export function machineCallerFromEvent(event: any): Author | null {
+  if (!String(event?.resource || '').startsWith('/machine/')) return null
+  const arn = event?.requestContext?.identity?.userArn
+  if (!arn) return null
+
+  // arn:aws:sts::<acct>:assumed-role/<RoleName>/<session>  → RoleName
+  // arn:aws:iam::<acct>:user/<UserName>                    → UserName
+  const parts = String(arn).split('/')
+  const name = (String(arn).includes(':assumed-role/') ? parts[1] : parts[parts.length - 1]) || 'machine'
+  return { authorId: String(arn), authorName: name }
+}
+
+/**
+ * Who to attribute a new post to, or null if nobody may write one.
+ *
+ * One definition, so the Cognito path and the machine path cannot drift into
+ * attributing posts differently. The Cognito branch is byte-identical to what it
+ * was before this function existed — `claims.sub` and the local part of the
+ * email — because the posts already in the table carry those values.
+ */
+export function authorFor(event: any): Author | null {
+  const machine = machineCallerFromEvent(event)
+  if (machine) return machine
+  if (!isAdmin(event)) return null
+  const user = getUserFromEvent(event)
+  if (!user) return null
+  return { authorId: user.userId, authorName: user.email.split('@')[0] }
+}
+
 /**
  * Post content, reduced to markup we are willing to render on a public page.
  *

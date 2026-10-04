@@ -19,8 +19,14 @@ jobs:
       - name: Install
         run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
 
+      # NOT `[ -f tsconfig.json ] && npx tsc --noEmit || echo "no tsconfig"`.
+      # A command in a `&&` list is exempt from errexit unless it is the last
+      # one, so a FAILING tsc was caught by the `||`, the list succeeded, and the
+      # step went green having printed the errors nobody reads. The fleet harness
+      # names this exact shape as rule 5's favourite disguise; it was here too.
       - name: Type-check if TypeScript
-        run: '[ -f tsconfig.json ] && npx tsc --noEmit || echo "no tsconfig"'
+        run: |
+          if [ -f tsconfig.json ]; then npx tsc --noEmit; else echo "no tsconfig"; fi
 
       - name: Images are servable
         run: node scripts/check-images.mjs
@@ -35,3 +41,14 @@ jobs:
 
       - name: Test if tests exist
         run: npm test --if-present
+
+      # The CDK app is a separate npm project, so the root install and typecheck
+      # never saw it — the Lambda handlers that serve the live blog were outside
+      # CI entirely. machine-auth.test.ts covers POST /machine/blogs, where the
+      # failure would be attributing a machine's post to a person.
+      - name: Infrastructure — typecheck and the machine-auth tests
+        working-directory: infrastructure
+        run: |
+          npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          npx tsc --noEmit
+          npm test

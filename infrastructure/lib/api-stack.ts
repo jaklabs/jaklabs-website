@@ -273,6 +273,71 @@ export class ApiStack extends cdk.Stack {
     blogResource.addMethod('PUT', blogsIntegration, authOptions)
     blogResource.addMethod('DELETE', blogsIntegration, authOptions)
 
+    // THE MACHINE ROUTE — POST /machine/blogs, authorised by AWS SigV4.
+    //
+    // content-engine/push.py runs in a terminal, which has no Cognito session.
+    // Landing a verified draft therefore used to mean a person pasting a browser
+    // id token, and the two ways around that were both worse than the friction:
+    // invoking this Lambda directly with hand-written
+    // `requestContext.authorizer.claims` forges the identity the byline is
+    // stamped from, and storing a 30-day refresh token hands a month of
+    // impersonation to whatever can read the secret.
+    //
+    // So the engine authenticates as itself. API Gateway verifies the signature
+    // before any code runs, the same place it verifies a Cognito token, and the
+    // post is authored by the machine instead of by a human it is imitating.
+    //
+    // ⚠️ A SEPARATE PREFIX, NOT AN OPTION ON /blogs. The handler decides a caller
+    // is a machine partly from `event.resource` starting with `/machine/`, so the
+    // path is doing security work: a route that is not declared here cannot mint
+    // a machine author no matter how it is called. Adding IAM auth to an existing
+    // /blogs method would have made every caller of that method ambiguous.
+    //
+    // ⚠️ NOTHING ELSE LIVES HERE. No PUT, no DELETE, no /admin/rebuild. The
+    // machine can create a draft and that is all — `machineCallerFromEvent()`
+    // deliberately returns an author rather than admin rights, so isAdmin() is
+    // untouched and nothing guarded by it widened. A capability the engine needs
+    // later has to be added by name, which is a decision somebody makes in a
+    // diff rather than one that arrives as a side effect.
+    //
+    // ⚠️ Publishing is refused in the handler, not merely absent here. Route
+    // surface says what can be called; the handler says what it may do.
+    const machineBlogsResource = this.api.root.addResource('machine').addResource('blogs')
+    machineBlogsResource.addMethod('POST', blogsIntegration, {
+      authorizationType: apigateway.AuthorizationType.IAM,
+    })
+
+    // The identity the engine assumes, scoped to exactly that one method.
+    //
+    // Deny-by-default does most of the work: an IAM principal with no
+    // execute-api:Invoke grant cannot call an IAM-authorised route at all. This
+    // role exists so the grant is declared in the stack and reviewable in a
+    // `cdk diff`, rather than attached by hand to whichever principal happened
+    // to need it — and so the grant can never widen past the method named below,
+    // because there is nothing else in the statement's resource list.
+    //
+    // ⚠️ The role NAME becomes the byline. machineCallerFromEvent() reads it out
+    // of the assumed-role ARN, so posts pushed this way are authored
+    // 'jaklabs-content-engine' and are distinguishable in the CRM from anything
+    // a person wrote. Renaming this role renames the author of future posts.
+    const contentEngineRole = new iam.Role(this, 'ContentEnginePublisherRole', {
+      roleName: 'jaklabs-content-engine',
+      description: 'Lets the content engine POST /machine/blogs as itself. Draft creation only.',
+      // Assumable only by the named agent principal — not by the account root,
+      // and not by any principal that merely happens to be in the account.
+      assumedBy: new iam.ArnPrincipal(`arn:aws:iam::${this.account}:user/haslett-crm-agent`),
+      maxSessionDuration: cdk.Duration.hours(1),
+    })
+    contentEngineRole.addToPolicy(new iam.PolicyStatement({
+      actions: ['execute-api:Invoke'],
+      resources: [this.api.arnForExecuteApi('POST', '/machine/blogs', 'v1')],
+    }))
+
+    new cdk.CfnOutput(this, 'ContentEngineRoleArn', {
+      value: contentEngineRole.roleArn,
+      description: 'Assume this to push drafts: see content-engine/push_iam.py',
+    })
+
     // CATEGORY ROUTES
     const categoriesIntegration = new apigateway.LambdaIntegration(categoriesLambda)
     const categoriesResource = this.api.root.addResource('categories')

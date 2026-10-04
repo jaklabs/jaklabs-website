@@ -2,7 +2,7 @@ import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocumentClient, PutCommand, GetCommand, UpdateCommand, DeleteCommand, QueryCommand } from '@aws-sdk/lib-dynamodb'
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from 'aws-lambda'
 import { success, created, noContent, error, notFound, validationError, serverError } from '../shared/response'
-import { generateId, generateSlug, calculateReadingTime, getCurrentTimestamp, formatDateKey, getUserFromEvent, isAdmin, validateRequired, sanitizeHtml, toPlainText, buildExcerpt } from '../shared/utils'
+import { generateId, generateSlug, calculateReadingTime, getCurrentTimestamp, formatDateKey, getUserFromEvent, isAdmin, authorFor, machineCallerFromEvent, validateRequired, sanitizeHtml, toPlainText, buildExcerpt } from '../shared/utils'
 import { BlogPost, CreateBlogInput, UpdateBlogInput, PaginatedResponse } from '../shared/types'
 import { AmplifyClient, StartJobCommand } from '@aws-sdk/client-amplify'
 
@@ -64,13 +64,36 @@ export async function rebuildSite(event: APIGatewayProxyEvent): Promise<APIGatew
 
 export async function createBlog(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   try {
-    if (!isAdmin(event)) return error('Admin access required', 403)
-    const user = getUserFromEvent(event)
-    if (!user) return error('User not found', 401)
+    // Two ways in, one definition of the byline. A person in the Admins group on
+    // either Cognito pool, or an IAM-signed caller on a /machine/ route — see
+    // authorFor(). The Cognito branch there is unchanged, so the existing posts'
+    // authorId/authorName remain what they were.
+    const machine = machineCallerFromEvent(event)
+    if (!machine) {
+      if (!isAdmin(event)) return error('Admin access required', 403)
+      if (!getUserFromEvent(event)) return error('User not found', 401)
+    }
+    const author = authorFor(event)
+    if (!author) return error('Admin access required', 403)
 
     const body: CreateBlogInput = JSON.parse(event.body || '{}')
     const validation = validateRequired(body, ['title', 'content', 'category'])
     if (!validation.valid) return validationError('Missing required fields', { missing: validation.missing })
+
+    // ⚠️ A MACHINE MAY NOT PUBLISH. This is the engine/bot line that the whole
+    // content-engine design rests on: a bot decides to publish, an engine hands
+    // a person something to read. push.py has no publish path for the same
+    // reason; this is that rule enforced server-side, where a future caller
+    // cannot simply choose not to honour it.
+    //
+    // It REFUSES rather than silently coercing to draft, because a caller that
+    // asked to publish has a bug or a misunderstanding, and quietly writing
+    // something other than what it asked for is how that survives to do damage
+    // somewhere else.
+    if (machine && body.status && body.status !== 'draft') {
+      return error('A machine caller may only create drafts. Publishing is a person\'s decision, '
+        + 'made in the CRM after reading the post.', 403)
+    }
 
     const now = getCurrentTimestamp()
     const id = generateId()
@@ -91,10 +114,38 @@ export async function createBlog(event: APIGatewayProxyEvent): Promise<APIGatewa
     const blog: BlogPost = {
       id, slug, title: toPlainText(body.title), excerpt: buildExcerpt(body.excerpt, safeContent),
       content: safeContent, coverImage: body.coverImage || '', category: body.category,
-      tags: body.tags || [], status, authorId: user.userId, authorName: user.email.split('@')[0],
+      tags: body.tags || [], status, authorId: author.authorId, authorName: author.authorName,
       readingTime: calculateReadingTime(toPlainText(safeContent)), publishedAt, createdAt: now, updatedAt: now,
       PK: `BLOG#${id}`, SK: 'METADATA', GSI1PK: `STATUS#${status}`, GSI1SK: formatDateKey(publishedAt || now),
       GSI2PK: `CATEGORY#${body.category.toLowerCase()}`, GSI2SK: formatDateKey(publishedAt || now),
+    }
+
+    // ⚠️ THE SLUG UNIQUENESS CHECK IS NOT BELT-AND-BRACES. IT IS THE ONLY ONE.
+    //
+    // The ConditionExpression below reads like it prevents duplicates. It does
+    // not: `id` is a fresh uuid on every call, so `attribute_not_exists(PK)` can
+    // never fail, and nothing else anywhere checked that a slug was unused.
+    // Posting the same slug twice therefore created TWO posts sharing one public
+    // URL — and because getBlog queries GSI3-Slug with `Limit: 1`, the duplicate
+    // was almost invisible through the API; you only found it by querying the
+    // index directly.
+    //
+    // That mattered little while every write came from a human clicking Save. It
+    // matters a great deal now a machine can retry: an interrupted batch re-run
+    // is the ordinary case, not the exotic one.
+    //
+    // Checked as a query rather than a condition because the uniqueness lives on
+    // a GSI, and a condition expression cannot reach one. The race between this
+    // read and the write below is real and accepted: two simultaneous creates of
+    // one slug remain possible. Writes here are a person saving a post or a
+    // serial push loop, so the exposure is a retry, which this does catch.
+    const clash = await docClient.send(new QueryCommand({
+      TableName: BLOGS_TABLE, IndexName: 'GSI3-Slug',
+      KeyConditionExpression: 'slug = :slug', ExpressionAttributeValues: { ':slug': slug }, Limit: 1,
+    }))
+    if (clash.Items && clash.Items.length > 0) {
+      return error(`A post already exists at /blog/${slug}. Edit that one, or change the slug — `
+        + 'creating a second would put two posts on one URL.', 409)
     }
 
     await docClient.send(new PutCommand({ TableName: BLOGS_TABLE, Item: blog, ConditionExpression: 'attribute_not_exists(PK)' }))
