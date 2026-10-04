@@ -82,7 +82,7 @@ function slug(length = 8) {
  * lead's timeline shows the enquiry as the first touch, the way it would if it
  * had come in by phone.
  */
-async function saveLead({ name, email, phone, subject, message }) {
+async function saveLead({ name, email, phone, subject, message, campaign }) {
   const now = new Date().toISOString();
   const leadId = `lead_${slug()}`;
 
@@ -108,7 +108,14 @@ async function saveLead({ name, email, phone, subject, message }) {
       // They came to us, which is the strongest signal a lead can carry, so it
       // starts warm rather than at the cold default.
       warmth: 4,
-      howIKnowThem: 'Submitted the contact form on jaklabs.io',
+      // Which ad, if any, brought them. Absent rather than empty when they came
+      // direct: "no campaign" and "campaign not recorded" must not look alike in
+      // the CRM, because the second one means attribution is broken and the first
+      // means organic — and the whole point of the field is telling them apart.
+      ...(campaign ? { campaign } : {}),
+      howIKnowThem: campaign
+        ? `Submitted the contact form on jaklabs.io — campaign ${campaign}`
+        : 'Submitted the contact form on jaklabs.io',
       painSignal: subject,
       nextStep: 'Reply — inbound enquiry',
       notes: '',
@@ -169,6 +176,10 @@ export const handler = async (event) => {
   try {
     const body = JSON.parse(event.body || '{}');
     const { name, email, phone, subject, message } = body;
+    // Never trusted into the record raw: it reaches a CRM a human reads.
+    // Only our own codes are kept; anything else is dropped, not stored.
+    const CAMPAIGNS = ['VIBE_RESCUE', 'OPERATOR', 'BROKEN_SITE'];
+    const campaign = CAMPAIGNS.includes(body.campaign) ? body.campaign : null;
 
     if (!name || !email || !subject || !message) {
       return {
@@ -212,7 +223,7 @@ export const handler = async (event) => {
     // logged loudly instead of thrown.
     const [mail, crm] = await Promise.allSettled([
       ses.send(new SendEmailCommand(emailParams)),
-      saveLead({ name, email, phone, subject, message }),
+      saveLead({ name, email, phone, subject, message, campaign }),
     ]);
 
     if (mail.status === 'rejected') console.error('SES send failed:', mail.reason);

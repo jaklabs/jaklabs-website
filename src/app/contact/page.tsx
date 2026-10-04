@@ -1,9 +1,10 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { Mail, Phone, MapPin, Clock, CheckCircle, Send, Sparkles } from 'lucide-react'
+import { captureCampaign, getCampaign } from '@/lib/campaign'
 
 const CONTACT_API_URL = 'https://mfo28du4bj.execute-api.us-east-1.amazonaws.com/prod/contact'
 
@@ -29,6 +30,10 @@ export default function ContactPage() {
   const contactInfoInView = useInView(contactInfoRef, { once: true, margin: '-100px' })
   const formInView = useInView(formRef, { once: true, margin: '-100px' })
 
+  // Someone can land straight here from an ad, so capture on this page too — not
+  // only on the audit page the ads point at.
+  useEffect(() => { captureCampaign() }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -46,7 +51,9 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formState),
+        // The campaign rides along rather than being asked for. Null when the visitor
+        // arrived directly, which is a real answer and gets stored as one.
+        body: JSON.stringify({ ...formState, campaign: getCampaign() }),
       })
 
       if (response.ok) {

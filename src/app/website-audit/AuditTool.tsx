@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { captureCampaign } from '@/lib/campaign'
 import Link from 'next/link'
 
 /**
@@ -34,6 +35,10 @@ const TONE: Record<string, string> = {
 }
 
 export default function AuditTool() {
+  // The ads land here. Capture the code now; the form that uses it is on another
+  // page and several minutes away. Gates nothing — see the note above.
+  useEffect(() => { captureCampaign() }, [])
+
   const [url, setUrl] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
