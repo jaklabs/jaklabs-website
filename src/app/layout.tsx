@@ -4,6 +4,7 @@ import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { SiteChrome } from '@/components/layout/SiteChrome'
+import { jsonLd } from '@/lib/jsonLd'
 
 /**
  * Facebook App ID, for fb:app_id.
@@ -114,7 +115,7 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
+            __html: jsonLd({
               '@context': 'https://schema.org',
               '@type': 'ProfessionalService',
               '@id': 'https://jaklabs.io/#business',

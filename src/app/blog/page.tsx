@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { getBlogPosts, getCategories } from '@/lib/blog-data'
 import BlogIndex from './BlogIndex'
 import { social } from '@/lib/social'
+import { jsonLd } from '@/lib/jsonLd'
 
 /**
  * The blog index — a SERVER component.
@@ -45,7 +46,7 @@ export default async function BlogPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
+          __html: jsonLd({
             '@context': 'https://schema.org',
             '@type': 'Blog',
             '@id': 'https://jaklabs.io/blog',

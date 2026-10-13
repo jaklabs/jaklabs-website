@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getBlogPost, getBlogPosts, getRelatedPosts, FALLBACK_COVER } from '@/lib/blog-data'
 import BlogArticle from './BlogArticle'
+import { jsonLd } from '@/lib/jsonLd'
 
 /**
  * One article — a SERVER component.
@@ -125,7 +126,7 @@ export default async function BlogPostPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
+          __html: jsonLd([
             {
               '@context': 'https://schema.org',
               '@type': 'BlogPosting',

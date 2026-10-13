@@ -39,6 +39,13 @@ jobs:
       - name: Every page ships a social card
         run: node scripts/check-og.mjs
 
+      # Also after the build, and for the same reason as the card check above: a
+      # source grep for `jsonLd(` passes on a call whose output is then discarded
+      # or re-wrapped. The <script> a browser receives is the artifact. It has a
+      # --self-test, because a check never observed failing is a rumour.
+      - name: JSON-LD survives the script tag
+        run: node scripts/check-jsonld.mjs
+
       - name: Test if tests exist
         run: npm test --if-present
 
@@ -46,7 +53,7 @@ jobs:
       # never saw it — the Lambda handlers that serve the live blog were outside
       # CI entirely. machine-auth.test.ts covers POST /machine/blogs, where the
       # failure would be attributing a machine's post to a person.
-      - name: Infrastructure — typecheck and the machine-auth tests
+      - name: Infrastructure — typecheck and the Lambda tests
         working-directory: infrastructure
         run: |
           npm ci --no-audit --no-fund || npm install --no-audit --no-fund

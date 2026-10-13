@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import AuditTool from './AuditTool'
 import { social } from '@/lib/social'
+import { jsonLd } from '@/lib/jsonLd'
 
 /**
  * The free website audit — the one page that reaches every kind of local
@@ -72,7 +73,7 @@ export default function WebsiteAuditPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify([
+          __html: jsonLd([
             {
               '@context': 'https://schema.org',
               '@type': 'WebApplication',

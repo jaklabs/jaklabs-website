@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { INDUSTRIES, getIndustry, industrySlugs, OFFERS } from '@/lib/industries'
 import { social } from '@/lib/social'
+import { jsonLd } from '@/lib/jsonLd'
 
 /**
  * One page per industry, generated from the shared taxonomy.
@@ -75,7 +76,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: jsonLd(faqSchema) }}
       />
 
       <section className="pt-32 pb-16">

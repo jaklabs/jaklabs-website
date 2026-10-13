@@ -171,15 +171,55 @@ export function sanitizeHtml(html: string): string {
 }
 
 /**
+ * Entity decoding, innermost first and `&amp;` LAST.
+ *
+ * ⚠️ THE ORDER IS THE WHOLE THING. Decode `&amp;` first and `&amp;lt;` becomes
+ * `&lt;` becomes `<` on the next pass — text that was deliberately written as a
+ * visible `&lt;` turns into real markup, which is precisely what the caller is
+ * trying not to produce. Going the other way, `&amp;lt;` contains no `&lt;`
+ * substring, so the inner passes leave it alone and the final `&amp;` pass
+ * yields the literal text `&lt;`. Correct.
+ */
+function decodeEntities(text: string): string {
+  return text
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#0*39;|&#x0*27;/gi, "'")
+    .replace(/&amp;/g, '&')   // ⚠️ LAST. See above.
+}
+
+/**
  * Strip markup entirely. For fields that are text, not HTML.
  *
  * An excerpt and a title are rendered in places React does not escape for you —
- * a <meta> description, JSON-LD, an RSS item, an og:title. Storing them as
- * plain text means there is no markup to escape wherever they end up.
+ * a <meta> description, JSON-LD, an og:title. Stripping the markup is what makes
+ * them safe to put there.
+ *
+ * ⚠️ IT DECODES, AND IT DID NOT UNTIL 2026-10-12. `sanitize-html` with
+ * `allowedTags: []` strips tags — intended — and ALSO entity-encodes the text it
+ * keeps, which is a RENDERING decision made at REST:
+ *
+ *     "Trades & Service"  ->  "Trades &amp; Service"
+ *     "a < b"             ->  "a &lt; b"
+ *
+ * Every consumer that escapes properly then escaped it a second time, so the
+ * live <title> read `Trades &amp;amp; Service Business Owner` — the line search
+ * results and social previews show. No title containing `&` could be stored with
+ * a bare `&` through this API at all; a repair script sent the right string, got
+ * a 2xx, and read its own value back unchanged.
+ *
+ * ⚠️ THE ENCODING WAS LOAD-BEARING UNTIL `src/lib/jsonLd.ts` SHIPPED. The blog
+ * pages print structured data through `dangerouslySetInnerHTML` with
+ * `JSON.stringify`, which does not escape `<`, so a title containing
+ * `</script>` would have broken out of that block. That escaping now happens at
+ * the JSON-LD boundary, where it belongs, and `scripts/check-jsonld.mjs` fails
+ * the build if a block skips it. Do not reintroduce encoding here as a second
+ * line of defence — two half-applied escapes are what produced the visible bug.
  */
 export function toPlainText(html: string): string {
-  return sanitize(html, { allowedTags: [], allowedAttributes: {} })
-    .replace(/&nbsp;/g, ' ')
+  return decodeEntities(sanitize(html, { allowedTags: [], allowedAttributes: {} }))
     .replace(/\s+/g, ' ')
     .trim()
 }
