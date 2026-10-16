@@ -70,7 +70,7 @@
   }
 
   .section-padding {
-    @apply py-20 md:py-32;
+    @apply py-14 md:py-32;
   }
 
   .heading-xl {

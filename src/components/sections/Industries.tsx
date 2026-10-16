@@ -86,7 +86,7 @@ export function Industries() {
     const row2X = useTransform(scrollYProgress, [0, 1], [scrollRange, -scrollRange])
 
     return (
-        <section ref={containerRef} className="py-20 md:py-32 relative overflow-hidden">
+        <section ref={containerRef} className="py-14 md:py-32 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 via-background to-secondary/30" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-purple/5 rounded-full blur-3xl" />
 

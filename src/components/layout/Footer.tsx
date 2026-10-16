@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone } from 'lucide-react'
+import { Facebook, Linkedin, Instagram, Mail, Phone } from 'lucide-react'
 
 // Every link here now resolves. It previously carried ten that did not: eight
 // /industries/* pages that had never been built, /careers, and /about#team —
@@ -45,17 +45,16 @@ const footerLinks = {
 
 const socialLinks = [
     { icon: Facebook, href: 'https://www.facebook.com/jakthedev', label: 'Facebook' },
-    { icon: Twitter, href: 'REMOVE_TWITTER', label: 'Twitter' },
     { icon: Linkedin, href: 'https://www.linkedin.com/in/jd-alexander-kemp-99b07064/', label: 'LinkedIn' },
-    { icon: Instagram, href: 'https://www.instagram.com/jaklabs.io?igsh=eHhmYnBvOXc4eGQ1&utm_source=qr', label: 'Instagram' },
+    { icon: Instagram, href: 'https://www.instagram.com/jaklabs.io', label: 'Instagram' },
 ]
 
 export function Footer() {
     return (
         <footer className="bg-secondary-dark border-t border-white/10">
             <div className="container-custom section-padding">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
-                    <div className="lg:col-span-2">
+                <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-10 md:gap-12">
+                    <div className="col-span-2">
                         <Link href="/" className="inline-block mb-6">
               <span className="text-3xl font-bold font-heading">
                 <span className="text-primary">JAK</span>
@@ -91,7 +90,7 @@ export function Footer() {
 
                     <div>
                         <h4 className="text-white font-semibold mb-4">Company</h4>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2 md:space-y-3">
                             {footerLinks.company.map((link) => (
                                 <li key={link.name}>
                                     <Link href={link.href} className="text-white/60 hover:text-primary transition-colors">
@@ -104,7 +103,7 @@ export function Footer() {
 
                     <div>
                         <h4 className="text-white font-semibold mb-4">Services</h4>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2 md:space-y-3">
                             {footerLinks.services.map((link) => (
                                 <li key={link.name}>
                                     <Link href={link.href} className="text-white/60 hover:text-primary transition-colors">
@@ -117,7 +116,7 @@ export function Footer() {
 
                     <div>
                         <h4 className="text-white font-semibold mb-4">Industries</h4>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2 md:space-y-3">
                             {footerLinks.industries.map((link) => (
                                 <li key={link.name}>
                                     <Link href={link.href} className="text-white/60 hover:text-primary transition-colors">

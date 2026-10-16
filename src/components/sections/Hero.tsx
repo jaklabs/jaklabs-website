@@ -76,7 +76,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 30 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-xl text-white/60 mb-10 max-w-2xl mx-auto"
+                        className="text-lg sm:text-xl text-white/60 mb-6 sm:mb-10 max-w-2xl mx-auto"
                     >
                         Scheduling, quoting, invoicing and follow-up — the work that currently
                         lives in a group chat and your head. I&apos;m JD Kemp, one senior engineer
@@ -115,7 +115,7 @@ export function Hero() {
                         initial={{ opacity: 0, y: 40 }}
                         animate={isInView ? { opacity: 1, y: 0 } : {}}
                         transition={{ duration: 0.6, delay: 0.5 }}
-                        className="grid grid-cols-1 sm:grid-cols-3 gap-8 mt-20 pt-10 border-t border-white/10"
+                        className="grid grid-cols-3 gap-3 sm:gap-8 mt-10 sm:mt-20 pt-6 sm:pt-10 border-t border-white/10"
                     >
                         {[
                             { value: '456', label: 'Michigan sites I audited', color: 'text-neon-purple' },

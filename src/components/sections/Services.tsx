@@ -113,31 +113,31 @@ export function Services() {
                             whileHover={{ y: -8, transition: { duration: 0.3 } }}
                             className="group"
                         >
-                            <div className={`relative h-full p-8 rounded-2xl bg-secondary/50 border ${service.borderColor} backdrop-blur-sm transition-all duration-500 ${service.glowColor} ${service.hoverGlow}`}>
+                            <div className={`relative h-full p-5 md:p-8 rounded-2xl bg-secondary/50 border ${service.borderColor} backdrop-blur-sm transition-all duration-500 ${service.glowColor} ${service.hoverGlow}`}>
                                 {/* Number badge */}
-                                <span className={`absolute top-6 right-6 text-6xl font-bold bg-gradient-to-br ${service.gradient} bg-clip-text text-transparent opacity-10 group-hover:opacity-20 transition-opacity`}>
+                                <span className={`absolute top-4 right-4 md:top-6 md:right-6 text-5xl md:text-6xl font-bold bg-gradient-to-br ${service.gradient} bg-clip-text text-transparent opacity-10 group-hover:opacity-20 transition-opacity`}>
                   {service.number}
                 </span>
 
                                 {/* Icon */}
                                 <motion.div
-                                    className={`w-14 h-14 rounded-xl ${service.iconBg} flex items-center justify-center mb-6 transition-all duration-300`}
+                                    className={`w-12 h-12 md:w-14 md:h-14 rounded-xl ${service.iconBg} flex items-center justify-center mb-4 md:mb-6 transition-all duration-300`}
                                     whileHover={{ rotate: [0, -10, 10, 0], transition: { duration: 0.5 } }}
                                 >
                                     <service.icon className={`w-7 h-7 ${service.iconColor}`} />
                                 </motion.div>
 
                                 {/* Content */}
-                                <h3 className="text-2xl font-bold mb-3 group-hover:text-white transition-colors">
+                                <h3 className="text-xl md:text-2xl font-bold mb-2 md:mb-3 group-hover:text-white transition-colors">
                                     {service.title}
                                 </h3>
 
-                                <p className="text-white/50 mb-6 group-hover:text-white/70 transition-colors">
+                                <p className="text-sm md:text-base text-white/50 mb-4 md:mb-6 group-hover:text-white/70 transition-colors">
                                     {service.description}
                                 </p>
 
                                 {/* Features */}
-                                <div className="flex flex-wrap gap-2 mb-6">
+                                <div className="flex flex-wrap gap-2 mb-4 md:mb-6">
                                     {service.features.map((feature, idx) => (
                                         <motion.span
                                             key={idx}
