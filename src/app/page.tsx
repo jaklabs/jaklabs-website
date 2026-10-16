@@ -1,4 +1,4 @@
-import { Hero, Services, Industries, CTA, ProductStrip } from '@/components/sections'
+import { Hero, Services, Industries, WhyMe, CTA, ProductStrip } from '@/components/sections'
 
 /**
  * ⚠️ SERVICES SITS ABOVE INDUSTRIES, AND THE ORDER IS THE POINT.
@@ -35,6 +35,7 @@ export default function Home() {
             <Hero />
             <Services />
             <Industries />
+            <WhyMe />
             <CTA />
             <ProductStrip />
         </>

@@ -57,7 +57,12 @@ const URL = process.argv[2] || 'http://localhost:3999'
 // far above the real figure reports success for exactly as long as it takes
 // someone to undo the work.
 const BUDGET = {
-    totalPx: 6800,        // measured 6,399 after WhyChooseUs was removed
+    // Raised 6800 -> 7200 on 2026-10-15, on purpose. The four "why me" lines
+    // came back above the CTA as a 697px block, having cost 1,312px as a full
+    // section. The check caught the increase and failed the build, which is
+    // what it is for — this is a deliberate spend of 697px on the most
+    // differentiated copy on the site, not drift.
+    totalPx: 7200,        // measured 7,096
     heroScreens: 1.0,     // the hero must not exceed ONE viewport — the first
                           // scroll has to land on the offers, not on more hero
     firstPricePx: 2000,   // measured 1,463. This is the real metric: how far a

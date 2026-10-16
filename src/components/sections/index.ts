@@ -1,5 +1,6 @@
 export { Hero } from './Hero'
 export { Services } from './Services'
 export { Industries } from './Industries'
+export { WhyMe } from './WhyMe'
 export { CTA } from './CTA'
 export { ProductStrip } from './ProductStrip'
