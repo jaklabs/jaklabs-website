@@ -47,11 +47,17 @@ const VH = 852
 // four. See the identity assertion below.
 const URL = process.argv[2] || 'http://localhost:3999'
 
-// Budgets sit just above what was measured on 2026-10-15 after the cuts, so a
-// little drift is allowed and a real regression is not. Raising one is a
-// decision somebody should have to make on purpose, in a diff, with a reason.
+// Budgets sit just above what was last MEASURED, so a little drift is allowed
+// and a real regression is not. Raising one is a decision somebody should have
+// to make on purpose, in a diff, with a reason.
+//
+// ⚠️ RATCHET THEM DOWN AFTER A CUT. This sat at 8,200 while the page measured
+// 6,399 for about ten minutes, which is 1,800px of slack — room for two whole
+// stacked sections to creep back in without a single check going red. A budget
+// far above the real figure reports success for exactly as long as it takes
+// someone to undo the work.
 const BUDGET = {
-    totalPx: 8200,        // measured 7,711
+    totalPx: 6800,        // measured 6,399 after WhyChooseUs was removed
     heroScreens: 1.0,     // the hero must not exceed ONE viewport — the first
                           // scroll has to land on the offers, not on more hero
     firstPricePx: 2000,   // measured 1,463. This is the real metric: how far a

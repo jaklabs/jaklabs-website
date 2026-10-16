@@ -1,4 +1,4 @@
-import { Hero, Services, Industries, WhyChooseUs, CTA, ProductStrip } from '@/components/sections'
+import { Hero, Services, Industries, CTA, ProductStrip } from '@/components/sections'
 
 /**
  * ⚠️ SERVICES SITS ABOVE INDUSTRIES, AND THE ORDER IS THE POINT.
@@ -12,6 +12,22 @@ import { Hero, Services, Industries, WhyChooseUs, CTA, ProductStrip } from '@/co
  *
  * The CTA stays last of the selling sections, and ProductStrip stays below it —
  * see ProductStrip for why that placement is deliberate rather than leftover.
+ *
+ * ⚠️ `WhyChooseUs` was REMOVED 2026-10-15, JD's call, to cut mobile height — it
+ * was 1,312px, 1.54 phone screens. Two things went with it and only one of them
+ * should ever come back:
+ *
+ *   GONE AND GOOD RIDDANCE: a stat block reading "5x Average ROI" and "30% Cost
+ *   Reduction". Both were template inventions with nothing behind them — there
+ *   are no clients to average — and they were LIVE. /work already carries a note
+ *   about killing the same class there ("150+ Projects Delivered", "98% Client
+ *   Satisfaction"); the homepage pair was missed. Nothing goes in a stat slot on
+ *   this site that is not registered in content-engine/facts.toml.
+ *
+ *   WORTH RE-HOMING: four trust lines that are the most differentiated copy the
+ *   site had — one senior engineer not a PM and three juniors; I did it to
+ *   myself first (Haslett runs on a CRM I wrote); published pricing; and I will
+ *   tell you to buy nothing. They are in git at the commit that removed this.
  */
 export default function Home() {
     return (
@@ -19,7 +35,6 @@ export default function Home() {
             <Hero />
             <Services />
             <Industries />
-            <WhyChooseUs />
             <CTA />
             <ProductStrip />
         </>
