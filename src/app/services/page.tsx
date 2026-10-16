@@ -19,6 +19,24 @@ const stats = [
 // Four service areas, each its own pillar. The hrefs are anchors into the
 // packages below rather than /services/<slug> pages — those never existed and
 // every one of them was a dead link.
+/**
+ * ⚠️ EVERY `subtitle` SAYS "one-time" AND "delivered in", AND BOTH WORDS ARE LOAD-BEARING.
+ *
+ * This read `$1,500 flat · about a week` until 2026-10-15, and a reader in a
+ * Facebook group quoted it back as **"1500 / week (about)"** — he parsed the
+ * middot as "per" and the duration as the billing period, then said the pricing
+ * sounded "unsure and open to charging more". A one-off audit was being read as
+ * a $6,000-a-month retainer.
+ *
+ * "flat" only denies HOURLY billing; it does not deny a RECURRING one, which is
+ * the reading that actually happened. "one-time" denies it, and "delivered in"
+ * re-labels the duration as a lead time instead of a billing period. Keep both
+ * on every line, including the "From $X" ones — a range is not self-evidently
+ * a total.
+ *
+ * The lesson generalises past this file: a price and a duration side by side
+ * are read as a RATE unless something in between forbids it.
+ */
 const services = [
     { id: 'ai-reliability', title: 'AI Reliability Audit', description: 'Your AI feature reviewed before it ships a wrong or unsafe answer. Eval harness, retrieval gates, a prioritised fix list.', href: '#ai-reliability' },
     { id: 'llm-sprint', title: 'LLM Integration Sprint', description: 'One production-ready AI feature, built end-to-end on your stack and your data — with the gates that keep it honest.', href: '#llm-sprint' },
@@ -38,7 +56,7 @@ const pricingPlans = [
     {
         id: 'ai-reliability',
         title: 'AI Reliability Audit',
-        subtitle: '$2,500 flat · about a week',
+        subtitle: '$2,500 one-time · delivered in about a week',
         description: 'You have an AI feature in or near production and no way to know whether it is about to say something wrong.',
         color: 'neon-cyan',
         features: [
@@ -70,7 +88,7 @@ const pricingPlans = [
         // against their own site and see the same machine work.
         id: 'local-seo',
         title: 'Local SEO Audit',
-        subtitle: '$1,500 flat · about a week',
+        subtitle: '$1,500 one-time · delivered in about a week',
         description: 'You are a local business, you know people search for what you do, and you are not the one they find.',
         color: 'neon-cyan',
         features: [
@@ -83,7 +101,7 @@ const pricingPlans = [
     {
         id: 'llm-sprint',
         title: 'LLM Integration Sprint',
-        subtitle: 'From $7,500 · 2–4 weeks',
+        subtitle: 'From $7,500 one-time · delivered in 2–4 weeks',
         description: 'You want a real AI feature — a chatbot, document processing, a copilot — and you have no AI engineer in-house.',
         color: 'neon-pink',
         featured: true,
@@ -97,7 +115,7 @@ const pricingPlans = [
     {
         id: 'ops-automation',
         title: 'Ops-Automation Build',
-        subtitle: 'From $6,000 · 2–4 weeks',
+        subtitle: 'From $6,000 one-time · delivered in 2–4 weeks',
         description: 'Your team is drowning in manual work that a system should be doing. This is the build I did for my own business first.',
         color: 'neon-purple',
         features: [

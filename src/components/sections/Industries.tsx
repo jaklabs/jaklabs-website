@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect, useState } from 'react'
+import { useRef } from 'react'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import {
     Home,
@@ -76,26 +76,17 @@ export function Industries() {
     const isRow1InView = useInView(row1Ref, { once: true, margin: '-50px' })
     const isRow2InView = useInView(row2Ref, { once: true, margin: '-50px' })
 
-    const [isMobile, setIsMobile] = useState(false)
-
-    useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768)
-        checkMobile()
-        window.addEventListener('resize', checkMobile)
-        return () => window.removeEventListener('resize', checkMobile)
-    }, [])
-
     const { scrollYProgress } = useScroll({
         target: containerRef,
         offset: ["start end", "end start"]
     })
 
-    const scrollRange = isMobile ? 800 : 400
+    const scrollRange = 400
     const row1X = useTransform(scrollYProgress, [0, 1], [-scrollRange, scrollRange])
     const row2X = useTransform(scrollYProgress, [0, 1], [scrollRange, -scrollRange])
 
     return (
-        <section ref={containerRef} className="py-32 relative overflow-hidden">
+        <section ref={containerRef} className="py-20 md:py-32 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-b from-secondary/30 via-background to-secondary/30" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-neon-purple/5 rounded-full blur-3xl" />
 
@@ -131,7 +122,36 @@ export function Industries() {
                     </motion.p>
                 </div>
 
-                <div className="space-y-8">
+                {/* PHONES GET A STATIC GRID; THE MARQUEE BELOW IS md: ONLY.
+                    The two rows slide in OPPOSITE directions off vertical scroll
+                    (row1X runs -range..+range, row2X runs +range..-range), and the
+                    travel used to be `isMobile ? 800 : 400` — double the distance on
+                    the screen where it reads worst. A reader in a Facebook group
+                    called the site "criss crossing visuals ... a page scroll of
+                    doom", and this section was the literal referent.
+                    It also cost a full extra screen: two 208px card rows plus 256px
+                    of padding to convey eight words. Same eight industries here, in
+                    roughly a third of the height, with nothing moving. */}
+                <div className="md:hidden grid grid-cols-2 gap-3">
+                    {[...industriesRow1, ...industriesRow2].map((industry) => (
+                        <div
+                            key={industry.name}
+                            className="flex items-center gap-3 rounded-xl bg-secondary/80 border border-white/5 px-3 py-3"
+                        >
+                            <div className={`w-9 h-9 shrink-0 rounded-lg bg-gradient-to-br ${industry.gradient} p-[1px]`}>
+                                <div className="w-full h-full rounded-lg bg-secondary flex items-center justify-center">
+                                    <industry.icon className="w-5 h-5 text-white" />
+                                </div>
+                            </div>
+                            <div className="min-w-0">
+                                <h3 className="text-sm font-semibold leading-tight truncate">{industry.name}</h3>
+                                <p className="text-xs text-white/40 leading-tight truncate">{industry.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="hidden md:block space-y-8">
                     <div ref={row1Ref}>
                         <motion.div
                             style={{ x: row1X }}
