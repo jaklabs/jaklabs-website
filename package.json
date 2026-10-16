@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "check:images": "node scripts/check-images.mjs",
-    "check:og": "node scripts/check-og.mjs"
+    "check:og": "node scripts/check-og.mjs",
+    "check:mobile": "node scripts/check-mobile-height.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
@@ -32,6 +33,7 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "eslint": "^8.56.0",
-    "eslint-config-next": "^14.2.0"
+    "eslint-config-next": "^14.2.0",
+    "puppeteer-core": "^25.14.0"
   }
 }
