@@ -48,7 +48,7 @@ const services = [
     {
         icon: Search,
         title: 'Embedded Engineering',
-        description: 'Monthly. I join your team for a stretch, learn your domain, and ship on your real systems. Forward-deployed — and the free Operations Audit is how it starts.',
+        description: 'Monthly retainer. I join your team for a stretch, learn your domain, and ship on your real systems. Forward-deployed — and the free Operations Audit is how it starts.',
         features: ['Your team', 'Your systems', 'Starts with the free audit'],
         gradient: 'from-neon-blue to-neon-purple',
         glowColor: 'shadow-[0_0_30px_rgba(0,136,255,0.3),0_0_60px_rgba(0,136,255,0.1)]',
