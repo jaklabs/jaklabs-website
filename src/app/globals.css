@@ -1064,3 +1064,261 @@
   70%  { opacity: 1; transform: scale(0.985); }
   100% { opacity: 1; transform: scale(1); }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   /ballast — the Ballast skin
+   ══════════════════════════════════════════════════════════════════════════
+   Deep navy with a level-vial green. The fourth scoped skin, and it has to be
+   distinct from the third: /ops-platform is BRASS on warm charcoal and sells
+   the same codebase to a different buyer (a multi-shop operator buying an
+   asset). This one sells a subscription to a 1-8 tech shop. If they looked
+   alike a reader would think they were the same offer at two prices.
+
+   The visual idea is a SPIRIT LEVEL. Ballast means staying level as the load
+   changes, which is also the product's argument — the bill does not tip when
+   you hire. The bubble level is the one instrument every trade already owns,
+   so the metaphor needs no explaining to the buyer. Hence the vial green
+   (#b6e34b) as the accent, a waterline in the hero, and a bubble that centres
+   itself when the comparison section arrives.
+
+   --bl-warn is deliberately a SECOND accent and only ever marks the per-tech
+   meter. The page makes one argument — metered versus flat — and giving the
+   metered side its own colour means the chart reads before the caption does.
+
+   Scoped for the reason the other three are: these tokens are dark and cool
+   where the site is purple, and hoisting them would restyle everything.
+   ══════════════════════════════════════════════════════════════════════════ */
+.ballast-skin {
+  --bl-ground: #0b1620;
+  --bl-panel: #12222e;
+  --bl-panel-2: #182c3a;
+  --bl-line: #1f3847;
+  --bl-ink: #eaf2f3;
+  --bl-muted: #93a7b3;
+  --bl-faint: #637884;
+  --bl-level: #b6e34b;
+  --bl-level-soft: #c8ee68;
+  --bl-level-ghost: #17251a;
+  --bl-warn: #e8883c;
+  --bl-good: #5fc98a;
+
+  background: var(--bl-ground);
+  color: var(--bl-muted);
+  font-family: var(--font-hanken), system-ui, sans-serif;
+}
+
+.ballast-skin h1,
+.ballast-skin h2,
+.ballast-skin h3 {
+  font-family: var(--font-space), system-ui, sans-serif;
+  color: var(--bl-ink);
+  letter-spacing: -0.02em;
+}
+
+.ballast-skin .bl-mono,
+.ballast-skin .bl-eyebrow {
+  font-family: var(--font-jet), ui-monospace, monospace;
+}
+.ballast-skin .bl-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--bl-level);
+}
+
+.ballast-skin .bl-ink { color: var(--bl-ink); }
+.ballast-skin .bl-faint { color: var(--bl-faint); }
+.ballast-skin .bl-level { color: var(--bl-level); }
+.ballast-skin .bl-warn { color: var(--bl-warn); }
+
+.ballast-skin .bl-panel {
+  background: var(--bl-panel);
+  border: 1px solid var(--bl-line);
+  border-radius: 14px;
+}
+.ballast-skin .bl-panel-2 { background: var(--bl-panel-2); }
+
+/* Tabular, same reasoning as the Haslett skin: the page's claim is that these
+   are real production figures, so digits that jitter between rows undercut it. */
+.ballast-skin .bl-num {
+  font-family: var(--font-jet), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--bl-ink);
+}
+
+.ballast-skin .bl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background: var(--bl-level);
+  color: #10200c;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.ballast-skin .bl-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -12px rgba(182, 227, 75, 0.6);
+}
+.ballast-skin .bl-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.8rem 1.4rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid var(--bl-line);
+  color: var(--bl-ink);
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+.ballast-skin .bl-btn-ghost:hover {
+  border-color: var(--bl-level);
+  background: var(--bl-level-ghost);
+}
+
+/* The status pill. A live dot would be a lie here — Ballast runs one shop and
+   it is mine — so this one pulses SLOWLY and the copy next to it says
+   "one shop" rather than "live". */
+.ballast-skin .bl-dot {
+  display: inline-block;
+  height: 0.45rem;
+  width: 0.45rem;
+  border-radius: 9999px;
+  background: var(--bl-level);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ballast-skin .bl-dot { animation: bl-breathe 2.8s ease-in-out infinite; }
+}
+@keyframes bl-breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(0.82); }
+}
+
+/* The hero waterline. A vessel sits at a waterline; the hero's bottom edge is
+   one. Pure gradient, no image, so it costs nothing. */
+.ballast-skin .bl-waterline {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(182, 227, 75, 0.07) 60%,
+    rgba(182, 227, 75, 0.16) 100%
+  );
+  border-bottom: 1px solid rgba(182, 227, 75, 0.3);
+}
+
+/* The level vial, used in the comparison section. The bubble is centred by the
+   animation below, so with motion off it renders already-level rather than
+   stuck off to one side. */
+.ballast-skin .bl-vial {
+  position: relative;
+  height: 2.25rem;
+  border-radius: 9999px;
+  background: var(--bl-panel-2);
+  border: 1px solid var(--bl-line);
+  overflow: hidden;
+}
+.ballast-skin .bl-vial::before,
+.ballast-skin .bl-vial::after {
+  content: '';
+  position: absolute;
+  top: 12%;
+  bottom: 12%;
+  width: 1px;
+  background: var(--bl-line);
+}
+.ballast-skin .bl-vial::before { left: calc(50% - 1.35rem); }
+.ballast-skin .bl-vial::after { left: calc(50% + 1.35rem); }
+.ballast-skin .bl-bubble {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 1.4rem;
+  width: 2.3rem;
+  margin-top: -0.7rem;
+  margin-left: -1.15rem;
+  border-radius: 9999px;
+  background: var(--bl-level);
+  opacity: 0.85;
+}
+
+/* The meter bars. The metered side GROWS as it scrolls into view and the flat
+   side does not move — the animation is the argument, so a reader who never
+   reads the caption still gets it. */
+.ballast-skin .bl-bar {
+  height: 0.6rem;
+  border-radius: 9999px;
+  transform-origin: left center;
+}
+.ballast-skin .bl-bar-meter { background: linear-gradient(90deg, var(--bl-warn), #f0a868); }
+.ballast-skin .bl-bar-flat { background: var(--bl-level); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ballast-skin * { transition: none !important; }
+}
+
+/* Scroll-driven, no JS, no flash, degrades to static — the same technique the
+   other three skins use. A page that needs JS to become visible is a page a
+   crawler sees empty. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .ballast-skin .bl-in {
+      animation: bl-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry 44%;
+    }
+    .ballast-skin .bl-stagger > * {
+      animation: bl-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 2% entry calc(40% + (var(--i, 0) * 8%));
+    }
+    .ballast-skin .bl-rule {
+      animation: bl-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 6% entry 40%;
+    }
+    /* The bubble drifts in off-level and settles. */
+    .ballast-skin .bl-bubble {
+      animation: bl-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 8% entry 58%;
+    }
+    /* Each metered bar grows from nothing, later ones lagging behind. */
+    .ballast-skin .bl-bar-meter {
+      animation: bl-grow linear both;
+      animation-timeline: view();
+      animation-range: entry 6% entry calc(42% + (var(--i, 0) * 10%));
+    }
+    .ballast-skin .bl-bar-flat {
+      animation: bl-hold linear both;
+      animation-timeline: view();
+      animation-range: entry 6% entry 40%;
+    }
+  }
+}
+@keyframes bl-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes bl-draw {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+@keyframes bl-settle {
+  0%   { transform: translateX(-3.2rem); opacity: 0.35; }
+  70%  { transform: translateX(0.35rem); opacity: 0.85; }
+  100% { transform: translateX(0); opacity: 0.85; }
+}
+@keyframes bl-grow {
+  from { transform: scaleX(0.04); opacity: 0.4; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+@keyframes bl-hold {
+  from { transform: scaleX(0.04); opacity: 0.4; }
+  to   { transform: scaleX(1); opacity: 1; }
+}

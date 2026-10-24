@@ -53,6 +53,9 @@ const navLinks: NavLink[] = [
         name: 'Products',
         href: '/hood-dev',
         dropdown: [
+            // Ballast leads: it is the one taking enquiries right now, and the
+            // dropdown is read top-down.
+            { name: 'Ballast', href: '/ballast' },
             { name: 'Hood Dev', href: '/hood-dev' },
             { name: 'Verdikt', href: '/verdikt' },
             { name: 'Ops Platform', href: '/ops-platform' },

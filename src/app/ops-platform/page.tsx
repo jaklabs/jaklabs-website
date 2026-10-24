@@ -448,6 +448,19 @@ export default function OpsPlatformPage() {
               </Link>
               .
             </p>
+            {/* Route the small operator somewhere real rather than losing them.
+                This page is priced for a portfolio; a three-tech shop that lands
+                here should not conclude there is nothing for them. Ballast is the
+                same codebase rented flat per shop — the thing both pages argue
+                against is the per-TECH meter, not the subscription. */}
+            <p className="hz-faint mx-auto mt-3 max-w-xl text-xs">
+              Running one shop with a handful of techs? Acquiring a codebase is the wrong shape at
+              that size —{' '}
+              <Link href="/ballast" className="hz-brass hover:underline">
+                Ballast
+              </Link>{' '}
+              is the same software rented flat per shop instead.
+            </p>
           </div>
         </div>
       </section>

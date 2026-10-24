@@ -60,6 +60,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Quarry — the growth-compliance engine. Early access; the register is still
     // private pending the attorney sign-off, and the page says so.
     { url: `${BASE}/quarry`, changeFrequency: 'monthly', priority: 0.8 },
+    // Ballast — the service-business platform. Ranked above the other product
+    // pages because it is the only one with an active sales motion: it is
+    // recruiting founding shops, so being found matters more here than on a
+    // page describing something already built.
+    { url: `${BASE}/ballast`, changeFrequency: 'monthly', priority: 0.85 },
   ] as const).map((p) => ({ ...p, lastModified: new Date() }))
 
   // A blog API outage must not produce a sitemap missing every post — better to
