@@ -65,6 +65,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // recruiting founding shops, so being found matters more here than on a
     // page describing something already built.
     { url: `${BASE}/ballast`, changeFrequency: 'monthly', priority: 0.85 },
+    // Payments — taking money, sold to any business in any sector. Ranked
+    // with /ballast rather than the other product pages because it is the
+    // second active sales motion, and because it publishes its rates: the
+    // search this page answers is someone looking up what a payment costs.
+    { url: `${BASE}/payments`, changeFrequency: 'monthly', priority: 0.85 },
   ] as const).map((p) => ({ ...p, lastModified: new Date() }))
 
   // A blog API outage must not produce a sitemap missing every post — better to

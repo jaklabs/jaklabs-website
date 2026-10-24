@@ -53,8 +53,11 @@ const navLinks: NavLink[] = [
         name: 'Products',
         href: '/hood-dev',
         dropdown: [
-            // Ballast leads: it is the one taking enquiries right now, and the
-            // dropdown is read top-down.
+            // The dropdown is read top-down, so the two items with a live
+            // sales motion lead. Payments is first: it sells to a business in
+            // ANY sector, where Ballast sells to a service shop, so it is the
+            // wider door of the two and the one being actively driven to.
+            { name: 'Payments', href: '/payments' },
             { name: 'Ballast', href: '/ballast' },
             { name: 'Hood Dev', href: '/hood-dev' },
             { name: 'Verdikt', href: '/verdikt' },
