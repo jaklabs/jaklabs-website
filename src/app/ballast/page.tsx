@@ -172,10 +172,11 @@ const WRONG = [
 
 export const metadata: Metadata = {
   title: 'Ballast — field service software priced per shop, not per tech',
+  // Kept under 160: Google truncates around there, and the founding-shop line
+  // is the part that must survive the cut.
   description:
-    'Job management, invoicing and books for a small service business, priced per shop instead '
-    + 'of per technician. It runs one shop in production today — my own. Founding shops for '
-    + 'early 2027.',
+    'Job management, invoicing and books priced per shop, not per technician. Runs one service '
+    + 'business in production today — my own. Founding shops early 2027.',
   alternates: { canonical: '/ballast' },
   ...social('default', {
     type: 'website',
