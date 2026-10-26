@@ -181,7 +181,7 @@ export const metadata: Metadata = {
     + 'isolation, an LLM reliability layer and 608 passing tests. HIPAA-ready architecture. '
     + 'Built and owned by me, awaiting its first operator.',
   alternates: { canonical: '/telehealth' },
-  ...social('default', {
+  ...social('telehealth', {
     type: 'website',
     url: '/telehealth',
     title: 'The platform for people who want to be the platform.',

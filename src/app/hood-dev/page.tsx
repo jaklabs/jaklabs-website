@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     'A developer school that assesses how you actually work — seven phases, nine measured leaks, '
     + 'evidence cited — then builds the track around what it found. Free for 90 days from launch.',
   alternates: { canonical: '/hood-dev' },
-  ...social('default', {
+  ...social('hood-dev', {
     type: 'website',
     url: '/hood-dev',
     title: 'Every course tells you what to learn. None of them look under your hood.',

@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     'Two sites JAK Labs built end to end: Haslett Handyman, a Michigan service business running on '
     + 'software written for it, and Morrell Ministries, a 501(c)(3) whose site I build and maintain.',
   alternates: { canonical: '/work' },
-  ...social('default', {
+  ...social('work', {
     type: 'website',
     url: '/work',
     title: 'Work | JAK Labs',

@@ -178,7 +178,7 @@ export const metadata: Metadata = {
     'Job management, invoicing and books priced per shop, not per technician. Runs one service '
     + 'business in production today — my own. Founding shops early 2027.',
   alternates: { canonical: '/ballast' },
-  ...social('default', {
+  ...social('ballast', {
     type: 'website',
     url: '/ballast',
     title: 'Priced per shop, not per tech.',

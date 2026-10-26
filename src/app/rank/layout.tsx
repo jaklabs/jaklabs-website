@@ -69,7 +69,7 @@ export const metadata: Metadata = {
   keywords: ['developer rank', 'code quality', 'static analysis', 'open source',
              'developer portfolio', 'engineering assessment', 'offline'],
   alternates: { canonical: 'https://rank.jaklabs.io' },
-  ...social('default', {
+  ...social('rank', {
     title: 'Aura — a developer rank that never sees your code',
     description:
       'Grades your repositories offline, across four dimensions it can measure and four it refuses '

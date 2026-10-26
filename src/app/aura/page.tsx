@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     + 'them out of 100 — your source never leaves your machine, and you can verify that with '
     + 'one grep before you run it.',
   alternates: { canonical: '/aura' },
-  ...social('default', {
+  ...social('aura', {
     type: 'website',
     url: '/aura',
     title: 'Aura Rank — a developer rank that never sees your code',

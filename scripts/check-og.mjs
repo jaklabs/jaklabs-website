@@ -21,6 +21,18 @@
 //  shared helper left the `images` key in the source and discarded it at render.
 //  The prerendered HTML is the artifact a crawler actually sees.
 //
+//  IT ALSO CHECKS THE CARDS ARE DISTINCT (2026-10-25, JD's requirement).
+//
+//  Presence was never the whole ask. Before this, 15 marketing pages shared one
+//  `default` card, so posting /quarry and posting /telehealth put the identical
+//  image in the feed — and the page cards were visually indistinguishable from
+//  the blog covers on top of that. Each page now carries its own, and a shared
+//  card is a build failure rather than something you notice months later in a
+//  feed. `default` was deleted from social.ts so sharing is not spellable, and
+//  this is the check that the rendered HTML agrees.
+//
+//  /_not-found is allowed to carry the site card: it is not a page anyone posts.
+//
 //  Run after `next build`.
 
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs'
@@ -47,7 +59,15 @@ const meta = (html, re) => (html.match(re) || [])[1]
 
 const bare = []
 const lying = []
+const byImage = new Map()
 let ok = 0
+
+// Blog posts are excluded from the uniqueness check: each carries its own
+// per-post cover from the CMS, and a post with no cover deliberately falls back
+// to a shared placeholder (FALLBACK_COVER). Asserting uniqueness there would
+// fail on a correct fallback.
+const isPost = (r) => r.startsWith('/blog/') && r !== '/blog/'
+const EXEMPT = new Set(['/_not-found'])
 
 for (const file of walk(DIR).sort()) {
     const html = readFileSync(file, 'utf8')
@@ -63,8 +83,14 @@ for (const file of walk(DIR).sort()) {
         ;(twCard === 'summary_large_image' ? lying : bare).push(route)
     } else {
         ok++
+        if (!isPost(route) && !EXEMPT.has(route)) {
+            if (!byImage.has(ogImage)) byImage.set(ogImage, [])
+            byImage.get(ogImage).push(route)
+        }
     }
 }
+
+const shared = [...byImage.entries()].filter(([, routes]) => routes.length > 1)
 
 if (lying.length) {
     console.error(`\n  ${lying.length} page(s) send twitter:card=summary_large_image with NO og:image.`)
@@ -76,9 +102,22 @@ if (bare.length) {
     for (const r of bare) console.error(`    ${r}`)
 }
 
-if (lying.length || bare.length) {
+if (shared.length) {
+    console.error(`\n  ${shared.length} social card(s) are used by more than one page.`)
+    console.error('  Posting these pages puts the same image in the feed:\n')
+    for (const [img, routes] of shared) {
+        console.error(`    ${img.split('/').pop()}`)
+        for (const r of routes) console.error(`        ${r}`)
+    }
+    console.error('\n  Give each page its own: add a card to')
+    console.error('  marketing/scripts/make-page-cards.py, regenerate, copy the PNG')
+    console.error('  into public/images, and point the page at it via social().')
+}
+
+if (lying.length || bare.length || shared.length) {
     console.error('\n  Set the card through social() in src/lib/social.ts.\n')
     process.exit(1)
 }
 
 console.log(`  og:image present on all ${ok} prerendered pages`)
+console.log(`  ${byImage.size} distinct page cards, none shared`)

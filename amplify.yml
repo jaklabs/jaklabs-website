@@ -19,6 +19,30 @@ frontend:
     build:
       commands:
         - npm run build
+        # ⚠️ THE GUARD WAS NOT MISSING. check-og.mjs caught /payments shipping
+        # with no og:image, correctly, on the very commit that introduced it
+        # (run 40123758891, 2026-10-24). It changed nothing, for two reasons,
+        # and the second is the one this block fixes:
+        #
+        #   1. CI had been RED since 2026-10-16 on an unrelated infrastructure
+        #      step, so a new true failure looked exactly like the standing one.
+        #      An alarm that always fires gets ignored — the morrell-uptime
+        #      lesson, in its most expensive form.
+        #   2. AMPLIFY BUILDS main INDEPENDENTLY OF GITHUB ACTIONS. A red CI has
+        #      never blocked a deploy here. So the page went live bare while the
+        #      check that would have stopped it was failing in another system.
+        #
+        # Running them here puts the check on the path that actually publishes.
+        # After the build, because check:og reads the prerendered HTML a crawler
+        # receives, not the source that produced it.
+        - npm run check:og
+        - npm run check:images
+        # ⚠️ check:mobile is deliberately NOT here. It drives a headless browser
+        # against a RUNNING server on :3999, so in a build phase with nothing
+        # listening it fails every time — and a guard that always fails is worse
+        # than no guard: it trains you to ignore the build, which is exactly how
+        # the social-card failure stayed invisible for eight days. It belongs
+        # behind `npm start`, run locally or in a CI job that boots the server.
   artifacts:
     baseDirectory: .next
     files:

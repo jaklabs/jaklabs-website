@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     'Check your website the way a customer on a phone would. Seven checks, real answers, '
     + 'no signup — built by JD Kemp after auditing 456 Michigan business sites.',
   alternates: { canonical: '/website-audit' },
-  ...social('default', {
+  ...social('website-audit', {
     type: 'website',
     url: '/website-audit',
     title: 'Free Website Audit for Michigan Businesses',

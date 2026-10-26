@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     'Streaks, XP and leagues wrapped around trade logging, with an edge engine that refuses to '
     + 'render a verdict until your sample earns it. Read-only broker access. A JAK Labs product.',
   alternates: { canonical: '/verdikt' },
-  ...social('default', {
+  ...social('verdikt', {
     type: 'website',
     url: '/verdikt',
     title: 'Every trading book tells you to keep a journal. Almost nobody does.',

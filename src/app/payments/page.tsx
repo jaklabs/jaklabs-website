@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { social } from '@/lib/social'
 import Link from 'next/link'
 import localFont from 'next/font/local'
 
@@ -124,12 +125,19 @@ export const metadata: Metadata = {
   description:
     'Take payment at a counter, on a job, at a desk or on an invoice. The fee is invoiced monthly and never deducted from the payment. Rates published: 0.75%, $49 + 0.25%, or 0.5% for nonprofits.',
   alternates: { canonical: '/payments' },
-  openGraph: {
+  // ⚠️ Routed through social(), NOT hand-written. This block used to spell
+  // `openGraph` itself with a title, a description and a url and no `images` —
+  // and because Next REPLACES the root layout's openGraph rather than merging
+  // it, that silently deleted the site card. /payments posted to Facebook as a
+  // bare link with no image at all, which is how this was noticed. social()
+  // cannot be called without a card, so the mistake is no longer spellable.
+  ...social('payments', {
+    type: 'website',
+    url: '/payments',
     title: 'Payments & Point of Sale — JAK Labs',
     description:
       'Published rates, nothing held, and the fee invoiced at month end instead of taken out of the payment. Book a call and we work out whether it fits.',
-    url: '/payments',
-  },
+  }),
 }
 
 /* ── Where money actually gets taken. One per sector, on purpose: the service

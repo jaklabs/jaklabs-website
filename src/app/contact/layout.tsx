@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   title: 'Book a Free Operations Audit',
   description: "Thirty minutes, no charge, no pitch. I walk your site and your process the way a customer would and tell you what I find — including when you don't need me.",
   alternates: { canonical: '/contact' },
-  ...social('default', {
+  ...social('contact', {
     title: 'Book a Free Operations Audit | JAK Labs',
     description: "Thirty minutes, no charge, no pitch. I walk your site and your process the way a customer would and tell you what I find — including when you don't need me.",
     url: '/contact',

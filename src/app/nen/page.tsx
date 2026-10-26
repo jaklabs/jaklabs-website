@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     + 'you which of the six categories you write like — citing what it read. Python, no '
     + 'dependencies, no network, MIT.',
   alternates: { canonical: '/nen' },
-  ...social('default', {
+  ...social('nen', {
     type: 'website',
     url: '/nen',
     title: '水見式 — find out your Nen type from the code you actually write',

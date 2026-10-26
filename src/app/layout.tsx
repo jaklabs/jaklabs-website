@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { social } from '@/lib/social'
 import localFont from 'next/font/local'
 import './globals.css'
 import { Navbar } from '@/components/layout/Navbar'
@@ -81,27 +82,15 @@ export const metadata: Metadata = {
              'scheduling software', 'invoicing software', 'Lansing', 'Michigan', 'custom software'],
   alternates: { canonical: '/' },
   ...(FB_APP_ID ? { other: { 'fb:app_id': FB_APP_ID } } : {}),
-  openGraph: {
-    title: 'Operations Software for Michigan Service Businesses | JAK Labs',
-    description: 'I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds $2,500–$10,000.',
-    url: 'https://jaklabs.io',
-    siteName: 'JAK Labs',
-    images: [
-      {
-        url: '/images/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'JAK Labs — operations software for local service businesses',
-      },
-    ],
+  // Routed through social() like every other page, so the site card and its alt
+  // text live in ONE place. This block used to be written out by hand, which is
+  // how /payments came to overwrite it with a card-less copy.
+  ...social('image', {
     type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
+    url: 'https://jaklabs.io',
     title: 'Operations Software for Michigan Service Businesses | JAK Labs',
-    description: 'I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds $2,500–$10,000.',
-    images: ['/images/og-image.png'],
-  },
+    description: 'I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds $2,500\u2013$10,000.',
+  }),
 }
 
 export default function RootLayout({

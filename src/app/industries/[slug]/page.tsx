@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { INDUSTRIES, getIndustry, industrySlugs, OFFERS } from '@/lib/industries'
-import { social } from '@/lib/social'
+import { social, industryCard } from '@/lib/social'
 import { jsonLd } from '@/lib/jsonLd'
 
 /**
@@ -45,7 +45,7 @@ export async function generateMetadata(
     title: ind.headline,
     description,
     alternates: { canonical: `/industries/${ind.slug}` },
-    ...social('default', {
+    ...social(industryCard(ind.slug), {
       type: 'website',
       url: `/industries/${ind.slug}`,
       title: `${ind.headline} | JAK Labs`,

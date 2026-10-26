@@ -207,7 +207,7 @@ export const metadata: Metadata = {
     + '86 tactics, 10 channels, a deterministic classifier that never calls a model. Free to run; '
     + 'paid to ship inside something you sell.',
   alternates: { canonical: '/quarry' },
-  ...social('default', {
+  ...social('quarry', {
     type: 'website',
     url: '/quarry',
     title: 'The growth engine that knows what’s legal.',

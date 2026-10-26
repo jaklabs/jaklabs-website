@@ -53,9 +53,22 @@ jobs:
       # never saw it — the Lambda handlers that serve the live blog were outside
       # CI entirely. machine-auth.test.ts covers POST /machine/blogs, where the
       # failure would be attributing a machine's post to a person.
+      # ⚠️ TWO installs, because there are two package.json files and
+      # infrastructure/tsconfig.json includes `lambda/**/*`. Installing only
+      # infrastructure/ left every lambda import unresolvable, so this step
+      # failed with "Cannot find module '@aws-sdk/client-dynamodb'" and a train
+      # of implicit-any errors downstream of it. It passed locally the whole
+      # time because lambda/node_modules was already on the developer's disk.
+      #
+      # It had been failing since 2026-10-16, which is the expensive part: CI was
+      # permanently red, so when check-og.mjs correctly caught /payments shipping
+      # with no social card on 2026-10-24, the new true failure was
+      # indistinguishable from the standing one and the page went live bare.
+      # A red build nobody can act on is a build that checks nothing.
       - name: Infrastructure — typecheck and the Lambda tests
         working-directory: infrastructure
         run: |
           npm ci --no-audit --no-fund || npm install --no-audit --no-fund
+          (cd lambda && (npm ci --no-audit --no-fund || npm install --no-audit --no-fund))
           npx tsc --noEmit
           npm test

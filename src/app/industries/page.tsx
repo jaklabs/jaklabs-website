@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     + 'management, staffing, logistics, and software teams shipping AI. What I build for each, '
     + 'and what it costs.',
   alternates: { canonical: '/industries' },
-  ...social('default', {
+  ...social('industries', {
     type: 'website',
     url: '/industries',
     title: 'Industries I Build For | JAK Labs',

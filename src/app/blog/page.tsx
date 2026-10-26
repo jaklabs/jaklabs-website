@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     'Practical writing on booking, intake and operations software for Michigan '
     + 'med spas, clinics and wellness businesses — from someone who audits their sites.',
   alternates: { canonical: '/blog' },
-  ...social('default', {
+  ...social('blog', {
     type: 'website',
     url: '/blog',
     title: 'Blog | JAK Labs',

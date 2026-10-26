@@ -171,7 +171,7 @@ export const metadata: Metadata = {
     + 'running a live company today. Acquire the codebase and I deploy it on your infrastructure. '
     + 'You own the IP.',
   alternates: { canonical: '/ops-platform' },
-  ...social('default', {
+  ...social('ops-platform', {
     type: 'website',
     url: '/ops-platform',
     title: 'Own the software that runs a real business.',
