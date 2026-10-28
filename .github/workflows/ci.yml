@@ -14,7 +14,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20' }
+        # ⚠️ 24, not 20. Node 20 cannot load a TypeScript file at all -- it throws
+        # ERR_UNKNOWN_FILE_EXTENSION on a .ts/.mts test file OR on a .ts module a
+        # test imports -- and --experimental-strip-types does not exist before
+        # 22.18. A repo pinned here below the version it is written for gets a
+        # workflow that can NEVER pass, which carries exactly as little
+        # information as one that can never fail. trading-hub sat red for
+        # thirteen days on this; civitas, telehealth-platform and
+        # haslett-website had been red since the day CI was added to them.
+        # Pinning the runner above the version the project needs is free.
+        with: { node-version: '24' }
 
       - name: Install
         run: npm ci --no-audit --no-fund || npm install --no-audit --no-fund
