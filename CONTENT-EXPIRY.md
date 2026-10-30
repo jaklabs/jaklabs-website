@@ -93,9 +93,29 @@ Section 8 claim: this one watches the authored copy in git, that one watches the
 DynamoDB that a reader actually sees. Neither catches the other drifting, which is why both
 exist — an edit made in the CRM never touches git, and no build or test will ever see it.
 
+<!-- expiry:binance-postmortem-live -->
+### binance-postmortem-live — the same claim, in the copy a reader actually sees
+
+The companion to `binance-postmortem` above, added when the post went live on
+30 October 2026 at 22:43 UTC. Same claim, same tripwire, different source: that
+row reads the authored markdown in git, this one reads the published page.
+
+**Two rows on purpose**, exactly as the Haslett register does for the Section 8
+claim. The post lives in DynamoDB, so an edit made in the CRM never touches git
+and no build or test will ever see it — and conversely a rewrite of the draft
+would not change what is being served. Neither row catches the other drifting,
+which is the whole reason both exist.
+
+⚠️ This row could only be added AFTER publication: jaklabs.io/blog/<missing-slug>
+returns HTTP 200 with a page titled "Post not found", so a URL row for an
+unpublished post reports its tripwire as missing — which reads as "somebody
+already rewrote the content" and is the wrong diagnosis, every day. See the
+warning on the row above.
+
 ```content-expiry
 # id | claim | changes-on | source | tripwire | action
 payments-test-network | The /payments page says the payment service runs on a test network and that no live money has gone through it | 2026-12-15 | https://jaklabs.io/payments | no live money has moved through it yet | FIRST check whether mainnet went live and whether counsel and the CPA signed off. If not, roll this date forward -- that is the expected outcome, not a failure. If it did, rewrite the status pill and the "Where this actually stands" panel in src/app/payments/page.tsx, and fix the same claim in the blog post what-it-costs-to-take-a-payment, which is in DynamoDB and will not be caught by any build.
 payments-mainnet-gate | The /payments page promises an accountant and an attorney sign off before live money moves, which holds only while the mainnet price source is unbuilt | 2026-12-15 | /Users/jak/claude-server/ballast-payments/CLAUDE.md | price source for mainnet (CPA) | The tripwire here is the PAYMENTS REPO, not the website. If it fired, ballast-payments no longer lists the mainnet price source as unbuilt, so the CPA decision has probably landed while jaklabs.io/payments still promises it has not. Check the real state, update the website, then roll or retire this row.
 binance-postmortem | The Binance post states that Binance found no evidence of a wallet private key leak and that this was a patient human intrusion rather than an AI agent, which the promised technical post-mortem may overturn | 2026-12-01 | /Users/jak/claude-server/jak-labs/content-engine/drafts/ai-did-not-steal-6-billion-from-binance.md | no evidence of any wallet private key leak | Check whether Binance has published its technical post-mortem and whether it still says no wallet private key leaked. If the account has changed, correct the post IN THE CRM (it lives in DynamoDB) and date the correction, as the post promises; then update binance-hack-laptop and binance-hack-attribution in jak-labs/content-engine/facts.toml with their old values added to supersedes, and re-run publish-facts.py --deploy. If no post-mortem yet, roll this date forward -- that is the expected outcome, not a failure.
+binance-postmortem-live | The PUBLISHED Binance post states that Binance found no evidence of a wallet private key leak and that this was a patient human intrusion rather than an AI agent, which the promised technical post-mortem may overturn | 2026-12-01 | https://jaklabs.io/blog/ai-did-not-steal-6-billion-from-binance | no evidence of any wallet private key leak | Same action as binance-postmortem, but this row watches the LIVE page rather than the draft in git. If this one fires and that one does not, the published copy was edited in the CRM and the two have drifted; fix the markdown in jak-labs/content-engine/drafts so the authored source and the live page agree again.
 ```
