@@ -157,22 +157,72 @@ export async function createBlog(event: APIGatewayProxyEvent): Promise<APIGatewa
   }
 }
 
+async function findBySlug(slug: string): Promise<BlogPost | null> {
+  const result = await docClient.send(new QueryCommand({
+    TableName: BLOGS_TABLE, IndexName: 'GSI3-Slug',
+    KeyConditionExpression: 'slug = :slug', ExpressionAttributeValues: { ':slug': slug }, Limit: 1,
+  }))
+  if (!result.Items || result.Items.length === 0) return null
+  return result.Items[0] as BlogPost
+}
+
+/**
+ * PUBLIC single post. Mounted with authorization NONE, so API Gateway never runs
+ * the authorizer and `requestContext.authorizer` is always undefined here —
+ * isAdmin() cannot be true on this route, for anybody, ever.
+ *
+ * A draft therefore 404s, which is correct for an anonymous reader: it must not
+ * learn that an unpublished post exists. The isAdmin() call below is kept only
+ * so the intent is readable; it is always false. Do NOT "fix" that by moving this
+ * route behind the authorizer — the website fetches published posts
+ * unauthenticated and that is the whole point of the route.
+ *
+ * The CRM must use getBlogForAdmin instead. See its comment.
+ */
 export async function getBlog(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
   try {
     const slug = event.pathParameters?.slug
     if (!slug) return validationError('Slug is required')
 
-    const result = await docClient.send(new QueryCommand({
-      TableName: BLOGS_TABLE, IndexName: 'GSI3-Slug',
-      KeyConditionExpression: 'slug = :slug', ExpressionAttributeValues: { ':slug': slug }, Limit: 1,
-    }))
-
-    if (!result.Items || result.Items.length === 0) return notFound('Blog post')
-    const blog = result.Items[0] as BlogPost
+    const blog = await findBySlug(slug)
+    if (!blog) return notFound('Blog post')
     if (!isAdmin(event) && blog.status !== 'published') return notFound('Blog post')
     return success(blog)
   } catch (err) {
     console.error('Error getting blog:', err)
+    return serverError('Failed to get blog')
+  }
+}
+
+/**
+ * Authenticated single post, any status. The other half of a fix that was only
+ * ever applied to the listing.
+ *
+ * listBlogsForAdmin exists because the admin UI called the PUBLIC list route and
+ * silently received published posts when it asked for drafts. The identical fault
+ * was left in place one route over: the CRM's editor loaded a post through the
+ * public GET /blogs/{slug}, where isAdmin() is structurally false, so every DRAFT
+ * came back 404 and the editor could not open it. Nobody could publish anything
+ * from the edit page — two posts sat undone for days, and the failure looked like
+ * a missing post rather than a missing permission.
+ *
+ * So this is the single-post twin of listBlogsForAdmin, and it behaves the same
+ * way: authenticated, 403 if the caller is not an admin, never a quiet
+ * substitution. The admin check is FIRST so an unauthorised caller cannot use
+ * timing or a 404-vs-403 difference to probe which slugs exist.
+ */
+export async function getBlogForAdmin(event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> {
+  try {
+    if (!isAdmin(event)) return error('Admin access required', 403)
+
+    const slug = event.pathParameters?.slug
+    if (!slug) return validationError('Slug is required')
+
+    const blog = await findBySlug(slug)
+    if (!blog) return notFound('Blog post')
+    return success(blog)
+  } catch (err) {
+    console.error('Error getting blog for admin:', err)
     return serverError('Failed to get blog')
   }
 }
@@ -404,7 +454,12 @@ export async function handler(event: APIGatewayProxyEvent): Promise<APIGatewayPr
   try {
     switch (method) {
       case 'GET':
-        if (isAdminRoute) return listBlogsForAdmin(event)
+        // ⚠️ hasSlug is checked on BOTH sides. Before /admin/blogs/{slug} existed
+        // this read `if (isAdminRoute) return listBlogsForAdmin(event)`, so an
+        // admin GET carrying a slug would have returned a LIST — a wrong answer
+        // shaped like a right one, which is the same fault this whole pair of
+        // routes exists to stop.
+        if (isAdminRoute) return hasSlug ? getBlogForAdmin(event) : listBlogsForAdmin(event)
         return hasSlug ? getBlog(event) : listBlogs(event)
       case 'POST':
         if (isRebuildRoute) return rebuildSite(event)

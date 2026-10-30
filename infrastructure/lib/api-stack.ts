@@ -264,6 +264,16 @@ export class ApiStack extends cdk.Stack {
     const adminResource = this.api.root.addResource('admin')
     const adminBlogsResource = adminResource.addResource('blogs')
     adminBlogsResource.addMethod('GET', blogsIntegration, authOptions)
+    // GET /admin/blogs/{slug} — the single-post twin of the listing above, and
+    // the half of this fix that was missing until 2026-10-30.
+    //
+    // GET /blogs/{slug} is public for the same reason GET /blogs is, so isAdmin()
+    // is structurally false there and a DRAFT 404s for everyone. The CRM's editor
+    // loaded posts through it, so it could not open a draft at all: Publish was
+    // unreachable from the edit page and two posts sat unpublished for days. The
+    // symptom was a 404 that looked like a missing post rather than a missing
+    // permission.
+    adminBlogsResource.addResource('{slug}').addMethod('GET', blogsIntegration, authOptions)
     // POST /admin/rebuild — takes no body. The app id and branch come from the
     // Lambda's environment, so there is nothing in the request to inject and the
     // worst an authenticated admin can do is rebuild a site they can already
