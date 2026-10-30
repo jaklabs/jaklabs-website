@@ -60,8 +60,42 @@ mainnet (CPA)" under *Not built yet*. If that line goes, the CPA decision has pr
 landed — and nothing about the website would look broken. The row firing is the prompt to
 go and check whether jaklabs.io is still promising a sign-off that has already happened.
 
+<!-- expiry:binance-postmortem -->
+### binance-postmortem — the Binance post rests on an investigation that is still running
+
+`ai-did-not-steal-6-billion-from-binance` argues that the October 2026 theft was a patient
+human intrusion into a signing path rather than an AI agent, and the load-bearing evidence
+is Binance's own statement that it found **no evidence of any wallet private key leak**.
+Binance has promised a full technical post-mortem, and its account has already moved once —
+from one compromised laptop on the Thursday morning to "additional points of breach" the
+same afternoon.
+
+The post says, in as many words, that if this turns out to be wrong the correction will
+appear on the page with the date on it. This row is what makes that a commitment rather
+than a sentence.
+
+⚠️ **The source is the DRAFT IN GIT, not the live URL, and that is deliberate for now.**
+The post was still unpublished when this row was written, and pointing a row at an
+unpublished URL on this site is worse than it sounds — see the warning below.
+
+⚠️⚠️ **jaklabs.io/blog/<missing-slug> RETURNS HTTP 200, NOT 404.** Measured 30 Oct 2026:
+a slug that does not exist serves a page titled "Post not found" with a 200 status, and so
+does a slug that is merely still a draft. So a URL-sourced row for an unpublished post does
+not report UNKNOWN — it reports the *tripwire is missing*, which reads as "somebody already
+rewrote the content" and is the wrong diagnosis entirely. It would also fire every single
+day. Any future row here pointing at a blog URL must be added only once the post is live,
+and anything else checking this site must assert on CONTENT, never on the status code.
+
+**When the post is published, add a second row pointing at
+`https://jaklabs.io/blog/ai-did-not-steal-6-billion-from-binance` with the same tripwire,
+and keep this one.** Two rows on purpose, exactly as the Haslett register does for the
+Section 8 claim: this one watches the authored copy in git, that one watches the copy in
+DynamoDB that a reader actually sees. Neither catches the other drifting, which is why both
+exist — an edit made in the CRM never touches git, and no build or test will ever see it.
+
 ```content-expiry
 # id | claim | changes-on | source | tripwire | action
 payments-test-network | The /payments page says the payment service runs on a test network and that no live money has gone through it | 2026-12-15 | https://jaklabs.io/payments | no live money has moved through it yet | FIRST check whether mainnet went live and whether counsel and the CPA signed off. If not, roll this date forward -- that is the expected outcome, not a failure. If it did, rewrite the status pill and the "Where this actually stands" panel in src/app/payments/page.tsx, and fix the same claim in the blog post what-it-costs-to-take-a-payment, which is in DynamoDB and will not be caught by any build.
 payments-mainnet-gate | The /payments page promises an accountant and an attorney sign off before live money moves, which holds only while the mainnet price source is unbuilt | 2026-12-15 | /Users/jak/claude-server/ballast-payments/CLAUDE.md | price source for mainnet (CPA) | The tripwire here is the PAYMENTS REPO, not the website. If it fired, ballast-payments no longer lists the mainnet price source as unbuilt, so the CPA decision has probably landed while jaklabs.io/payments still promises it has not. Check the real state, update the website, then roll or retire this row.
+binance-postmortem | The Binance post states that Binance found no evidence of a wallet private key leak and that this was a patient human intrusion rather than an AI agent, which the promised technical post-mortem may overturn | 2026-12-01 | /Users/jak/claude-server/jak-labs/content-engine/drafts/ai-did-not-steal-6-billion-from-binance.md | no evidence of any wallet private key leak | Check whether Binance has published its technical post-mortem and whether it still says no wallet private key leaked. If the account has changed, correct the post IN THE CRM (it lives in DynamoDB) and date the correction, as the post promises; then update binance-hack-laptop and binance-hack-attribution in jak-labs/content-engine/facts.toml with their old values added to supersedes, and re-run publish-facts.py --deploy. If no post-mortem yet, roll this date forward -- that is the expected outcome, not a failure.
 ```
