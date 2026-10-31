@@ -10,7 +10,7 @@
     "destroy": "cdk destroy --all",
     "diff": "cdk diff",
     "synth": "cdk synth",
-    "test": "ts-node --transpile-only test/machine-auth.test.ts && ts-node --transpile-only test/plain-text.test.ts && node --test test/mailForwarder.test.mjs"
+    "test": "ts-node --transpile-only test/machine-auth.test.ts && ts-node --transpile-only test/plain-text.test.ts && node --test test/mailForwarder.test.mjs && node --test test/contact.test.mjs"
   },
   "dependencies": {
     "@aws-sdk/client-amplify": "^3.1123.0",

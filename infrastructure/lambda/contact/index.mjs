@@ -35,15 +35,38 @@ const ses = new SESClient({ region: 'us-east-1' });
 // able-to-receive are different facts and the SES identity list only shows the
 // first. (The same false premise had also propagated into Footer.tsx.)
 //
-// ⚠️ THIS IS THE FORM'S RECIPIENT, NOT THE PUBLISHED ADDRESS. The site now
-// publishes contact@jaklabs.io everywhere (src/lib/business.ts), which forwards
-// to this same inbox via SES. This constant was deliberately left pointing
-// straight at Gmail: the form already delivers directly, and putting a working
-// path behind a forwarder built the same day would add a hop and a failure mode
-// for no gain. Changing it is a decision, not a tidy-up.
+// ⚠️ MOVED TO contact@jaklabs.io ON 2026-10-31 AT JD'S REQUEST. It was a
+// personal Gmail, and the paragraph above is the reason it had to change: the
+// site now publishes contact@jaklabs.io on every page, so leaving the form
+// delivering somewhere else would have recreated the exact fault this file was
+// written to fix -- a visitor writing to one address while their message goes to
+// another. `contact.test.mjs` now asserts this constant EQUALS the EMAIL
+// exported from src/lib/business.ts, so the two cannot drift again. That
+// invariant was stated in prose here from the beginning and enforced by nothing.
+//
+// It costs one extra hop: SES receives at contact@jaklabs.io, stores to
+// s3://jaklabs-inbound-mail-706558533041/contact/, and jaklabs-mail-forwarder
+// sends it on to JD's inbox. What that buys is a single archived destination --
+// the message also stays in the WorkMail mailbox and in S3 for 90 days, so there
+// are now three copies of an enquiry rather than one.
+//
+// ⚠️ NO LOOP, AND HERE IS WHY, BECAUSE IT IS THE OBVIOUS FEAR WITH THIS CHANGE.
+// The forwarder sends to a gmail.com address, not back to contact@jaklabs.io, so
+// the chain terminates after one hop. The thing that WOULD loop is pointing
+// FORWARD_TO at an address this rule set receives; it is pointed at Gmail.
+//
+// ⚠️ REPLY-TO SURVIVES THE HOP, which is the only property of this message that
+// actually matters. `ReplyToAddresses: [email]` below carries the enquirer, and
+// the forwarder's rewrite() prefers an existing Reply-To over the From it finds
+// -- so hitting Reply in Gmail still answers the person who filled the form, not
+// no-reply@jaklabs.io and not ourselves. There is a cosmetic cost: the From line
+// becomes "no-reply@jaklabs.io via JAK Labs" rather than naming the enquirer,
+// because Source is a bare address with no display name for rewrite() to carry.
+// The subject is already prefixed "[JAKLabs Contact]" and the body's first two
+// lines are Name and Email, so the inbox is still readable.
 //
 // Both of these are SES-verified, which Source requires.
-const RECIPIENT_EMAIL = 'jdakemp@gmail.com';
+const RECIPIENT_EMAIL = 'contact@jaklabs.io';
 
 // The FROM address, which is not the same thing as the TO address and must not
 // be collapsed back into one constant.
