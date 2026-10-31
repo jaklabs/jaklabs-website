@@ -24,6 +24,26 @@
 // forwarding, that is the point at which this becomes a shared package rather than a
 // parameter, and `brand` is a parameter precisely so that move is mechanical.
 
+// ⚠️ `to` IS DELIBERATELY NOT IN THIS SET, AND DO NOT ADD IT TO FIX GMAIL TABS.
+// A forwarded message keeps `To: contact@jaklabs.io`, so it is not addressed to the mailbox
+// it lands in -- which is a known Gmail signal for list/bulk mail and is the obvious
+// explanation for these arriving under the Updates tab rather than Primary. It is also
+// WRONG, and it was measured before being acted on (31 Oct 2026). Every [JAKLabs Contact]
+// message in the destination inbox:
+//
+//   27 Sep  direct SES, no forwarder, To: jdakemp@gmail.com   -> CATEGORY_PERSONAL (Primary)
+//   04 Oct  direct SES, no forwarder, To: jdakemp@gmail.com   -> CATEGORY_UPDATES
+//   31 Oct  via this forwarder,       To: contact@jaklabs.io  -> CATEGORY_UPDATES
+//   31 Oct  via this forwarder,       To: contact@jaklabs.io  -> CATEGORY_UPDATES
+//
+// The 4 Oct row is the one that matters: a DIRECT send, addressed correctly, filed under
+// Updates anyway. Two near-identical direct sends landed in different tabs, so the tab is
+// not a function of any header this code sets, and rewriting `To:` would have been a guess
+// dressed as a fix -- it would have changed what the reader sees, lost the address the mail
+// was actually sent to, and quite possibly not moved the tab at all.
+//
+// The deterministic fix is a Gmail FILTER in the recipient's account, which overrides the
+// categoriser. That is the recipient's to make and cannot be done from here.
 const DROP = new Set(['dkim-signature', 'return-path', 'sender', 'message-id', 'from', 'reply-to']);
 
 /** Split raw MIME into unfolded header fields and the untouched body. */
