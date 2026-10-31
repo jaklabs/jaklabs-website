@@ -6,6 +6,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { SiteChrome } from '@/components/layout/SiteChrome'
 import { jsonLd } from '@/lib/jsonLd'
+import { EMAIL, PHONE_E164 } from '@/lib/business'
 
 /**
  * Facebook App ID, for fb:app_id.
@@ -112,8 +113,8 @@ export default function RootLayout({
               legalName: 'Jak Development LLC',
               alternateName: 'JAK Labs',
               url: 'https://jaklabs.io',
-              email: 'jdakemp@gmail.com',
-              telephone: '+1-517-505-7135',
+              email: EMAIL,
+              telephone: PHONE_E164,
               description:
                 'Operations software for local service businesses — scheduling, quoting, '
                 + 'invoicing and follow-up. One senior engineer based in the Lansing, Michigan area.',

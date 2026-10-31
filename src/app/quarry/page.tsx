@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import localFont from 'next/font/local'
 import { social } from '@/lib/social'
+import { MAILTO as CONTACT_MAILTO } from '@/lib/business'
 
 /**
  * Quarry — the growth-compliance engine. Free to run, paid to ship inside
@@ -79,7 +80,7 @@ const plexMono = localFont({
 })
 
 const MAILTO =
-  'mailto:jdakemp@gmail.com?subject='
+  CONTACT_MAILTO + '?subject='
   + encodeURIComponent('Quarry — early access')
   + '&body='
   + encodeURIComponent(

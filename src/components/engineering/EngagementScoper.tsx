@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { MAILTO } from '@/lib/business'
 
 /**
  * The engagement scoper.
@@ -300,7 +301,7 @@ export function EngagementScoper() {
   const brief = done ? buildBrief(answers) : null
 
   const mailto = brief
-    ? 'mailto:jdakemp@gmail.com?subject='
+    ? MAILTO + '?subject='
       + encodeURIComponent(brief.subject)
       + '&body='
       + encodeURIComponent(

@@ -96,6 +96,29 @@ A visitor sees two of these and neither matches where their message goes. Pick
 `jdakemp@jaklabs.io` — it is the only one that reads like a business — and make
 all three agree.
 
+> ✅ **RESOLVED 2026-10-31 — and the recommendation above was WRONG.**
+> `jdakemp@jaklabs.io` is a verified SES *sending* identity and is **not** an
+> alias on either WorkMail user, while the WorkMail receipt rule claims the whole
+> `jaklabs.io` domain — so mail to it reaches WorkMail, finds no mailbox and
+> **bounces**. Following this advice would have put an address that receives
+> nothing on every page, and the only symptom would have been enquiries that
+> never arrived. *"Reads like a business"* was the entire basis for the choice;
+> whether it could receive mail was never checked.
+>
+> The site now publishes **`contact@jaklabs.io`** — a live alias on the WorkMail
+> mailbox, forwarded to JD's inbox by `infrastructure/create-inbound-mail.sh`
+> and verified with a message that actually arrived. It is single-sourced in
+> `src/lib/business.ts`, and `scripts/check-contact.mjs` fails the build on a
+> hard-coded copy anywhere in `src/`.
+>
+> The count in this section was also understated. It was not two or three places:
+> it was **eleven, across nine files**.
+>
+> ⚠️ The third row still stands as written — the contact **form** delivers to
+> `jdakemp@gmail.com` (it was `jdakempdev@gmail.com` when this was written), and
+> that was deliberately left alone rather than routed through the new forwarder.
+> See the comment on `RECIPIENT_EMAIL` in `infrastructure/lambda/contact/index.mjs`.
+
 ### 3.2 The site says "we" 153 times and "I" zero times
 
 The brand standard for every JAK Labs document is first person: *I/my, never

@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, Mail } from 'lucide-react'
+import { EMAIL, MAILTO } from '@/lib/business'
 
 export function CTA() {
     const ref = useRef(null)
@@ -63,9 +64,9 @@ export function CTA() {
                                 Schedule a Call
                                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                             </Link>
-                            <a href="mailto:jdakemp@gmail.com" className="btn-secondary">
+                            <a href={MAILTO} className="btn-secondary">
                                 <Mail className="mr-2 w-5 h-5" />
-                                jdakemp@gmail.com
+                                {EMAIL}
                             </a>
                         </motion.div>
                     </div>

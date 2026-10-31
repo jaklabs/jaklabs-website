@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Facebook, Linkedin, Instagram, Mail, Phone } from 'lucide-react'
+import { EMAIL, MAILTO, PHONE_DISPLAY, PHONE_HREF } from '@/lib/business'
 
 // Every link here now resolves. It previously carried ten that did not: eight
 // /industries/* pages that had never been built, /careers, and /about#team —
@@ -73,17 +74,23 @@ export function Footer() {
                             service business run without its owner. One engineer, Lansing, Michigan.
                         </p>
                         <div className="space-y-3">
-                            {/* NOT jdakemp@jaklabs.io — the apex domain has no MX record, so that
-    address receives nothing. Mail is configured on email.jaklabs.io.
-    Add an MX record on the apex (or Google Workspace) and this can
-    become the professional address everywhere. */}
-                            <a href="mailto:jdakemp@gmail.com" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
+                            {/* The address and phone come from src/lib/business.ts and are
+    hard-coded nowhere — check-contact.mjs fails the build on a copy.
+    This comment USED TO SAY the apex had no MX record and that mail
+    was configured on email.jaklabs.io. Both were false (checked
+    2026-10-31): the apex resolves 10 inbound-smtp.us-east-1.amazonaws.com,
+    and email.jaklabs.io has no MX, no A and no CNAME at all. Its
+    conclusion -- do not publish jdakemp@jaklabs.io -- happens to be
+    right, because that address is a verified SES SENDING identity and
+    not an alias on either WorkMail user, so mail to it bounces. Right
+    answer, invented reason: see src/lib/business.ts. */}
+                            <a href={MAILTO} className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
                                 <Mail className="w-5 h-5" />
-                                <span>jdakemp@gmail.com</span>
+                                <span>{EMAIL}</span>
                             </a>
-                            <a href="tel:+15175057135" className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
+                            <a href={PHONE_HREF} className="flex items-center space-x-3 text-white/60 hover:text-primary transition-colors">
                                 <Phone className="w-5 h-5" />
-                                <span>(517) 505-7135</span>
+                                <span>{PHONE_DISPLAY}</span>
                             </a>
                         </div>
                     </div>

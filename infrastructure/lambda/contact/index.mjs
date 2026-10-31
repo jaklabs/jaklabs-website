@@ -24,8 +24,25 @@ const ses = new SESClient({ region: 'us-east-1' });
 // while the form delivers to another — which was the case: the site showed two
 // addresses and the form used a third.
 //
-// NOT jdakemp@jaklabs.io: the apex domain has no MX record, so it receives
-// nothing. Both of these are SES-verified, which Source requires.
+// NOT jdakemp@jaklabs.io -- right answer, wrong reason, corrected 2026-10-31.
+// This used to say "the apex domain has no MX record, so it receives nothing".
+// The apex HAS had an MX for a long time: it resolves
+// 10 inbound-smtp.us-east-1.amazonaws.com, because the WorkMail organisation set
+// it up. The real reason not to use that address is that it is a verified SES
+// SENDING identity and NOT an alias on either WorkMail user, while the WorkMail
+// receipt rule claims the whole jaklabs.io domain -- so mail to it reaches
+// WorkMail, finds no mailbox and bounces. Verified-for-sending and
+// able-to-receive are different facts and the SES identity list only shows the
+// first. (The same false premise had also propagated into Footer.tsx.)
+//
+// ⚠️ THIS IS THE FORM'S RECIPIENT, NOT THE PUBLISHED ADDRESS. The site now
+// publishes contact@jaklabs.io everywhere (src/lib/business.ts), which forwards
+// to this same inbox via SES. This constant was deliberately left pointing
+// straight at Gmail: the form already delivers directly, and putting a working
+// path behind a forwarder built the same day would add a hop and a failure mode
+// for no gain. Changing it is a decision, not a tidy-up.
+//
+// Both of these are SES-verified, which Source requires.
 const RECIPIENT_EMAIL = 'jdakemp@gmail.com';
 
 // The FROM address, which is not the same thing as the TO address and must not

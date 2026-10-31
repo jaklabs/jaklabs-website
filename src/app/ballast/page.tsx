@@ -3,6 +3,7 @@ import Link from 'next/link'
 import localFont from 'next/font/local'
 import { social } from '@/lib/social'
 import BallastMeter from './BallastMeter'
+import { MAILTO as CONTACT_MAILTO } from '@/lib/business'
 
 /**
  * Ballast — the multi-tenant service-business platform.
@@ -104,7 +105,7 @@ const jet = localFont({
 })
 
 const MAILTO =
-  'mailto:jdakemp@gmail.com?subject='
+  CONTACT_MAILTO + '?subject='
   + encodeURIComponent('Ballast — founding shop')
   + '&body='
   + encodeURIComponent(

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { Mail, Phone, MapPin, Clock, CheckCircle, Send, Sparkles } from 'lucide-react'
 import { captureCampaign, getCampaign } from '@/lib/campaign'
+import { EMAIL, MAILTO, PHONE_DISPLAY, PHONE_HREF } from '@/lib/business'
 
 const CONTACT_API_URL = 'https://mfo28du4bj.execute-api.us-east-1.amazonaws.com/prod/contact'
 
@@ -82,15 +83,15 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: 'Phone',
-      value: '(517) 505-7135',
-      href: 'tel:+15175057135',
+      value: PHONE_DISPLAY,
+      href: PHONE_HREF,
       gradient: 'from-neon-purple to-neon-pink',
     },
     {
       icon: Mail,
       title: 'Email',
-      value: 'jdakemp@gmail.com',
-      href: 'mailto:jdakemp@gmail.com',
+      value: EMAIL,
+      href: MAILTO,
       gradient: 'from-neon-pink to-neon-cyan',
     },
     {

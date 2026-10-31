@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import localFont from 'next/font/local'
 import { social } from '@/lib/social'
+import { MAILTO as CONTACT_MAILTO } from '@/lib/business'
 
 /**
  * The Haslett Ops Platform — the codebase offered as an acquirable asset.
@@ -90,7 +91,7 @@ const plexMono = localFont({
 })
 
 const MAILTO =
-  'mailto:jdakemp@gmail.com?subject='
+  CONTACT_MAILTO + '?subject='
   + encodeURIComponent('Haslett Ops Platform — acquisition')
   + '&body='
   + encodeURIComponent(

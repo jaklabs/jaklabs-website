@@ -40,6 +40,19 @@ jobs:
       - name: Images are servable
         run: node scripts/check-images.mjs
 
+      # The published contact address and phone live in src/lib/business.ts and nowhere
+      # else. Swapping that address was logged as "a three-line change" and was ELEVEN
+      # across NINE files; nothing connected them, so the only way to get it right was to
+      # already suspect the note was wrong. This step is why the next swap is one line.
+      # It forbids the CORRECT address as a literal too -- a guard that only banned the old
+      # value would go green the moment somebody pasted the new one. --self-test runs it
+      # against deliberately broken input, because a check never observed failing is a
+      # rumour.
+      - name: Contact details come from one source
+        run: |
+          node scripts/check-contact.mjs --self-test
+          node scripts/check-contact.mjs
+
       - name: Build if the project builds
         run: npm run build --if-present
 

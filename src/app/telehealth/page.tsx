@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import localFont from 'next/font/local'
 import { social } from '@/lib/social'
+import { MAILTO as CONTACT_MAILTO } from '@/lib/business'
 
 /**
  * The telehealth platform — offered for licence or acquisition.
@@ -99,7 +100,7 @@ const plexMono = localFont({
 })
 
 const MAILTO =
-  'mailto:jdakemp@gmail.com?subject='
+  CONTACT_MAILTO + '?subject='
   + encodeURIComponent('Telehealth platform — licence or acquire')
   + '&body='
   + encodeURIComponent(
