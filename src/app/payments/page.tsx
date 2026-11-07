@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { social } from '@/lib/social'
 import Link from 'next/link'
 import localFont from 'next/font/local'
+import { OFFERS, subtitle } from '@/lib/pricing'
 
 /**
  * /payments — taking payment, sold as a service to ANY business.
@@ -238,11 +239,12 @@ const PLANS = [
       stay on every line -- see the header note. ───────────────────────────── */
 const BUILDS: [string, string, string][] = [
   ['Operations Audit', 'Free', 'Where the manual work actually is, and what it would take to remove it. No signup.'],
-  ['Local SEO Audit', '$1,500 one-time · delivered in about a week', 'Why a local business does not show up, worst first. Not a retainer and not a ranking promise.'],
-  ['AI Reliability Audit', '$2,500 one-time · delivered in about a week', 'An AI feature reviewed before it ships a wrong answer. Eval harness, retrieval gates, a prioritised fix list.'],
-  ['Ops-Automation Build', 'From $6,000 one-time · delivered in 2–4 weeks', 'One manual workflow automated end to end — intake to ticketing to invoicing.'],
-  ['LLM Integration Sprint', 'From $7,500 one-time · delivered in 2–4 weeks', 'One production-ready AI feature, built on your stack and your data, with the gates that keep it honest.'],
-  ['Support after a build', '$1–2K per month · optional, cancel with notice', 'Keeping what I built running, improved and supported. Never assumed, never bundled.'],
+  [OFFERS.localSeo.title, subtitle(OFFERS.localSeo), 'Why a local business does not show up, worst first. Not a retainer and not a ranking promise.'],
+  [OFFERS.aiReliability.title, subtitle(OFFERS.aiReliability), 'An AI feature reviewed before it ships a wrong answer. Eval harness, retrieval gates, a prioritised fix list.'],
+  [OFFERS.opsAutomation.title, subtitle(OFFERS.opsAutomation), 'One manual workflow automated end to end — intake to ticketing to invoicing.'],
+  [OFFERS.llmSprint.title, subtitle(OFFERS.llmSprint), 'One production-ready AI feature, built on your stack and your data, with the gates that keep it honest.'],
+  [OFFERS.support.title, subtitle(OFFERS.support), 'Keeping what I built running, improved and supported. Never assumed, never bundled.'],
+  [OFFERS.frontOffice.title, subtitle(OFFERS.frontOffice), 'Enquiries answered, quotes chased, invoices followed up — without you remembering. You read every message before it goes.'],
   ['Embedded engineering', 'Monthly retainer · 8–20 hrs/week, month-to-month', 'I work inside your team for a stretch and ship on your real systems. Scope agreed each cycle.'],
 ]
 

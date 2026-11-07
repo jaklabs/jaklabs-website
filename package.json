@@ -10,7 +10,8 @@
     "check:images": "node scripts/check-images.mjs",
     "check:og": "node scripts/check-og.mjs",
     "check:mobile": "node scripts/check-mobile-height.mjs",
-    "check:contact": "node scripts/check-contact.mjs"
+    "check:contact": "node scripts/check-contact.mjs",
+    "check:pricing": "node scripts/check-pricing.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

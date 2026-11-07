@@ -37,6 +37,12 @@ frontend:
         # receives, not the source that produced it.
         - npm run check:og
         - npm run check:images
+        # Prices live in src/lib/pricing.ts only. Here rather than only in CI for the
+        # reason the block above gives: Amplify builds main independently of GitHub
+        # Actions, so a red CI has never blocked a deploy. It reads source rather than
+        # built HTML, so it could run preBuild -- it sits with the others so there is
+        # one place to look for "what gates a publish".
+        - npm run check:pricing
         # ⚠️ check:mobile is deliberately NOT here. It drives a headless browser
         # against a RUNNING server on :3999, so in a build phase with nothing
         # listening it fails every time — and a guard that always fails is worse

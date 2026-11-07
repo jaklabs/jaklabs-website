@@ -5,6 +5,7 @@ import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { OFFERS, subtitle, BUILD_RANGE_SHORT } from '@/lib/pricing'
 
 // True and checkable. The previous set — 125+ projects, 150+ clients served,
 // 100% satisfaction — was invented, and a fabricated number is the cheapest
@@ -13,7 +14,7 @@ const stats = [
     { value: '456', label: 'MICHIGAN SITES AUDITED' },
     { value: '7', label: 'CHECKS, FREE, NO SIGNUP' },
     { value: '1', label: 'ENGINEER ON YOUR PROJECT' },
-    { value: '$2.5–10K', label: 'TYPICAL BUILD' },
+    { value: BUILD_RANGE_SHORT, label: 'TYPICAL BUILD' },
 ]
 
 // Four service areas, each its own pillar. The hrefs are anchors into the
@@ -42,6 +43,7 @@ const services = [
     { id: 'llm-sprint', title: 'LLM Integration Sprint', description: 'One production-ready AI feature, built end-to-end on your stack and your data — with the gates that keep it honest.', href: '#llm-sprint' },
     { id: 'ops-automation', title: 'Ops-Automation Build', description: 'One manual workflow automated: lead intake to ticketing to invoicing, receipt OCR, accounting sync. The Haslett build.', href: '#ops-automation' },
     { id: 'local-seo', title: 'Local SEO Audit', description: 'Why a local business does not show up, in priority order — technical, local pack and structure. Fixed price, no retainer.', href: '#local-seo' },
+    { id: 'front-office', title: 'Front Office', description: 'The follow-up happens without you remembering it — enquiries answered, quotes chased, invoices followed. You approve; you never write it.', href: '#front-office' },
     { id: 'embedded', title: 'Embedded Engineering', description: 'I join your team for a stretch and ship on your real systems. Forward-deployed, monthly, no recruiter.', href: '#embedded' },
 ]
 
@@ -56,7 +58,7 @@ const pricingPlans = [
     {
         id: 'ai-reliability',
         title: 'AI Reliability Audit',
-        subtitle: '$2,500 one-time · delivered in about a week',
+        subtitle: subtitle(OFFERS.aiReliability),
         description: 'You have an AI feature in or near production and no way to know whether it is about to say something wrong.',
         color: 'neon-cyan',
         features: [
@@ -88,7 +90,7 @@ const pricingPlans = [
         // against their own site and see the same machine work.
         id: 'local-seo',
         title: 'Local SEO Audit',
-        subtitle: '$1,500 one-time · delivered in about a week',
+        subtitle: subtitle(OFFERS.localSeo),
         description: 'You are a local business, you know people search for what you do, and you are not the one they find.',
         color: 'neon-cyan',
         features: [
@@ -101,7 +103,7 @@ const pricingPlans = [
     {
         id: 'llm-sprint',
         title: 'LLM Integration Sprint',
-        subtitle: 'From $7,500 one-time · delivered in 2–4 weeks',
+        subtitle: subtitle(OFFERS.llmSprint),
         description: 'You want a real AI feature — a chatbot, document processing, a copilot — and you have no AI engineer in-house.',
         color: 'neon-pink',
         featured: true,
@@ -115,14 +117,33 @@ const pricingPlans = [
     {
         id: 'ops-automation',
         title: 'Ops-Automation Build',
-        subtitle: 'From $6,000 one-time · delivered in 2–4 weeks',
+        subtitle: subtitle(OFFERS.opsAutomation),
         description: 'Your team is drowning in manual work that a system should be doing. This is the build I did for my own business first.',
         color: 'neon-purple',
         features: [
             { category: 'What gets automated', items: ['Lead intake → ticketing → scheduling → invoicing', 'Receipt and document OCR', 'QuickBooks / Plaid sync and clean books', 'The follow-up that only happens when someone remembers'] },
             { category: 'Built on your stack', items: ['Your tools where they work, replaced where they do not', 'AWS, Terraform-managed', 'Yours to keep — no platform lock-in'] },
             { category: 'Why me', items: ['I built exactly this for Haslett Handyman and I still operate it', '$216K invoiced at ~99% collected', '3,235 transactions auto-categorised', '~140 hours of admin removed'] },
-            { category: 'Optional after', items: ['$1–2K/month to keep it running, improved and supported'] },
+            { category: 'Optional after', items: [`${subtitle(OFFERS.support)} — to keep it running, improved and supported`] },
+            { category: 'Or have it run for you', items: ['Front Office, below — the follow-up happens without you remembering it'] },
+        ]
+    },
+    {
+        id: 'front-office',
+        title: 'Front Office',
+        subtitle: subtitle(OFFERS.frontOffice),
+        description: 'The work your office does between jobs — answering, chasing, following up — happens whether or not anyone remembers it. This runs my own business.',
+        color: 'neon-purple',
+        features: [
+            { category: 'What gets handled', items: ['Every new enquiry picked up and answered', 'Every quote chased until there is an answer', 'Invoices followed up without you chasing them', 'Replies read and routed, not left sitting in an inbox'] },
+            // ⚠️ THIS IS THE DIFFERENTIATOR AND IT IS A DECIDED POSITION, not copy.
+            // JD, 2026-11-07: the approval gate stays whole, no auto-approve
+            // (foundation-agent/DECISIONS.md). The commoditised tier of this market
+            // cannot say it, so it belongs on the page — and if the gate is ever
+            // lowered, this block has to come off with it.
+            { category: 'You stay in control', items: ['Nothing a customer sees goes out until you have read it', 'You approve from your phone — you never write the message', 'One tap clears a whole morning of them'] },
+            { category: 'Why me', items: ['It runs my own business before it runs yours', '51 scheduled automations, 18 of them moving real money', '$216K invoiced through software I wrote and still operate', '~140 hours of admin removed'] },
+            { category: 'How it is priced', items: ['Starts with the free 30-minute Operations Audit', 'The scope — and the price — comes out of what that finds', 'Monthly, cancel with notice. The build that sets it up is priced separately'] },
         ]
     },
     {

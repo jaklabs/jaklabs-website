@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { OFFERS } from './pricing'
 
 //  Social cards, in one place, because Next does not deep-merge metadata.
 //
@@ -58,7 +59,7 @@ const CARDS = {
   ],
   services: [
     '/images/og-services.png',
-    'published prices — Reliability audit $2,500 · Integration sprint from $7,500 · Ops build from $6,000',
+    `published prices — Reliability audit ${OFFERS.aiReliability.price} · Integration sprint ${OFFERS.llmSprint.price.toLowerCase()} · Ops build ${OFFERS.opsAutomation.price.toLowerCase()}`,
   ],
   engineering: [
     '/images/og-engineering.png',

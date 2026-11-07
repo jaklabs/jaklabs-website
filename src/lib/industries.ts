@@ -1,3 +1,10 @@
+// Aliased: this file already exports its own `OFFERS` (per-industry offer links,
+// a different concept). Renaming either one would churn every importer.
+import { OFFERS as PRICES, BUILD_RANGE } from './pricing'
+
+// `From $6,000` reads wrong mid-sentence ("start at From $6,000"), so the bare
+// figure is derived once here rather than stripped at four call sites.
+const OPS_FROM = PRICES.opsAutomation.price.replace('From ', '')
 /**
  * The industry taxonomy, as the website tells it.
  *
@@ -104,9 +111,9 @@ export const INDUSTRIES: Industry[] = [
       },
       {
         q: 'What does it cost?',
-        a: 'Ops-Automation builds start at $6,000 and most land between $6,000 and $10,000. The '
+        a: `Ops-Automation builds start at ${OPS_FROM} and most land within ${BUILD_RANGE}. The `
           + 'free Operations Audit comes first and is genuinely free — it is how I find out '
-          + 'whether there is $6,000 of value here before either of us commits.',
+          + `whether there is ${OPS_FROM} of value here before either of us commits.`,
       },
     ],
   },
@@ -221,7 +228,7 @@ export const INDUSTRIES: Industry[] = [
       },
       {
         q: 'What does an LLM Integration Sprint cost and how long is it?',
-        a: 'From $7,500, and two to four weeks. One production-ready feature, end to end, '
+        a: `${PRICES.llmSprint.price}, and two to four weeks. One production-ready feature, end to end, `
           + 'deployed and documented — scoped to a single workflow so the timeline is honest.',
       },
     ],
@@ -403,7 +410,7 @@ export const INDUSTRIES: Industry[] = [
       {
         q: 'What does the AI Reliability Audit actually deliver?',
         a: 'A review of your prompts, retrieval and failure modes, an eval-harness design you can '
-          + 'implement, and a prioritised fix list — in about a week for a fixed $2,500. No '
+          + `implement, and a prioritised fix list — in about a week for a fixed ${PRICES.aiReliability.price}. No `
           + 'retainer and no commitment past it.',
       },
       {
@@ -433,9 +440,9 @@ export const ALSO_SERVED = [
 ]
 
 export const OFFERS = {
-  audit: { name: 'AI Reliability Audit', price: '$2,500', href: '/services#ai-reliability' },
-  sprint: { name: 'LLM Integration Sprint', price: 'from $7,500', href: '/services#llm-sprint' },
-  ops: { name: 'Ops-Automation Build', price: 'from $6,000', href: '/services#ops-automation' },
+  audit: { name: PRICES.aiReliability.title, price: PRICES.aiReliability.price, href: '/services#ai-reliability' },
+  sprint: { name: PRICES.llmSprint.title, price: PRICES.llmSprint.price.toLowerCase(), href: '/services#llm-sprint' },
+  ops: { name: PRICES.opsAutomation.title, price: PRICES.opsAutomation.price.toLowerCase(), href: '/services#ops-automation' },
 } as const
 
 export const getIndustry = (slug: string) => INDUSTRIES.find((i) => i.slug === slug)

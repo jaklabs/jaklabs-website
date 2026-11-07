@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight, Play } from 'lucide-react'
+import { BUILD_RANGE_SHORT } from '@/lib/pricing'
 
 export function Hero() {
     const ref = useRef(null)
@@ -120,7 +121,7 @@ export function Hero() {
                         {[
                             { value: '456', label: 'Michigan sites I audited', color: 'text-neon-purple' },
                             { value: '1', label: 'Engineer on your project', color: 'text-neon-pink' },
-                            { value: '$2.5–10K', label: 'Typical build', color: 'text-neon-cyan' },
+                            { value: BUILD_RANGE_SHORT, label: 'Typical build', color: 'text-neon-cyan' },
                         ].map((stat, index) => (
                             <motion.div
                                 key={index}

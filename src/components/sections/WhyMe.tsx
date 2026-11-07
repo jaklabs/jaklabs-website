@@ -1,6 +1,7 @@
 'use client'
 
 import { Target, Rocket, Shield, HeartHandshake } from 'lucide-react'
+import { BUILD_RANGE } from '@/lib/pricing'
 
 /**
  * The four reasons to pick one engineer over an agency, sitting just above the
@@ -43,7 +44,7 @@ const reasons = [
     {
         icon: Shield,
         title: 'Published pricing',
-        description: 'Most builds land between $2,500 and $10,000. It is on the blog, in public, so you do not spend three calls finding out.',
+        description: `Most builds land within ${BUILD_RANGE}. It is on the blog, in public, so you do not spend three calls finding out.`,
     },
     {
         icon: HeartHandshake,

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import localFont from 'next/font/local'
 import { social } from '@/lib/social'
 import { MAILTO as CONTACT_MAILTO } from '@/lib/business'
+import { OFFERS } from '@/lib/pricing'
 
 /**
  * Quarry — the growth-compliance engine. Free to run, paid to ship inside
@@ -191,7 +192,7 @@ const TIERS = [
 const ADDONS = [
   {
     lab: 'Coverage pack',
-    price: '$2,500',
+    price: OFFERS.aiReliability.price,
     p: 'A jurisdiction or a vertical researched, cited and merged into the register within 30 days. Yours on merge; public 90 days later.',
   },
   {

@@ -4,12 +4,13 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { motion, useInView } from 'framer-motion'
 import { Megaphone, Smartphone, Palette, Search, ArrowRight, ArrowUpRight } from 'lucide-react'
+import { OFFERS } from '@/lib/pricing'
 
 const services = [
     {
         icon: Megaphone,
         title: 'AI Reliability Audit',
-        description: '$2,500 flat. Your AI feature reviewed before it ships a wrong answer — eval harness, retrieval gates, a prioritised fix list. About a week.',
+        description: `${OFFERS.aiReliability.price} one-time. Your AI feature reviewed before it ships a wrong answer — eval harness, retrieval gates, a prioritised fix list. About a week.`,
         features: ['Eval harness', 'Retrieval gates', 'Prioritised fix list'],
         gradient: 'from-neon-purple to-neon-pink',
         glowColor: 'shadow-[0_0_30px_rgba(168,85,247,0.3),0_0_60px_rgba(168,85,247,0.1)]',
@@ -22,7 +23,7 @@ const services = [
     {
         icon: Smartphone,
         title: 'LLM Integration Sprint',
-        description: 'From $7,500. One production-ready AI feature built end to end on your stack, with the evaluation gates that keep it honest. Two to four weeks.',
+        description: `${OFFERS.llmSprint.price}. One production-ready AI feature built end to end on your stack, with the evaluation gates that keep it honest. Two to four weeks.`,
         features: ['One feature, end to end', 'Your stack', 'Deployed and handed over'],
         gradient: 'from-neon-pink to-neon-cyan',
         glowColor: 'shadow-[0_0_30px_rgba(255,45,146,0.3),0_0_60px_rgba(255,45,146,0.1)]',
@@ -35,7 +36,7 @@ const services = [
     {
         icon: Palette,
         title: 'Ops-Automation Build',
-        description: 'From $6,000. One manual workflow automated — intake to ticketing to invoicing, OCR, accounting sync. The build I did for my own business first.',
+        description: `${OFFERS.opsAutomation.price}. One manual workflow automated — intake to ticketing to invoicing, OCR, accounting sync. The build I did for my own business first.`,
         features: ['Intake to invoice', 'Receipt OCR', 'Accounting sync'],
         gradient: 'from-neon-cyan to-neon-blue',
         glowColor: 'shadow-[0_0_30px_rgba(0,255,255,0.3),0_0_60px_rgba(0,255,255,0.1)]',

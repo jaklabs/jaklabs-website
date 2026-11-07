@@ -7,6 +7,7 @@ import { Footer } from '@/components/layout/Footer'
 import { SiteChrome } from '@/components/layout/SiteChrome'
 import { jsonLd } from '@/lib/jsonLd'
 import { EMAIL, PHONE_E164 } from '@/lib/business'
+import { BUILD_RANGE } from '@/lib/pricing'
 
 /**
  * Facebook App ID, for fb:app_id.
@@ -78,7 +79,7 @@ export const metadata: Metadata = {
     default: 'Operations Software for Michigan Service Businesses | JAK Labs',
     template: '%s | JAK Labs',
   },
-  description: 'I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds $2,500–$10,000.',
+  description: `I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds ${BUILD_RANGE}.`,
   keywords: ['operations software', 'small business software michigan', 'CRM for service business',
              'scheduling software', 'invoicing software', 'Lansing', 'Michigan', 'custom software'],
   alternates: { canonical: '/' },
@@ -90,7 +91,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: 'https://jaklabs.io',
     title: 'Operations Software for Michigan Service Businesses | JAK Labs',
-    description: 'I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds $2,500\u2013$10,000.',
+    description: `I build the scheduling, quoting and invoicing software that lets a local service business run without its owner. One senior engineer, Lansing, Michigan. Most builds ${BUILD_RANGE}.`,
   }),
 }
 

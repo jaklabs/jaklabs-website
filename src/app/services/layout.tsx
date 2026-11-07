@@ -1,5 +1,15 @@
 import type { Metadata } from 'next'
 import { social } from '@/lib/social'
+import { OFFERS, subtitle } from '@/lib/pricing'
+
+// Built from the price source, not written out, so a reprice cannot leave the
+// search snippet quoting last month's number. Front Office is named without a
+// figure because it has none — see lib/pricing.ts.
+const DESC = `${OFFERS.aiReliability.title} ${OFFERS.aiReliability.price} · `
+  + `${OFFERS.localSeo.title} ${OFFERS.localSeo.price} · `
+  + `${OFFERS.llmSprint.title} ${OFFERS.llmSprint.price.toLowerCase()} · `
+  + `${OFFERS.opsAutomation.title} ${OFFERS.opsAutomation.price.toLowerCase()} · `
+  + `Front Office and embedded engineering monthly. Fixed scope, published prices.`
 
 // The page itself is a client component and cannot export metadata, so it lives
 // here. Before this every page on the site returned the same title and
@@ -7,11 +17,11 @@ import { social } from '@/lib/social'
 // described what it was.
 export const metadata: Metadata = {
   title: 'Services & Pricing',
-  description: "AI Reliability Audit $2,500 · Local SEO Audit $1,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
+  description: DESC,
   alternates: { canonical: '/services' },
   ...social('services', {
     title: 'Services & Pricing | JAK Labs',
-    description: "AI Reliability Audit $2,500 · Local SEO Audit $1,500 · LLM Integration Sprint from $7,500 · Ops-Automation Build from $6,000 · embedded engineering monthly. Fixed scope, published prices.",
+    description: DESC,
     url: '/services',
     type: 'website',
   }),
